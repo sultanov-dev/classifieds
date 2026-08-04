@@ -5,6 +5,7 @@ import { KeyIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Container from '@/shared/container'
 
+import CategoryMenu from './category.menu'
 import LangDropMenu from './lang.dropMenu'
 import ProfileMenu from './profile.menu'
 
@@ -12,7 +13,7 @@ export default function Header() {
   return (
     <header>
       <Container>
-        <div className="mb-6 flex items-center justify-end gap-x-5 pt-4">
+        <div className="mb-6 flex items-center justify-end gap-x-5 border-b py-4">
           <LangDropMenu />
           <Button variant={'ghost'} className="text-base font-normal capitalize">
             <Link href={'/register'} className="flex items-center gap-x-1">
@@ -24,7 +25,13 @@ export default function Header() {
           <ProfileMenu />
         </div>
       </Container>
-      {/* bottom header */}
+      <Container>
+        <div className="mb-10 flex items-center gap-x-7">
+          <CategoryMenu />
+          <span>2</span>
+          <span>2</span>
+        </div>
+      </Container>
     </header>
   )
 }
