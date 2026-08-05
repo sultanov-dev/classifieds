@@ -8,6 +8,7 @@ import Container from '@/shared/container'
 import CategoryMenu from './category.menu'
 import LangDropMenu from './lang.dropMenu'
 import ProfileMenu from './profile.menu'
+import RegionSelect from './region.select'
 
 export default function Header() {
   return (
@@ -28,7 +29,7 @@ export default function Header() {
       <Container>
         <div className="mb-10 flex items-center gap-x-7">
           <CategoryMenu />
-          <span>2</span>
+          <RegionSelect />
           <span>2</span>
         </div>
       </Container>
