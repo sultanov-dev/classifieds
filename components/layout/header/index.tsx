@@ -9,6 +9,7 @@ import CategoryMenu from './category.menu'
 import LangDropMenu from './lang.dropMenu'
 import ProfileMenu from './profile.menu'
 import RegionSelect from './region.select'
+import SearchInput from './searchInput'
 
 export default function Header() {
   return (
@@ -30,7 +31,7 @@ export default function Header() {
         <div className="mb-10 flex items-center gap-x-7">
           <CategoryMenu />
           <RegionSelect />
-          <span>2</span>
+          <SearchInput />
         </div>
       </Container>
     </header>
