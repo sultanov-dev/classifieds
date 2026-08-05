@@ -1,6 +1,10 @@
+import { HeartIcon } from 'lucide-react'
+
 import { IProduct } from '@/data/product'
-import { formatAdDate } from '@/lib/utils'
+import { cn, formatAdDate } from '@/lib/utils'
 import { BlurImage } from '@/shared/blur.image'
+
+import { Button } from '../ui/button'
 
 export function ProductCard({ item }: { item: IProduct }) {
   return (
@@ -16,6 +20,14 @@ export function ProductCard({ item }: { item: IProduct }) {
             key={i}
           />
         ))}
+        <Button
+          className="absolute top-3 right-3 z-20 cursor-pointer bg-black/20 transition-colors hover:bg-black/30"
+          size={'icon-sm'}
+        >
+          <HeartIcon
+            className={cn('size-5', item.isLiked ? 'fill-rose-600 stroke-rose-600' : 'fill-none')}
+          />
+        </Button>
       </div>
       <div className="p-3.5">
         <div className="mb-3">

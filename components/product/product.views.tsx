@@ -1,3 +1,5 @@
+'use client'
+
 import { productData } from '@/data/product'
 import { Heading } from '@/shared/heading'
 
