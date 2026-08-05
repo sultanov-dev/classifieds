@@ -1,5 +1,10 @@
-import { Button } from '@/components/ui/button'
+import HomePage from '@/components/pages/home/home.page'
+import Container from '@/shared/container'
 
 export default function Home() {
-	return <Button variant={'default'}>button</Button>
+  return (
+    <Container>
+      <HomePage />
+    </Container>
+  )
 }

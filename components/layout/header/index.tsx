@@ -29,7 +29,7 @@ export default function Header() {
         </div>
       </Container>
       <Container>
-        <div className="mb-10 flex flex-wrap items-center gap-x-7 sm:flex-wrap lg:flex-nowrap">
+        <div className="mb-10 flex flex-wrap items-center justify-center gap-x-7 sm:flex-wrap lg:flex-nowrap">
           <CategoryMenu />
           <RegionSelect />
           <AddButton />
