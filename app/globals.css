@@ -121,9 +121,9 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground bg-[##FAFAFA];
   }
   html {
-    @apply font-poppins-sans;
+    @apply font-poppins-sans bg-[##FAFAFA];
   }
 }

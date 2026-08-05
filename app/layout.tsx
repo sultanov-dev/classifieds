@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang="en"
       className={cn('h-full', 'antialiased', poppinsSans.variable, 'font-poppins-sans')}
     >
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col bg-[##FAFAFA]">
         <Header />
         {children}
       </body>

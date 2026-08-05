@@ -29,7 +29,7 @@ export default function CategoryMenu() {
         }
       >
         <MenuIcon className="size-4" />
-        <span className="text-base font-normal capitalize">Kategoriya</span>
+        <span className="hidden text-base font-normal capitalize md:block">Kategoriya</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-3xs">
         <DropdownMenuGroup>

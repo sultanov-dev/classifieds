@@ -5,6 +5,7 @@ import { KeyIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Container from '@/shared/container'
 
+import AddButton from './add.button'
 import CategoryMenu from './category.menu'
 import LangDropMenu from './lang.dropMenu'
 import ProfileMenu from './profile.menu'
@@ -28,10 +29,13 @@ export default function Header() {
         </div>
       </Container>
       <Container>
-        <div className="mb-10 flex items-center gap-x-7">
+        <div className="mb-10 flex flex-wrap items-center gap-x-7 sm:flex-wrap lg:flex-nowrap">
           <CategoryMenu />
           <RegionSelect />
-          <SearchInput />
+          <AddButton />
+          <div className="order-3 mt-4 w-full md:order-2 md:w-auto md:min-w-0 md:flex-1 lg:mt-0 lg:max-w-135">
+            <SearchInput />
+          </div>
         </div>
       </Container>
     </header>

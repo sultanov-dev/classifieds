@@ -10,13 +10,13 @@ export default function SearchInput() {
   const [search, setSeaerch] = useState('')
 
   return (
-    <div className="relative w-135">
+    <div className="relative w-full">
       <Input
         value={search}
         onChange={(e) => setSeaerch(e.target.value)}
         type="text"
         placeholder="Elon qidirish"
-        className="focus-visible:ring-0 focus-visible:outline-none"
+        className="w-full focus-visible:right-0 focus-visible:outline-none"
       />
       {search && (
         <XIcon
