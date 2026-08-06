@@ -6,8 +6,6 @@ import { cn } from '@/lib/utils'
 
 import './globals.css'
 
-import Header from '@/components/layout/header'
-
 const poppinsSans = Poppins({
   variable: '--font-poppins-sans',
   subsets: ['latin'],
@@ -26,10 +24,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang="en"
       className={cn('h-full', 'antialiased', poppinsSans.variable, 'font-poppins-sans')}
     >
-      <body className="flex min-h-full flex-col bg-[##FAFAFA]">
-        <Header />
-        {children}
-      </body>
+      <body className="min-h-full bg-[##FAFAFA]">{children}</body>
     </html>
   )
 }
