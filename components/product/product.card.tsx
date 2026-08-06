@@ -1,6 +1,6 @@
 import { HeartIcon } from 'lucide-react'
 
-import { IProduct } from '@/data/product'
+import { IProduct } from '@/data/product.data'
 import { cn, formatAdDate } from '@/lib/utils'
 import { BlurImage } from '@/shared/blur.image'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { productData } from '@/data/product'
+import { productData } from '@/data/product.data'
 import { Heading } from '@/shared/heading'
 
 import { ProductCard } from './product.card'
