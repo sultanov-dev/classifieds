@@ -5,7 +5,7 @@ export interface IProduct {
   price: string
   isLiked: boolean
   region: string
-  createdAt: Date
+  createdAt: string
 }
 
 export const productData: IProduct[] = [
@@ -16,7 +16,7 @@ export const productData: IProduct[] = [
     price: '370 196 800 so’m',
     isLiked: false,
     region: 'toshkent',
-    createdAt: new Date(),
+    createdAt: '2026-08-06T12:32:00+05:00',
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const productData: IProduct[] = [
     price: '370 196 800 so’m',
     isLiked: true,
     region: 'Surxondaryo viloyati',
-    createdAt: new Date(),
+    createdAt: '2026-08-06T12:32:00+05:00',
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ export const productData: IProduct[] = [
     price: '370 196 800 so’m',
     isLiked: false,
     region: 'namangan viloyati',
-    createdAt: new Date(),
+    createdAt: '2026-08-06T12:32:00+05:00',
   },
   {
     id: 4,
@@ -43,6 +43,6 @@ export const productData: IProduct[] = [
     price: '370 196 800 so’m',
     isLiked: true,
     region: 'xorazm viloyati',
-    createdAt: new Date(),
+    createdAt: '2026-08-06T12:32:00+05:00',
   },
 ]
