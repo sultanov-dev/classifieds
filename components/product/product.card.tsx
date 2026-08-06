@@ -10,16 +10,13 @@ export function ProductCard({ item }: { item: IProduct }) {
   return (
     <div className="w-full min-w-0 rounded-md bg-white shadow-md">
       <div className="relative aspect-square h-48.75 w-full outline-hidden">
-        {item.images.map((image, i) => (
-          <BlurImage
-            src={image}
-            alt={item.title}
-            className="rounded-xl object-cover p-2"
-            fill
-            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            key={i}
-          />
-        ))}
+        <BlurImage
+          src={item.images[0]}
+          alt={item.title}
+          className="rounded-xl object-cover p-2"
+          fill
+          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        />
         <Button
           className="absolute top-3 right-3 z-20 cursor-pointer bg-black/20 transition-colors hover:bg-black/30"
           size={'icon-sm'}
