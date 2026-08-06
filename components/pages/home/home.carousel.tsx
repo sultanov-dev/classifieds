@@ -11,7 +11,7 @@ import { BlurImage } from '@/shared/blur.image'
 export default function HomeCarousel() {
   return (
     <Swiper
-      className="relative aspect-video h-120 w-full sm:aspect-16/7 lg:aspect-21/7"
+      className="relative mt-10 aspect-video h-120 w-full sm:aspect-16/7 lg:aspect-21/7"
       pagination={{ dynamicBullets: true }}
       modules={[Pagination, Autoplay]}
       spaceBetween={30}

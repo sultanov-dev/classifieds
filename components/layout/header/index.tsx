@@ -15,7 +15,7 @@ import SearchInput from './searchInput'
 
 export default function Header() {
   return (
-    <header>
+    <header className="w-full">
       <Container>
         <div className="mb-6 flex items-center justify-end gap-x-5 border-b py-4">
           <LangDropMenu />
@@ -30,7 +30,7 @@ export default function Header() {
         </div>
       </Container>
       <Container>
-        <div className="mb-10 flex flex-wrap items-center justify-center gap-x-7 sm:flex-wrap lg:flex-nowrap">
+        <div className="flex flex-wrap items-center justify-center gap-x-7 sm:flex-wrap lg:flex-nowrap">
           <CategoryMenu />
           <RegionSelect />
           <AddButton />
