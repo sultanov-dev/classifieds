@@ -7,8 +7,9 @@ export default function HomePage() {
   return (
     <div className="w-full">
       <HomeCarousel />
-      <ProductViews />
+      <ProductViews title="Yangi elonlar" />
       <InfoBanner />
+      <ProductViews title="Barcha elonlar" />
     </div>
   )
 }

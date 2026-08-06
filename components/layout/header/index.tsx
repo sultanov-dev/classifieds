@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { KeyIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { authPages } from '@/config/pages.config'
 import Container from '@/shared/container'
 
 import AddButton from './add.button'
@@ -19,7 +20,7 @@ export default function Header() {
         <div className="mb-6 flex items-center justify-end gap-x-5 border-b py-4">
           <LangDropMenu />
           <Button variant={'ghost'} className="text-base font-normal capitalize">
-            <Link href={'/register'} className="flex items-center gap-x-1">
+            <Link href={authPages.REGISTER} className="flex items-center gap-x-1">
               <KeyIcon className="h-4 w-4" />
               register
             </Link>
