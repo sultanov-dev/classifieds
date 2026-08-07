@@ -8,11 +8,21 @@ import {
 } from '@/components/ui/select'
 import { regionData } from '@/data/region.data'
 
-export default function RegionSelect() {
+interface RegionSelectProps {
+  value: string
+  onValueChange: (value: string | null) => void
+  placeholder?: string
+}
+
+export default function RegionSelect({
+  value,
+  onValueChange,
+  placeholder = 'Viloyatni tanlang',
+}: RegionSelectProps) {
   return (
-    <Select items={regionData} defaultValue={'toshkent shahri'}>
+    <Select items={regionData} value={value} onValueChange={onValueChange}>
       <SelectTrigger className="w-48">
-        <SelectValue placeholder="Region" />
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent className="w-90" side="bottom" alignItemWithTrigger={false}>
         <SelectGroup>

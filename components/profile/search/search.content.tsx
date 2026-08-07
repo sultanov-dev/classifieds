@@ -19,7 +19,7 @@ export function SearchContent() {
             />
           </div>
           <div className="ml-4 flex flex-col justify-center">
-            <h1 className="line-clamp-2 w-105 text-base font-normal md:text-2xl">{item.title}</h1>
+            <h1 className="line-clamp-2 w-105 text-base font-normal md:text-2xl">{item.title}`</h1>
             <span className="mt-5 mb-5 text-base font-semibold lg:text-2xl">{item.price}</span>
             <div className="flex items-center justify-between border-t px-3 pt-3">
               <span className="text-muted-foreground text-xs font-normal capitalize">
