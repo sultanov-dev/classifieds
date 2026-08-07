@@ -26,10 +26,10 @@ export function ProductCard({ item }: { item: IProduct }) {
           />
         </Button>
       </div>
-      <div className="p-3.5">
+      <div className="flex h-36.25 flex-col justify-center p-3.5">
         <div className="mb-3">
-          <h6 className="line-clamp-2 text-base font-normal">{item.title}</h6>
-          <span className="text-lg font-semibold">{item.price}</span>
+          <h6 className="line-clamp-2 min-h-10 text-base leading-5 font-normal">{item.title}</h6>
+          <span className="mt-2 inline-block text-lg font-semibold">{item.price}</span>
         </div>
         <div className="flex items-center justify-between border-t pt-3">
           <span className="text-muted-foreground text-xs font-normal capitalize">
