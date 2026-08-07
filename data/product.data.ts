@@ -5,6 +5,7 @@ type TAttribute = {
 
 export interface IProduct {
   id: number
+  slug: string
   images: string[]
   category: string
   title: string
@@ -19,6 +20,7 @@ export const productData: IProduct[] = [
   {
     id: 1,
     category: 'car',
+    slug: 'byd-chazor-dmi120km-flagship-1',
     images: ['/car.jpg', '/car2.jpeg'],
     title: 'BYD Chazor DMI 120km Flagship Full pozitsiyasi',
     price: '370 196 800 so’m',
@@ -37,6 +39,7 @@ export const productData: IProduct[] = [
     id: 2,
     category: 'phone',
     images: ['/car2.jpeg', '/car.jpg'],
+    slug: 'iphone-15-promax-95-1',
     title: 'Iphone 15 pro max 95%',
     price: '12300000 so’m',
     isLiked: true,
@@ -54,6 +57,7 @@ export const productData: IProduct[] = [
     id: 3,
     category: 'car',
     images: ['/car.jpg', '/car2.jpeg'],
+    slug: 'byd-chazor-dmi120km-flagship-2',
     title: 'BYD Chazor DMI 120km Flagship Full pozitsiyasi',
     price: '370 196 800 so’m',
     isLiked: false,
@@ -71,6 +75,7 @@ export const productData: IProduct[] = [
     id: 4,
     category: 'phone',
     images: ['/car2.jpeg', '/car.jpg'],
+    slug: 'iphone-15-promax-95-2',
     title: 'Iphone 15 pro max 95%',
     price: '12300000 so’m',
     isLiked: true,

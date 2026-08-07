@@ -2,9 +2,13 @@
   "semi": false,
   "trailingComma": "all",
   "singleQuote": true,
-  "printWidth": 100,
+  "useTabs": true,
+  "printWidth": 80,
   "tabWidth": 2,
-  "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  "plugins": [
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
   "importOrder": [
     "^(react|next/(.*))$",
     "<BUILTIN_MODULES>",
