@@ -21,11 +21,13 @@ export interface IProduct {
 	attribute: TAttribute[]
 	desctiption: string
 	seller: TSeller
+	status: string
 }
 
 export const productData: IProduct[] = [
 	{
 		id: 1,
+		status: 'yangi',
 		category: 'car',
 		slug: 'byd-chazor-dmi120km-flagship-1',
 		images: ['/car.jpg', '/car2.jpeg'],
@@ -51,6 +53,7 @@ export const productData: IProduct[] = [
 	{
 		id: 2,
 		category: 'phone',
+		status: 'ishlatilgan',
 		images: ['/car2.jpeg', '/car.jpg'],
 		slug: 'iphone-15-promax-95-1',
 		title: 'Iphone 15 pro max 95%',
@@ -75,6 +78,7 @@ export const productData: IProduct[] = [
 	{
 		id: 3,
 		category: 'car',
+		status: 'ishlatilgan',
 		images: ['/car.jpg', '/car2.jpeg'],
 		slug: 'byd-chazor-dmi120km-flagship-2',
 		title: 'BYD Chazor DMI 120km Flagship Full pozitsiyasi',
@@ -99,6 +103,7 @@ export const productData: IProduct[] = [
 	{
 		id: 4,
 		category: 'phone',
+		status: 'yangi',
 		images: ['/car2.jpeg', '/car.jpg'],
 		slug: 'iphone-15-promax-95-2',
 		title: 'Iphone 15 pro max 95%',
