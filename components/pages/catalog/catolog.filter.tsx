@@ -10,7 +10,7 @@ export function CatalogFilter({ region }: { region: string }) {
 		<div className="bg-background rounded-md p-3 shadow">
 			<RegionSelect
 				className="mb-5 w-full"
-				value={region}
+				value={region || 'toshkent'}
 				onValueChange={(value) => console.log(value)}
 			/>
 			<RangeSlider

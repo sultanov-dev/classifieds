@@ -39,10 +39,10 @@ export function RangeSlider({
 		<div className="mt-5">
 			<div className="mb-4 flex items-center justify-center gap-6">
 				<span className="inline-bloc px-2 py-1 text-sm font-medium tracking-wide">
-					dan: ${fromInitialValue}
+					dan: ${fromValue}
 				</span>
 				<span className="inline-block px-2 py-1 text-sm font-medium tracking-wide">
-					gacha: ${toInitialValue}
+					gacha: ${toValue}
 				</span>
 			</div>
 
