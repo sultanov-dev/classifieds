@@ -1,66 +1,90 @@
-import { CarIcon, SmartphoneIcon, type LucideIcon } from 'lucide-react'
-
-interface ICategory {
-  id: string
-  label: string
-  slug: string
+type TCategory = {
+	id: string
+	label: string
+	slug: string
 }
 
 interface ICategoryData {
-  id: number
-  label: string
-  Icon?: LucideIcon
-  category: ICategory[]
+	id: number
+	label: string
+	subCategory: TCategory[]
+}
+
+type TCate = {
+	label: string
+	subCategory: Omit<TCategory, 'slug'>[]
+}
+
+interface ICategory {
+	transport: TCate
+	electronics: TCate
+}
+
+export const CATEGORIES: ICategory = {
+	transport: {
+		label: '🚗 transport',
+		subCategory: [
+			{ id: 'cars', label: 'Yengil avtomobillar' },
+			{ id: 'moto', label: 'Motosikllar' },
+			{ id: 'trucks', label: 'Yuk mashinalari' },
+		],
+	},
+	electronics: {
+		label: '📱 elektronika',
+		subCategory: [
+			{ id: 'phones', label: 'Telefonlar' },
+			{ id: 'laptops', label: 'Noutbuklar' },
+			{ id: 'accessories', label: 'Aksessuarlar' },
+		],
+	},
 }
 
 export const categoryData: ICategoryData[] = [
-  {
-    id: 1,
-    Icon: CarIcon,
-    label: 'transport',
-    category: [
-      {
-        id: '1',
-        label: 'Yengil avtomobil',
-        slug: 'yengil-automobil',
-      },
-      {
-        id: '2',
-        label: 'mahsus transport',
-        slug: 'mahsux-transport',
-      },
-      {
-        id: '3',
-        label: 'motosikl',
-        slug: 'motosikl',
-      },
-    ],
-  },
-  {
-    id: 2,
-    Icon: SmartphoneIcon,
-    label: 'elektronika',
-    category: [
-      {
-        id: '4',
-        label: 'Telefon va akssesuarlar',
-        slug: 'telefon-akssesuarlar',
-      },
-      {
-        id: '5',
-        label: 'televizorlar',
-        slug: 'televizorlar',
-      },
-      {
-        id: '6',
-        label: 'Noutbook',
-        slug: 'noutbook',
-      },
-      {
-        id: '7',
-        label: 'planshetlar',
-        slug: 'planshetlar',
-      },
-    ],
-  },
+	{
+		id: 1,
+		label: '🚗 Transport',
+		subCategory: [
+			{
+				id: '1',
+				label: 'Yengil avtomobil',
+				slug: 'yengil-automobil',
+			},
+			{
+				id: '2',
+				label: 'mahsus transport',
+				slug: 'mahsux-transport',
+			},
+			{
+				id: '3',
+				label: 'motosikl',
+				slug: 'motosikl',
+			},
+		],
+	},
+	{
+		id: 2,
+		label: '📱 Elektronika',
+		subCategory: [
+			{
+				id: '4',
+				label: 'Telefon va akssesuarlar',
+				slug: 'telefon-akssesuarlar',
+			},
+			{
+				id: '5',
+				label: 'televizorlar',
+				slug: 'televizorlar',
+			},
+			{
+				id: '6',
+				label: 'Noutbook',
+				slug: 'noutbook',
+			},
+			{
+				id: '7',
+				label: 'planshetlar',
+				slug: 'planshetlar',
+			},
+		],
+	},
 ]

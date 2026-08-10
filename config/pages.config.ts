@@ -18,6 +18,7 @@ class ProtectPages {
 	SETTINGS = '/profile/settings'
 	ADS = '/profile/ads'
 	SEARCH = '/profile/search'
+	CREATELISTING = '/create'
 }
 
 export const protectPages = new ProtectPages()

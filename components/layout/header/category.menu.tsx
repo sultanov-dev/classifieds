@@ -41,13 +41,12 @@ export default function CategoryMenu() {
 					{categoryData.map((category) => (
 						<DropdownMenuSub key={category.label}>
 							<DropdownMenuSubTrigger className={'font-normal capitalize'}>
-								{category.Icon ? <category.Icon className="size-6" /> : null}
 								{category.label}
 							</DropdownMenuSubTrigger>
 
 							<DropdownMenuPortal>
 								<DropdownMenuSubContent>
-									{category.category.map((item) => (
+									{category.subCategory.map((item) => (
 										<DropdownMenuItem key={item.id}>
 											<Link
 												className="font-normal capitalize"
