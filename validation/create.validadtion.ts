@@ -28,7 +28,9 @@ export const electronicsSchema = baseSchema.extend({
 	category: z.literal('electronics'),
 	attributes: z.object({
 		brand: z.string().min(1, 'Brendni kiriting (masalan: Apple)'),
-		memory: z.string().min(1, 'Xotirani kiriting (masalan: 256GB)'),
+		model: z.string().min(1, 'Brendni kiriting (masalan: Apple)'),
+		memory: z.string().min(1, 'Xotirani tanlang'),
+		ramMemory: z.string().min(1, 'Ram xotirani tanlang'),
 		color: z.string().min(1, 'Rangni tanlang'),
 		status: z.enum(['new', 'used'], 'Holatini belgilang'),
 		battery: z.number().min(1).max(100, "Batareya maksimal 100% bo'ladi"),

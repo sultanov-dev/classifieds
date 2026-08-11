@@ -20,8 +20,6 @@ export function CategoryFields() {
 
 	return (
 		<>
-			<h2 className="text-xl font-medium">1. Kategoriyani tanlang</h2>
-
 			<div className="mt-6 grid grid-cols-2 gap-4">
 				<Controller
 					name="category"

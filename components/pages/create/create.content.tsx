@@ -10,8 +10,10 @@ import { TListingSchmema } from '@/validation/create.validadtion'
 import { CategoryFields } from './category.fields'
 import { CommonFields } from './common.fields'
 import { CreateWrapper } from './create.wrapper'
+import { ElectronicFields } from './electronic.fields'
 import { useListingForm } from './hooks/useListingForm'
 import { useSteps } from './hooks/useSteps'
+import { TransportFields } from './transport.fields'
 
 export function CreateContent() {
 	const { form, selectedCategory } = useListingForm()
@@ -39,11 +41,16 @@ export function CreateContent() {
 							</CreateWrapper>
 						)}
 
-						{currentStep === 2 && <h1>2 step</h1>}
+						{currentStep === 2 && (
+							<CreateWrapper>
+								{selectedCategory === 'transport' && <TransportFields />}
+								{selectedCategory === 'electronics' && <ElectronicFields />}
+							</CreateWrapper>
+						)}
 					</FieldGroup>
 				</form>
 
-				<div className="mt-8 flex justify-between border-t pt-6">
+				<div className="mt-8 flex items-center justify-between border-t pt-6">
 					<Button
 						type="button"
 						variant="outline"

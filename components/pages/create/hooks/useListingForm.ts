@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, useWatch } from 'react-hook-form'
 
+import { MEMORYDATA, RAMDATA } from '@/data/region.data'
 import { listingSchema, TListingSchmema } from '@/validation/create.validadtion'
 
 export const useListingForm = () => {
@@ -48,10 +49,12 @@ export const useListingForm = () => {
 		} else {
 			form.setValue('attributes', {
 				brand: '',
-				memory: '',
+				model: '',
+				memory: MEMORYDATA[0].value,
+				ramMemory: RAMDATA[0].value,
 				color: '',
 				status: 'new',
-				battery: 100,
+				battery: 0,
 			})
 		}
 	}

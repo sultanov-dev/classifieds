@@ -42,7 +42,7 @@ export function CommonFields() {
 							className="text-xs font-medium"
 							id="create-listing-price"
 						>
-							Elon sarlavhasi
+							Narxi: ($)
 						</FieldLabel>
 						<Input
 							type="number"
@@ -69,7 +69,7 @@ export function CommonFields() {
 							className="text-xs font-medium"
 							id="create-listing-region"
 						>
-							Elon sarlavhasi
+							Hududni tanlang
 						</FieldLabel>
 						<RegionSelect value={field.value} onValueChange={field.onChange} />
 
@@ -86,7 +86,7 @@ export function CommonFields() {
 							className="text-xs font-medium"
 							id="create-listing-description"
 						>
-							Elon sarlavhasi
+							Elon haqida
 						</FieldLabel>
 						<Textarea
 							className="resize-none"
