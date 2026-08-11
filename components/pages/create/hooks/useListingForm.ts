@@ -10,9 +10,9 @@ export const useListingForm = () => {
 			category: 'transport',
 			title: '',
 			region: '',
-			subCategory: '',
+			subCategory: 'cars',
 			description: '',
-			price: undefined,
+			price: 0,
 			attributes: {
 				marka: '',
 				model: '',
@@ -26,6 +26,11 @@ export const useListingForm = () => {
 	const selectedCategory = useWatch({
 		control: form.control,
 		name: 'category',
+	})
+
+	const selectedSubCategory = useWatch({
+		control: form.control,
+		name: 'subCategory',
 	})
 
 	const handleChangeCategory = (value: 'transport' | 'electronics') => {
@@ -51,5 +56,16 @@ export const useListingForm = () => {
 		}
 	}
 
-	return { selectedCategory, handleChangeCategory, form }
+	const handleChangeSubCategory = (value: string) => {
+		form.setValue('subCategory', value)
+		form.clearErrors('subCategory')
+	}
+
+	return {
+		selectedCategory,
+		handleChangeCategory,
+		form,
+		selectedSubCategory,
+		handleChangeSubCategory,
+	}
 }

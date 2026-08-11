@@ -40,7 +40,7 @@ export default function RegionSelect({
 			>
 				<SelectGroup>
 					{regionData.map((item) =>
-						pathname === '/catalog' || '/' ? (
+						['/catalog', '/'].includes(pathname) ? (
 							<Link
 								href={`${publicPages.CATALOG}?region=${item.value}`}
 								key={item.value}

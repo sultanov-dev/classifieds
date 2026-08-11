@@ -1,14 +1,16 @@
 import { z } from 'zod'
 
-const baseSchema = z.object({
+export const baseSchema = z.object({
 	subCategory: z.string('Kichik kategoriyani tanlang'),
-	price: z.number(),
+	price: z
+		.number('Narxni raqamlarda kiriting')
+		.positive("Narx noldan katta bo'lishi kerak"),
 	region: z.string('Hududni tanlang'),
-	description: z.string().min(80, "Ko'proq ma'lumot yozing"),
-	title: z.string().min(20, "Sarlavhani toliqroq yo'zing"),
+	description: z.string().min(60, "Ko'proq ma'lumot yozing"),
+	title: z.string().min(10, "Sarlavhani toliqroq yo'zing"),
 })
 
-const transportSchema = baseSchema.extend({
+export const transportSchema = baseSchema.extend({
 	category: z.literal('transport'),
 	attributes: z.object({
 		marka: z.string().min(1, 'Markani kiriting'),
@@ -22,7 +24,7 @@ const transportSchema = baseSchema.extend({
 	}),
 })
 
-const electronicsSchema = baseSchema.extend({
+export const electronicsSchema = baseSchema.extend({
 	category: z.literal('electronics'),
 	attributes: z.object({
 		brand: z.string().min(1, 'Brendni kiriting (masalan: Apple)'),
