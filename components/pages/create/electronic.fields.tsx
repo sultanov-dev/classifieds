@@ -1,12 +1,13 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Field, FieldLabel } from '@/components/ui/field'
+import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { MEMORYDATA, RAMDATA } from '@/data/region.data'
 import type { TListingSchmema } from '@/validation/create.validadtion'
 
+import { ColorPicker } from './color.picker.fields'
 import { MemoryGroup } from './memory.group'
 
 export function ElectronicFields() {
@@ -21,11 +22,12 @@ export function ElectronicFields() {
 					<Field data-invalid={fieldState.invalid}>
 						<FieldLabel id="create-listing-brand">Qurilma markasi</FieldLabel>
 						<Input
-							id="create-listing-marka"
+							id="create-listing-brand"
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
 							placeholder="Masalan: Apple, Sumsung..."
-							{...field}
+							value={field.value ?? ''}
+							onChange={field.onChange}
 						/>
 					</Field>
 				)}
@@ -40,7 +42,7 @@ export function ElectronicFields() {
 							id="create-listing-model"
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
-							placeholder="Masalan: 14pro, 15promax..."
+							placeholder="Masalan: iphone 14pro, 15promax..."
 							{...field}
 						/>
 					</Field>
@@ -63,10 +65,16 @@ export function ElectronicFields() {
 							type="number"
 							id="create-listing-battery"
 							aria-invalid={fieldState.invalid}
-							autoComplete="off"
 							placeholder="Batareyka foizi"
-							{...field}
+							value={field.value ?? ''}
+							onChange={(e) =>
+								field.onChange(
+									e.target.value === '' ? undefined : Number(e.target.value),
+								)
+							}
 						/>
+
+						{fieldState.error && <FieldError errors={[fieldState.error]} />}
 					</Field>
 				)}
 			/>
@@ -93,6 +101,7 @@ export function ElectronicFields() {
 					</Field>
 				)}
 			/>
+			<ColorPicker control={control} />
 		</div>
 	)
 }

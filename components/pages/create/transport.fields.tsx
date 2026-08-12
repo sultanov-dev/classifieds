@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Field, FieldLabel } from '@/components/ui/field'
+import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -63,7 +63,12 @@ export function TransportFields() {
 						<FieldLabel id="create-listing-year">
 							Ishab chiqarilgan yili
 						</FieldLabel>
-						<Select value={field.value} onValueChange={field.onChange}>
+						<Select
+							value={field.value}
+							onValueChange={(value) =>
+								field.onChange(value === null ? undefined : Number(value))
+							}
+						>
 							<SelectTrigger>
 								<SelectValue placeholder="Yilni tanlang" />
 							</SelectTrigger>
@@ -75,6 +80,7 @@ export function TransportFields() {
 								))}
 							</SelectContent>
 						</Select>
+						{fieldState.error && <FieldError errors={[fieldState.error]} />}
 					</Field>
 				)}
 			/>
@@ -90,7 +96,11 @@ export function TransportFields() {
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
 							placeholder="Probeg raqamlarda yozing"
-							{...field}
+							value={field.value}
+							onChange={(e) => {
+								const value = e.target.value
+								field.onChange(value === '' ? undefined : Number(value))
+							}}
 						/>
 					</Field>
 				)}

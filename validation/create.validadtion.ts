@@ -10,8 +10,16 @@ export const baseSchema = z.object({
 	title: z.string().min(10, "Sarlavhani toliqroq yo'zing"),
 })
 
+const imagesSchema = z.object({
+	images: z
+		.array(z.custom<File>((val) => val instanceof File, "Fayl bo'lishi kerak"))
+		.min(1, 'Kamida 1 ta rasm yuklashingiz kerak')
+		.max(6, 'Maksimal 10 ta rasm yuklash mumkin'),
+})
+
 export const transportSchema = baseSchema.extend({
 	category: z.literal('transport'),
+	images: imagesSchema.shape.images,
 	attributes: z.object({
 		marka: z.string().min(1, 'Markani kiriting'),
 		model: z.string().min(1, 'Modelni kiriting'),
@@ -26,6 +34,7 @@ export const transportSchema = baseSchema.extend({
 
 export const electronicsSchema = baseSchema.extend({
 	category: z.literal('electronics'),
+	images: imagesSchema.shape.images,
 	attributes: z.object({
 		brand: z.string().min(1, 'Brendni kiriting (masalan: Apple)'),
 		model: z.string().min(1, 'Brendni kiriting (masalan: Apple)'),

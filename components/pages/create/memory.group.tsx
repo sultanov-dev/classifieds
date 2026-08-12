@@ -26,7 +26,7 @@ export function MemoryGroup({
 						<FieldLabel id="create-listing-memory">Asosiy xotirasi</FieldLabel>
 						<RadioGroup
 							onValueChange={field.onChange}
-							value={field.value ?? '128gb'}
+							value={field.value ?? '128bg'}
 							className="flex flex-wrap gap-4"
 						>
 							{memoryData.map((item) => (
@@ -60,7 +60,7 @@ export function MemoryGroup({
 						<FieldLabel id="create-listing-ramMemory">RAM xotirasi</FieldLabel>
 						<RadioGroup
 							onValueChange={field.onChange}
-							value={field.value ?? '8gb'}
+							value={field.value ?? '64gb'}
 							className="flex flex-wrap gap-4"
 						>
 							{ramData.map((item) => (

@@ -13,6 +13,7 @@ import { CreateWrapper } from './create.wrapper'
 import { ElectronicFields } from './electronic.fields'
 import { useListingForm } from './hooks/useListingForm'
 import { useSteps } from './hooks/useSteps'
+import { ImageUpload } from './image.upload'
 import { TransportFields } from './transport.fields'
 
 export function CreateContent() {
@@ -25,7 +26,7 @@ export function CreateContent() {
 	} = useSteps(form, selectedCategory)
 
 	const onSubmit = (data: TListingSchmema) => {
-		console.log(JSON.stringify(data, null, 2))
+		console.log(data)
 	}
 
 	return (
@@ -45,6 +46,12 @@ export function CreateContent() {
 							<CreateWrapper>
 								{selectedCategory === 'transport' && <TransportFields />}
 								{selectedCategory === 'electronics' && <ElectronicFields />}
+							</CreateWrapper>
+						)}
+
+						{currentStep === 3 && (
+							<CreateWrapper>
+								<ImageUpload control={form.control} />
 							</CreateWrapper>
 						)}
 					</FieldGroup>

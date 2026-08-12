@@ -6,6 +6,7 @@ import { listingSchema, TListingSchmema } from '@/validation/create.validadtion'
 
 export const useListingForm = () => {
 	const form = useForm<TListingSchmema>({
+		mode: 'onChange',
 		resolver: zodResolver(listingSchema),
 		defaultValues: {
 			category: 'transport',
@@ -14,6 +15,7 @@ export const useListingForm = () => {
 			subCategory: 'cars',
 			description: '',
 			price: 0,
+			images: [],
 			attributes: {
 				marka: '',
 				model: '',
@@ -35,6 +37,8 @@ export const useListingForm = () => {
 	})
 
 	const handleChangeCategory = (value: 'transport' | 'electronics') => {
+		if (selectedCategory === value) return
+
 		form.setValue('category', value, { shouldValidate: true })
 		form.setValue('subCategory', '', { shouldValidate: true })
 

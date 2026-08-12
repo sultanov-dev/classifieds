@@ -12,7 +12,7 @@ import {
 const STEPS = [
 	{ id: 1, title: 'Asosiy' },
 	{ id: 2, title: 'Xususiyatlar' },
-	{ id: 3, title: 'Tavsif' },
+	{ id: 3, title: 'Rasmlar' },
 ]
 
 export const useSteps = (
@@ -40,16 +40,18 @@ export const useSteps = (
 
 		if (step === 2) {
 			const attrSchema =
-				selectedCategory === 'transport' ? transportSchema : electronicsSchema
-			const result = attrSchema.safeParse(formValues.attributes)
+				selectedCategory === 'transport'
+					? transportSchema.shape.attributes
+					: electronicsSchema.shape.attributes
 
+			const result = attrSchema.safeParse(formValues.attributes)
 			if (!result.success) {
-				result.error.issues.forEach((is) => {
+				result.error.issues.forEach((issue) => {
 					form.setError(
-						`attributes.${String(is.path[0])}` as keyof TListingSchmema,
+						`attributes.${String(issue.path[0])}` as keyof TListingSchmema,
 						{
 							type: 'manual',
-							message: is.message,
+							message: issue.message,
 						},
 					)
 				})
