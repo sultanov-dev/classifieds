@@ -17,9 +17,15 @@ interface IUserData {
 	createdAt: string
 }
 
-export interface IRegisterResponse {
+export interface IAuthResponse {
 	success: boolean
 	message: string
 	user: IUserData
-	tokens: ITokens
+	accessToken: string
+}
+
+export interface IGetNewTokensRes {
+	data: {
+		accessToken: string
+	}
 }
