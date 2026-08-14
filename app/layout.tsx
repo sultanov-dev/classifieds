@@ -6,6 +6,10 @@ import { cn } from '@/lib/utils'
 
 import './globals.css'
 
+import { Toaster } from 'sonner'
+
+import { ReactQueryProvider } from '@/providers/react.query'
+
 const poppinsSans = Poppins({
 	variable: '--font-poppins-sans',
 	subsets: ['latin'],
@@ -29,7 +33,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
 				'font-poppins-sans',
 			)}
 		>
-			<body className="min-h-full bg-[#FAFAFA]">{children}</body>
+			<body className="min-h-full bg-[#FAFAFA]">
+				<ReactQueryProvider>{children}</ReactQueryProvider>
+				<Toaster position="top-center" />
+			</body>
 		</html>
 	)
 }
