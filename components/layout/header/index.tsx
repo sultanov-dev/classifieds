@@ -36,19 +36,24 @@ export default function Header() {
 			<Container>
 				<div className="mb-6 flex items-center justify-end gap-x-5 border-b py-4">
 					<LangDropMenu />
-					<Button
-						variant={'ghost'}
-						className="text-base font-normal capitalize"
-					>
-						<Link
-							href={authPages.REGISTER}
-							className="flex items-center gap-x-1"
+					{!isAuthenticated && !isLoading ? (
+						<Button
+							variant={'ghost'}
+							className="text-base font-normal capitalize"
 						>
-							<KeyIcon className="h-4 w-4" />
-							register
-						</Link>
-					</Button>
-					{isLoading && !isAuthenticated ? <Loader /> : <ProfileMenu />}
+							<Link
+								href={authPages.REGISTER}
+								className="flex items-center gap-x-1"
+							>
+								<KeyIcon className="h-4 w-4" />
+								register
+							</Link>
+						</Button>
+					) : isLoading ? (
+						<Loader />
+					) : (
+						<ProfileMenu />
+					)}
 				</div>
 			</Container>
 			<Container>

@@ -40,9 +40,11 @@ class AuthService {
 	}
 
 	async logout() {
-		const response = await instance.post(`${this.BASE_URL}/logout`)
+		const response = await instance.post<{ message: string }>(
+			`${this.BASE_URL}/logout`,
+		)
 
-		if (response.data) removeFromStorage()
+		if (response.status === 200) removeFromStorage()
 
 		return response
 	}

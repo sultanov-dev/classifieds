@@ -10,11 +10,15 @@ export const getAccesToken = () => {
 
 export const saveTokenStorage = (token: string) => {
 	Cookie.set(ETokens.ACCESSTOKEN, token, {
+		domain: 'localhost',
 		sameSite: 'strict',
 		expires: 1,
 	})
 }
 
 export const removeFromStorage = () => {
-	Cookie.remove(ETokens.ACCESSTOKEN)
+	Cookie.remove(ETokens.ACCESSTOKEN, {
+		domain: 'localhost',
+		path: '/',
+	})
 }
