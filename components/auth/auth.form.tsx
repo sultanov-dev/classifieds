@@ -2,12 +2,12 @@
 
 import Link from 'next/link'
 
-import { LoaderIcon } from 'lucide-react'
 import { Controller } from 'react-hook-form'
 
 import { useAuthForm } from '@/hooks/useAuthForm'
 import { authPages } from '@/config/pages.config'
 import { cn } from '@/lib/utils'
+import { Loader } from '@/shared/loader'
 
 import { Button } from '../ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field'
@@ -89,7 +89,7 @@ export default function AuthForm({ isLogin }: { isLogin: boolean }) {
 				disabled={isLoading}
 			>
 				{isLogin ? 'Kirish' : 'Ro"yhatdan o"tish'}
-				{isLoading && <LoaderIcon className="size-4 animate-spin" />}
+				{isLoading && <Loader />}
 			</Button>
 
 			<div className="mt-7 flex w-full items-center justify-center gap-3">

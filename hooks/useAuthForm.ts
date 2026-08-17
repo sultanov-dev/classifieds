@@ -11,6 +11,8 @@ import { publicPages } from '@/config/pages.config'
 import { authService } from '@/services/auth/auth.service'
 import { authSchema, type TAuthScheme } from '@/validation/auth.validation'
 
+import { useAuth } from './useAuth'
+
 export const useAuthForm = (isLogin: boolean) => {
 	const form = useForm<TAuthScheme>({
 		resolver: zodResolver(authSchema),
@@ -22,15 +24,18 @@ export const useAuthForm = (isLogin: boolean) => {
 
 	const [isPending, startTransition] = useTransition()
 	const router = useRouter()
+	const { setCridentials } = useAuth()
 
 	const { mutate: mutateLogin, isPending: isLoginPending } = useMutation({
 		mutationKey: ['login'],
 		mutationFn: (data: TAuthScheme) => authService.main('login', data),
-		onSuccess() {
+		onSuccess(data) {
 			startTransition(() => {
 				form.reset()
+				toast.success(data.message)
 				router.push(publicPages.HOME)
 			})
+			setCridentials(data.data.user)
 		},
 		onError(error) {
 			if (isAxiosError(error)) {
@@ -43,11 +48,13 @@ export const useAuthForm = (isLogin: boolean) => {
 		useMutation({
 			mutationKey: ['login'],
 			mutationFn: (data: TAuthScheme) => authService.main('register', data),
-			onSuccess() {
+			onSuccess(data) {
 				startTransition(() => {
 					form.reset()
+					toast.success(data.message)
 					router.push(publicPages.HOME)
 				})
+				setCridentials(data.data.user)
 			},
 			onError(error) {
 				if (isAxiosError(error)) {
@@ -66,5 +73,5 @@ export const useAuthForm = (isLogin: boolean) => {
 
 	const isLoading = isPending || isLoginPending || isRegisterPending
 
-	return {form, isLoading, onSubmit}
+	return { form, isLoading, onSubmit }
 }

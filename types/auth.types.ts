@@ -8,7 +8,7 @@ export interface ITokens {
 	refreshToken: ETokens.REFRESHTOKEN
 }
 
-interface IUserData {
+export interface IUserData {
 	id: string
 	fullName: string | null
 	email: string
@@ -17,11 +17,17 @@ interface IUserData {
 	createdAt: string
 }
 
+export type TUserResponse = {
+	user: IUserData
+}
+
 export interface IAuthResponse {
 	success: boolean
 	message: string
-	user: IUserData
-	accessToken: string
+	data: {
+		user: IUserData
+		accessToken: string
+	}
 }
 
 export interface IGetNewTokensRes {

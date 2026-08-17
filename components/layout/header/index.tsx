@@ -7,8 +7,11 @@ import { useState } from 'react'
 import { KeyIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/hooks/useAuth'
+import { useProfile } from '@/hooks/useProfile'
 import { authPages } from '@/config/pages.config'
 import Container from '@/shared/container'
+import { Loader } from '@/shared/loader'
 import RegionSelect from '@/shared/region.select'
 
 import AddButton from './add.button'
@@ -20,6 +23,9 @@ import SearchInput from './searchInput'
 export default function Header() {
 	const searchParams = useSearchParams()
 	const regionSearch = searchParams.get('region')
+
+	const { isLoading } = useProfile()
+	const { isAuthenticated } = useAuth()
 
 	const [region, setRegion] = useState<string | null>(
 		regionSearch || 'toshkent',
@@ -42,8 +48,7 @@ export default function Header() {
 							register
 						</Link>
 					</Button>
-					{/* user loading */}
-					<ProfileMenu />
+					{isLoading && !isAuthenticated ? <Loader /> : <ProfileMenu />}
 				</div>
 			</Container>
 			<Container>
