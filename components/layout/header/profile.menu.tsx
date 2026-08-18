@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import {
 	HeartIcon,
 	ScrollTextIcon,
@@ -15,6 +17,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { protectPages } from '@/config/pages.config'
 
 import { LogOutBtn } from './logOut'
 
@@ -27,30 +30,38 @@ export default function ProfileMenu() {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-[256px]">
 				<DropdownMenuGroup className="space-y-2">
-					<DropdownMenuItem>
-						<ScrollTextIcon className="size-5" />
-						<span className="text-base font-normal text-black capitalize">
-							Mening elonlarim
-						</span>
-					</DropdownMenuItem>
-					<DropdownMenuItem>
-						<HeartIcon className="size-5" />
-						<span className="text-base font-normal text-black capitalize">
-							saqlanganlar
-						</span>
-					</DropdownMenuItem>
-					<DropdownMenuItem>
-						<SearchIcon className="size-5" />
-						<span className="text-base font-normal text-black capitalize">
-							qidiruvlar
-						</span>
-					</DropdownMenuItem>
-					<DropdownMenuItem>
-						<UserCogIcon className="size-5" />
-						<span className="text-base font-normal text-black capitalize">
-							sozlamalar
-						</span>
-					</DropdownMenuItem>
+					<Link href={protectPages.ADS}>
+						<DropdownMenuItem>
+							<ScrollTextIcon className="size-5" />
+							<span className="text-base font-normal text-black capitalize">
+								Mening elonlarim
+							</span>
+						</DropdownMenuItem>
+					</Link>
+					<Link href={protectPages.LIKED}>
+						<DropdownMenuItem>
+							<HeartIcon className="size-5" />
+							<span className="text-base font-normal text-black capitalize">
+								saqlanganlar
+							</span>
+						</DropdownMenuItem>
+					</Link>
+					<Link href={protectPages.SEARCH}>
+						<DropdownMenuItem>
+							<SearchIcon className="size-5" />
+							<span className="text-base font-normal text-black capitalize">
+								qidiruvlar
+							</span>
+						</DropdownMenuItem>
+					</Link>
+					<Link href={protectPages.SETTINGS}>
+						<DropdownMenuItem>
+							<UserCogIcon className="size-5" />
+							<span className="text-base font-normal text-black capitalize">
+								sozlamalar
+							</span>
+						</DropdownMenuItem>
+					</Link>
 					<DropdownMenuSeparator />
 					<LogOutBtn />
 				</DropdownMenuGroup>

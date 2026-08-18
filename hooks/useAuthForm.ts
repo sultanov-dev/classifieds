@@ -33,7 +33,7 @@ export const useAuthForm = (isLogin: boolean) => {
 			startTransition(() => {
 				form.reset()
 				toast.success(data.message)
-				router.push(publicPages.HOME)
+				router.replace(publicPages.HOME)
 			})
 			setCridentials(data.data.user)
 		},
@@ -52,7 +52,7 @@ export const useAuthForm = (isLogin: boolean) => {
 				startTransition(() => {
 					form.reset()
 					toast.success(data.message)
-					router.push(publicPages.HOME)
+					router.replace(publicPages.HOME)
 				})
 				setCridentials(data.data.user)
 			},

@@ -1,6 +1,6 @@
 export enum ETokens {
 	ACCESSTOKEN = 'accessToken',
-	REFRESHTOKEN = 'refreshToken',
+	REFRESHTOKEN = 'refresh_token',
 }
 
 export interface ITokens {
