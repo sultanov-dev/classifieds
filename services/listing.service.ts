@@ -1,5 +1,8 @@
-import { instance } from '@/api/axios'
-import type { IListingResponse } from '@/types/listing.types'
+import { axiosClassic, instance } from '@/api/axios'
+import type {
+	IGetListingResponse,
+	IListingResponse,
+} from '@/types/listing.types'
 
 class ListingService {
 	private LISTINGURL = '/listings'
@@ -11,6 +14,14 @@ class ListingService {
 		)
 
 		return response
+	}
+
+	async getLisings() {
+		const response = await axiosClassic.get<IGetListingResponse>(
+			`${this.LISTINGURL}`,
+		)
+
+		return response.data
 	}
 }
 

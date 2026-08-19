@@ -16,7 +16,9 @@ export interface IListing {
 	currency: string
 	region: string
 	status: string
-	attributes: Attributes
+	slug: string
+	isLiked: boolean
+	attributes: Record<string, string | number>
 	viewCount: number
 	category: string
 	subCategory: string
@@ -24,13 +26,6 @@ export interface IListing {
 	user: IUser
 	createdAt: string
 	updatedAt: string
-}
-
-export interface Attributes {
-	year: number
-	fuel: string
-	transmission: string
-	mileage: number
 }
 
 export interface TImages {
@@ -46,4 +41,14 @@ export interface IUser {
 	fullName: string
 	phoneNumber: string
 	region: string
+}
+
+export type TListingRemoveUser = Omit<IListing, 'user'>
+
+export interface IGetListingResponse {
+	success: boolean
+	message: string
+	data: {
+		listings: TListingRemoveUser[]
+	}
 }
