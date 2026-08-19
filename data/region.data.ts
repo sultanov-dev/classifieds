@@ -6,47 +6,47 @@ interface IRegion {
 export const regionData: IRegion[] = [
 	{
 		label: 'Toshkent shahri',
-		value: 'toshkent',
+		value: 'toshkent-shahri',
 	},
 	{
 		label: 'Fargʻona viloyati',
-		value: 'fargona',
+		value: 'fargona-viloyati',
 	},
 	{
 		label: 'Jizzax viloyati',
-		value: 'jizzax',
+		value: 'jizzax-viloyati',
 	},
 	{
 		label: 'Xorazm viloyati',
-		value: 'xorazm',
+		value: 'xorazm-viloyati',
 	},
 	{
 		label: 'Namangan viloyati',
-		value: 'namangan',
+		value: 'namangan-viloyati',
 	},
 	{
 		label: 'Navoiy viloyati',
-		value: 'navoiy',
+		value: 'navoiy-viloyati',
 	},
 	{
 		label: 'Qashqadaryo viloyati',
-		value: 'qashqadaryo',
+		value: 'qashqadaryo-viloyati',
 	},
 	{
 		label: 'Samarqand viloyati',
-		value: 'samarqand',
+		value: 'samarqand-viloyati',
 	},
 	{
 		label: 'Sirdaryo viloyati',
-		value: 'sirdaryo',
+		value: 'sirdaryo-viloyati',
 	},
 	{
 		label: 'Surxondaryo viloyati',
-		value: 'surxondaryo',
+		value: 'surxondaryo-viloyati',
 	},
 	{
 		label: 'Toshkent viloyati',
-		value: 'toshkentVil',
+		value: 'toshkent-viloyati',
 	},
 ]
 

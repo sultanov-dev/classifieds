@@ -16,6 +16,7 @@ export const useListingForm = () => {
 			description: '',
 			price: 0,
 			images: [],
+			currency: 'UZS',
 			attributes: {
 				marka: '',
 				model: '',

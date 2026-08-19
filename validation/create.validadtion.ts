@@ -7,7 +7,11 @@ export const baseSchema = z.object({
 		.positive("Narx noldan katta bo'lishi kerak"),
 	region: z.string('Hududni tanlang'),
 	description: z.string().min(60, "Ko'proq ma'lumot yozing"),
-	title: z.string().min(10, "Sarlavhani toliqroq yo'zing"),
+	title: z
+		.string()
+		.min(10, "Sarlavhani toliqroq yo'zing")
+		.max(120, 'Sarlavha 120ta belgidan oshmasligi kerak'),
+	currency: z.enum(['USD', 'UZS'], 'Valyutani tanlang'),
 })
 
 const imagesSchema = z.object({

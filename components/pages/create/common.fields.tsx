@@ -2,6 +2,8 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 import RegionSelect from '@/shared/region.select'
 
@@ -34,6 +36,31 @@ export function CommonFields() {
 				)}
 			/>
 			<Controller
+				name="currency"
+				control={control}
+				render={({ field, fieldState }) => (
+					<Field data-invalid={fieldState.invalid}>
+						<FieldLabel id="create-listing-currency">
+							Valyuta turini tanlang
+						</FieldLabel>
+						<RadioGroup
+							onValueChange={field.onChange}
+							value={field.value ?? 'UZS'}
+							className="flex w-fit items-center gap-3"
+						>
+							<div className="flex items-center gap-3">
+								<RadioGroupItem value="UZS" id="create-listing-currency-UZS" />
+								<Label htmlFor="create-listing-currency-UZS">UZS</Label>
+							</div>
+							<div className="flex items-center gap-3">
+								<RadioGroupItem value="USD" id="create-listing-currency-USD" />
+								<Label htmlFor="create-listing-currency-USD">USD</Label>
+							</div>
+						</RadioGroup>
+					</Field>
+				)}
+			/>
+			<Controller
 				name="price"
 				control={control}
 				render={({ field, fieldState }) => (
@@ -42,7 +69,7 @@ export function CommonFields() {
 							className="text-xs font-medium"
 							id="create-listing-price"
 						>
-							Narxi: ($)
+							Narxi
 						</FieldLabel>
 						<Input
 							type="number"

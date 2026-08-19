@@ -4,30 +4,28 @@ import { FormProvider } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { FieldGroup } from '@/components/ui/field'
+import { Loader } from '@/shared/loader'
 import { StepIndicator } from '@/shared/step.indicator'
-import { TListingSchmema } from '@/validation/create.validadtion'
 
 import { CategoryFields } from './category.fields'
 import { CommonFields } from './common.fields'
 import { CreateWrapper } from './create.wrapper'
 import { ElectronicFields } from './electronic.fields'
-import { useListingForm } from './hooks/useListingForm'
-import { useSteps } from './hooks/useSteps'
+import { useCreateListing } from './hooks/useCreateListing'
 import { ImageUpload } from './image.upload'
 import { TransportFields } from './transport.fields'
 
 export function CreateContent() {
-	const { form, selectedCategory } = useListingForm()
 	const {
-		step: currentStep,
+		isLoading,
+		onSubmit,
+		currentStep,
 		STEPS,
 		prevStep,
 		nextStep,
-	} = useSteps(form, selectedCategory)
-
-	const onSubmit = (data: TListingSchmema) => {
-		console.log(data)
-	}
+		form,
+		selectedCategory,
+	} = useCreateListing()
 
 	return (
 		<div className="bg-card mx-auto max-w-2xl rounded-xl p-6 shadow-sm">
@@ -76,8 +74,10 @@ export function CreateContent() {
 							type="submit"
 							form="create-listing"
 							className="bg-green-600 hover:bg-green-700"
+							disabled={isLoading}
 						>
 							Elonni joylash
+							{isLoading && <Loader />}
 						</Button>
 					)}
 				</div>
