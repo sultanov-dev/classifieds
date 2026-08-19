@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import ProductViews from '@/components/product/product.views'
 
 import HomeCarousel from './home.carousel'
@@ -7,9 +9,13 @@ export default function HomePage() {
 	return (
 		<div className="w-full">
 			<HomeCarousel />
-			<ProductViews title="Yangi elonlar" />
+			<Suspense fallback={<div>loading..</div>}>
+				<ProductViews title="Yangi elonlar" />
+			</Suspense>
 			<InfoBanner />
-			<ProductViews title="Barcha elonlar" />
+			<Suspense fallback={<div>loading..</div>}>
+				<ProductViews title="Barcha elonlar" />
+			</Suspense>
 		</div>
 	)
 }

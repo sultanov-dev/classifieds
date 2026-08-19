@@ -15,8 +15,8 @@ export default function ProductViews({ title }: TProductViews) {
 
 	if (!data || !data.listings.length) {
 		return (
-			<div className="my-16 h-full">
-				<Heading title="E'lonlar topilmadi" />
+			<div className="my-16 flex h-full items-center justify-center">
+				<h1>Elon topilmadi</h1>
 			</div>
 		)
 	}
@@ -25,11 +25,13 @@ export default function ProductViews({ title }: TProductViews) {
 		<div className="my-16 h-full">
 			{title && <Heading title={title} className="mb-5" />}
 			<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-				{isLoading ? (
-					<ProductLoader />
-				) : (
-					data.listings.map((item) => <ProductCard item={item} key={item.id} />)
-				)}
+				{isLoading
+					? Array.from([1, 2, 3, 4]).map((_, index) => (
+							<ProductLoader key={index} />
+						))
+					: data.listings.map((item) => (
+							<ProductCard item={item} key={item.id} />
+						))}
 			</div>
 		</div>
 	)

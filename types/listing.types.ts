@@ -18,7 +18,7 @@ export interface IListing {
 	status: string
 	slug: string
 	isLiked: boolean
-	attributes: Record<string, string | number>
+	attributes: TAttirbute[]
 	viewCount: number
 	category: string
 	subCategory: string
@@ -26,6 +26,11 @@ export interface IListing {
 	user: IUser
 	createdAt: string
 	updatedAt: string
+}
+
+export type TAttirbute = {
+	key: string
+	value: string | number
 }
 
 export interface TImages {

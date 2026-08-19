@@ -23,6 +23,14 @@ class ListingService {
 
 		return response.data
 	}
+
+	async getLisingById(id: string) {
+		const response = await axiosClassic.get<IListingResponse>(
+			`${this.LISTINGURL}/${id}`,
+		)
+
+		return response.data.data
+	}
 }
 
 export const listingService = new ListingService()

@@ -11,7 +11,7 @@ import { Button } from '../ui/button'
 export function ProductCard({ item }: { item: TListingRemoveUser }) {
 	return (
 		<div className="relative">
-			<Link href={`/ads/${item.slug}-${item.id}`}>
+			<Link href={`/ads/${item.id}`}>
 				<div className="w-full min-w-0 rounded-md bg-white shadow-md">
 					<div className="relative aspect-square h-48.75 w-full outline-hidden">
 						<BlurImage

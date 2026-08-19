@@ -23,3 +23,31 @@ export const formatAdDate = (date: string | string) => {
 
 	return `${get('day')}.${get('month')}.${get('year')} ${get('hour')}:${get('minute')}`
 }
+
+interface FormatPriceOptions {
+	currency?: 'UZS' | 'USD' | 'EUR' | 'RUB' | string
+	locale?: string
+	fractionDigits?: number
+}
+
+export const formatCurrency = (
+	amount: string | number,
+	options: FormatPriceOptions = {},
+) => {
+	if (amount === undefined || amount === null || amount === '') return '0'
+
+	const num =
+		typeof amount === 'string'
+			? Number(amount.replace(/[^0-9.-]+/g, ''))
+			: amount
+	if (isNaN(num)) return '0'
+
+	const { currency, locale = 'uz-UZ', fractionDigits } = options
+
+	return new Intl.NumberFormat(locale, {
+		style: 'currency',
+		currency,
+		minimumFractionDigits: fractionDigits,
+		maximumFractionDigits: fractionDigits,
+	}).format(num)
+}
