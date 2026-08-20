@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import { HeartIcon } from 'lucide-react'
 
+import { useLiked } from '@/hooks/useLiked'
 import { cn, formatAdDate } from '@/lib/utils'
 import { BlurImage } from '@/shared/blur.image'
 import type { TListingRemoveUser } from '@/types/listing.types'
@@ -9,6 +10,8 @@ import type { TListingRemoveUser } from '@/types/listing.types'
 import { Button } from '../ui/button'
 
 export function ProductCard({ item }: { item: TListingRemoveUser }) {
+	const { optimisticLiked, isLoading, handleToggle } = useLiked(item.isLiked)
+
 	return (
 		<div className="relative">
 			<Link href={`/ads/${item.id}`}>
@@ -47,11 +50,13 @@ export function ProductCard({ item }: { item: TListingRemoveUser }) {
 			<Button
 				className="absolute top-3 right-3 z-20 cursor-pointer bg-black/20 transition-colors hover:bg-black/30"
 				size={'icon-sm'}
+				disabled={isLoading}
+				onClick={() => handleToggle(item.id)}
 			>
 				<HeartIcon
 					className={cn(
 						'size-5',
-						item.isLiked ? 'fill-rose-600 stroke-rose-600' : 'fill-none',
+						optimisticLiked ? 'fill-rose-600 stroke-rose-600' : 'fill-none',
 					)}
 				/>
 			</Button>

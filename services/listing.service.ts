@@ -4,6 +4,8 @@ import type {
 	IListingResponse,
 } from '@/types/listing.types'
 
+import { getAccesToken } from './auth/auth.helper'
+
 class ListingService {
 	private LISTINGURL = '/listings'
 
@@ -17,19 +19,35 @@ class ListingService {
 	}
 
 	async getLisings() {
+		const accessToken = getAccesToken()
+
 		const response = await axiosClassic.get<IGetListingResponse>(
 			`${this.LISTINGURL}`,
+			{
+				headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+			},
 		)
 
 		return response.data
 	}
 
 	async getLisingById(id: string) {
+		const accessToken = getAccesToken()
+
 		const response = await axiosClassic.get<IListingResponse>(
 			`${this.LISTINGURL}/${id}`,
+			{
+				headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+			},
 		)
 
 		return response.data.data
+	}
+
+	async likedListing(id: string) {
+		const response = await instance.post(`${this.LISTINGURL}/${id}/like`)
+
+		return response.data
 	}
 }
 
