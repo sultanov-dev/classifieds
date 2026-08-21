@@ -10,10 +10,6 @@ const filterButtons: { label: string; value: TStatus }[] = [
 		value: 'new',
 	},
 	{
-		label: 'Ishlatilgan',
-		value: 'used',
-	},
-	{
 		label: 'Barchasi',
 		value: 'all',
 	},

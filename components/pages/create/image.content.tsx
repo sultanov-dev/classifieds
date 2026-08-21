@@ -10,9 +10,11 @@ import { useImages } from './hooks/useImages'
 export function ImageContent({
 	value,
 	onChange,
+	isLoading,
 }: {
 	value: File[]
 	onChange: (files: File[]) => void
+	isLoading: boolean
 }) {
 	const { imagePrviews, handleSelectImages, removeImage } = useImages({
 		value,
@@ -31,14 +33,20 @@ export function ImageContent({
 					multiple
 					accept="image/*"
 					className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
-					disabled={imagePrviews.length >= 6}
+					disabled={imagePrviews.length >= 6 || isLoading}
 					onChange={(e) => {
 						if (e.target.files) {
 							handleSelectImages(e.target.files)
 						}
 					}}
 				/>
-				<div className="flex flex-col items-center justify-center space-y-2">
+				<div
+					aria-disabled={isLoading}
+					className={cn(
+						'flex flex-col items-center justify-center space-y-2',
+						isLoading && 'cursor-not-allowed',
+					)}
+				>
 					<div className="bg-background rounded-full border p-3 shadow-sm">
 						<UploadCloudIcon className="text-primary h-6 w-6" />
 					</div>

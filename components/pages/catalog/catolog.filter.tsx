@@ -1,16 +1,19 @@
 'use client'
 
+import { useFilter } from '@/hooks/useFilter'
 import RegionSelect from '@/shared/region.select'
 
 import { RangeSlider } from './catalog.slider'
 import { StatusSort } from './catalog.status'
 
-export function CatalogFilter({ region }: { region: string }) {
+export function CatalogFilter() {
+	const { queryParams } = useFilter()
+
 	return (
 		<div className="bg-background rounded-md p-3 shadow">
 			<RegionSelect
 				className="mb-5 w-full"
-				value={region || 'toshkent'}
+				value={queryParams.region || 'Toskent shahri'}
 				onValueChange={(value) => console.log(value)}
 			/>
 			<RangeSlider

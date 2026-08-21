@@ -48,6 +48,12 @@ export interface IUser {
 	region: string
 }
 
+export type TMeta = {
+	page: number
+	limit: number | null
+	totalPages: number
+}
+
 export type TListingRemoveUser = Omit<IListing, 'user'>
 
 export interface IGetListingResponse {
@@ -55,5 +61,24 @@ export interface IGetListingResponse {
 	message: string
 	data: {
 		listings: TListingRemoveUser[]
+		meta: TMeta
 	}
+}
+
+export enum ESORT {
+	NEWEST = 'newest',
+	OLDEST = 'oldest',
+	ALL = 'all',
+}
+
+export type TListingParams = {
+	q?: string
+	region?: string
+	page?: string | number
+	limit?: string | number
+	category?: string
+	sort?: ESORT
+	minPrice?: string | number
+	maxPrice?: string | number
+	currency?: 'UZS' | 'USD'
 }

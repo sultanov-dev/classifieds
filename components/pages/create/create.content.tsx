@@ -49,7 +49,7 @@ export function CreateContent() {
 
 						{currentStep === 3 && (
 							<CreateWrapper>
-								<ImageUpload control={form.control} />
+								<ImageUpload control={form.control} isLoading={isLoading} />
 							</CreateWrapper>
 						)}
 					</FieldGroup>

@@ -1,7 +1,10 @@
-import { CatalogFilter } from '@/components/pages/catalog/catolog.filter'
-import Container from '@/shared/container'
+import { CatalogExplorer } from '@/components/pages/catalog/catalog.explorer'
+import { listingService } from '@/services/listing.service'
+import type { TListingParams } from '@/types/listing.types'
 
-type TSearchParams = Promise<{ region: string; category: string }>
+type TSearchParams = Promise<TListingParams>
+
+export const revalidate = 30
 
 export default async function CatalogPage({
 	searchParams,
@@ -10,15 +13,10 @@ export default async function CatalogPage({
 }) {
 	const resolvedSearchParams = await searchParams
 
-	console.log(resolvedSearchParams)
+	const data = await listingService.getLisings({
+		...resolvedSearchParams,
+		limit: resolvedSearchParams.limit || 10,
+	})
 
-	return (
-		<Container className="mt-10">
-			<div className="grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
-				<aside className="hidden lg:block">
-					<CatalogFilter region={resolvedSearchParams.region} />
-				</aside>
-			</div>
-		</Container>
-	)
+	return <CatalogExplorer initialData={data} />
 }

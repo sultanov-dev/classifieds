@@ -1,0 +1,44 @@
+'use client'
+
+import { Suspense } from 'react'
+
+import { useQuery } from '@tanstack/react-query'
+
+import { useFilter } from '@/hooks/useFilter'
+import { listingService } from '@/services/listing.service'
+import Container from '@/shared/container'
+import { IGetListingResponse } from '@/types/listing.types'
+
+import { CatalogListings } from './catalog.listings'
+import CatalogLoader from './catalog.loader'
+import { CatalogFilter } from './catolog.filter'
+
+export function CatalogExplorer({
+	initialData,
+}: {
+	initialData: IGetListingResponse
+}) {
+	const { queryParams, isFilterUpdated } = useFilter()
+
+	const { data, isPending, isLoading, isFetching, isRefetching } = useQuery({
+		queryKey: ['catalog-explorer', queryParams],
+		queryFn: () => listingService.getLisings(queryParams),
+		initialData: initialData,
+		enabled: isFilterUpdated,
+	})
+
+	const isCatalogLoading = isPending || isFetching || isLoading || isRefetching
+
+	return (
+		<Container className="mt-10">
+			<div className="grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+				<aside className="hidden lg:block">
+					<CatalogFilter />
+				</aside>
+				<Suspense fallback={<CatalogLoader />}>
+					<CatalogListings isLoading={isCatalogLoading} data={data.data} />
+				</Suspense>
+			</div>
+		</Container>
+	)
+}

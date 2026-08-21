@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
@@ -12,6 +12,8 @@ import { useListingForm } from './useListingForm'
 import { useSteps } from './useSteps'
 
 export const useCreateListing = () => {
+	const queryClient = useQueryClient()
+
 	const { form, selectedCategory } = useListingForm()
 	const {
 		step: currentStep,
@@ -31,6 +33,7 @@ export const useCreateListing = () => {
 				router.replace('/')
 				toast.success("E'lon joylandi")
 			})
+			queryClient.invalidateQueries({ queryKey: ['listings'] })
 		},
 		onError: (error) => {
 			if (isAxiosError(error)) {

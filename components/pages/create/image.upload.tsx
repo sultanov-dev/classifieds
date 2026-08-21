@@ -7,8 +7,10 @@ import { ImageContent } from './image.content'
 
 export function ImageUpload({
 	control,
+	isLoading,
 }: {
 	control: Control<TListingSchmema>
+	isLoading: boolean
 }) {
 	return (
 		<Controller<TListingSchmema, 'images'>
@@ -28,7 +30,11 @@ export function ImageUpload({
 						</span>
 					</div>
 
-					<ImageContent value={field.value} onChange={field.onChange} />
+					<ImageContent
+						isLoading={isLoading}
+						value={field.value}
+						onChange={field.onChange}
+					/>
 				</Field>
 			)}
 		/>

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { HeartIcon } from 'lucide-react'
 
 import { useLiked } from '@/hooks/useLiked'
-import { cn, formatAdDate } from '@/lib/utils'
+import { cn, formatAdDate, formatCurrency } from '@/lib/utils'
 import { BlurImage } from '@/shared/blur.image'
 import type { TListingRemoveUser } from '@/types/listing.types'
 
@@ -30,9 +30,15 @@ export function ProductCard({ item }: { item: TListingRemoveUser }) {
 							<h6 className="line-clamp-2 min-h-10 text-base leading-5 font-normal">
 								{item.title}
 							</h6>
-							<span className="mt-2 inline-block text-lg font-semibold">
-								{item.price}
-								{item.currency === 'USD' ? '$' : "So'm"}
+							<span
+								className="mt-2 inline-block text-lg font-semibold"
+								suppressHydrationWarning
+							>
+								{formatCurrency(item.price, {
+									currency: item.currency,
+									locale: item.currency === 'USD' ? 'en-US' : 'uz-UZ',
+									fractionDigits: 2,
+								})}
 							</span>
 						</div>
 						<div className="flex items-center justify-between border-t pt-3">

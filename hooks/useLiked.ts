@@ -19,7 +19,9 @@ export const useLiked = (isLiked: boolean) => {
 		mutationKey: ['like-listing'],
 		mutationFn: (id: string) => listingService.likedListing(id),
 		onSuccess: (_, variable) =>
-			queryClient.invalidateQueries({ queryKey: ['listings', variable] }),
+			queryClient.invalidateQueries({
+				queryKey: ['listings', 'catalog-explorer', variable],
+			}),
 		onError: () => toast.error('Xatolik sodir boldi'),
 	})
 
