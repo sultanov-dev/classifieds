@@ -1,5 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useTransition } from 'react'
 
 import { useFilterStore } from '@/store/useFilterStore'
 import type { TListingParams } from '@/types/listing.types'
@@ -8,8 +8,10 @@ export const useFilter = () => {
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 	const router = useRouter()
+	const [isPending, startTransition] = useTransition()
 
-	const { queryParams, updateQueryParam, isFilterUpdated } = useFilterStore()
+	const { queryParams, updateQueryParam, isFilterUpdated, reset } =
+		useFilterStore()
 
 	useEffect(() => {
 		searchParams.forEach((value, key) => {
@@ -30,9 +32,11 @@ export const useFilter = () => {
 			newParams.delete(key)
 		}
 
-		router.replace(pathname + `?${newParams.toString()}`)
+		startTransition(() => {
+			router.replace(pathname + `?${newParams.toString()}`, { scroll: false })
+		})
 		updateQueryParam({ key, value })
 	}
 
-	return { queryParams, isFilterUpdated, updateQueryParams }
+	return { queryParams, isFilterUpdated, updateQueryParams, isPending, reset }
 }

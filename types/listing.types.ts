@@ -80,5 +80,5 @@ export type TListingParams = {
 	sort?: ESORT
 	minPrice?: string | number
 	maxPrice?: string | number
-	currency?: 'UZS' | 'USD'
+	currency?: string
 }

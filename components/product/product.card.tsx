@@ -10,7 +10,7 @@ import type { TListingRemoveUser } from '@/types/listing.types'
 import { Button } from '../ui/button'
 
 export function ProductCard({ item }: { item: TListingRemoveUser }) {
-	const { optimisticLiked, isLoading, handleToggle } = useLiked(item.isLiked)
+	const { isLoading, handleToggle } = useLiked(item.isLiked)
 
 	return (
 		<div className="relative">
@@ -62,7 +62,7 @@ export function ProductCard({ item }: { item: TListingRemoveUser }) {
 				<HeartIcon
 					className={cn(
 						'size-5',
-						optimisticLiked ? 'fill-rose-600 stroke-rose-600' : 'fill-none',
+						item.isLiked ? 'fill-rose-600 stroke-rose-600' : 'fill-none',
 					)}
 				/>
 			</Button>

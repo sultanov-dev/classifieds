@@ -10,11 +10,11 @@ export default function HomePage() {
 		<div className="w-full">
 			<HomeCarousel />
 			<Suspense fallback={<div>loading..</div>}>
-				<ProductViews title="Yangi elonlar" />
+				<ProductViews title="Yangi elonlar" isHomePage />
 			</Suspense>
 			<InfoBanner />
 			<Suspense fallback={<div>loading..</div>}>
-				<ProductViews title="Barcha elonlar" />
+				<ProductViews title="Barcha elonlar" isHomePage />
 			</Suspense>
 		</div>
 	)

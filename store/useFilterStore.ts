@@ -15,7 +15,7 @@ const initileStoreState: Pick<IFilterStoreState, 'queryParams'> = {
 		sort: ESORT.ALL,
 		page: 1,
 		limit: 10,
-		currency: 'USD',
+		currency: '',
 	},
 }
 
