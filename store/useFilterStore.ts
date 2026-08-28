@@ -16,6 +16,8 @@ const initileStoreState: Pick<IFilterStoreState, 'queryParams'> = {
 		page: 1,
 		limit: 10,
 		currency: '',
+		category: '',
+		region: '',
 	},
 }
 

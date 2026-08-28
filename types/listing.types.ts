@@ -82,3 +82,9 @@ export type TListingParams = {
 	maxPrice?: string | number
 	currency?: string
 }
+
+export const defaultDueryParamsData: TListingParams = {
+	sort: ESORT.ALL,
+	page: 1,
+	limit: 10,
+}

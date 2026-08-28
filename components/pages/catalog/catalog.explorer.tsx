@@ -5,12 +5,14 @@ import { Suspense } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import { useFilter } from '@/hooks/useFilter'
+import { useInitialParams } from '@/hooks/useIntitalParams'
 import { listingService } from '@/services/listing.service'
 import Container from '@/shared/container'
 import { IGetListingResponse } from '@/types/listing.types'
 
 import { CatalogListings } from './catalog.listings'
 import CatalogLoader from './catalog.loader'
+import { CatalogPagination } from './catalogPagination'
 import { CatalogFilter } from './catolog.filter'
 
 export function CatalogExplorer({
@@ -19,6 +21,7 @@ export function CatalogExplorer({
 	initialData: IGetListingResponse
 }) {
 	const { queryParams, isFilterUpdated, isPending: filterPending } = useFilter()
+	useInitialParams()
 
 	const { data, isPending, isLoading, isFetching, isRefetching } = useQuery({
 		queryKey: ['catalog-explorer', queryParams],
@@ -45,6 +48,10 @@ export function CatalogExplorer({
 						<CatalogListings isLoading={isCatalogLoading} data={data.data} />
 					</Suspense>
 				)}
+			</div>
+
+			<div className="my-5 flex w-full items-center justify-center">
+				<CatalogPagination totalPages={data.data.meta.totalPages} />
 			</div>
 		</Container>
 	)

@@ -47,17 +47,17 @@ export const categoryData: ICategoryData[] = [
 			{
 				id: '1',
 				label: 'Yengil avtomobil',
-				slug: 'yengil-automobil',
+				slug: 'cars',
 			},
 			{
 				id: '2',
 				label: 'mahsus transport',
-				slug: 'mahsux-transport',
+				slug: 'trucks',
 			},
 			{
 				id: '3',
 				label: 'motosikl',
-				slug: 'motosikl',
+				slug: 'moto',
 			},
 		],
 	},
@@ -68,22 +68,17 @@ export const categoryData: ICategoryData[] = [
 			{
 				id: '4',
 				label: 'Telefon va akssesuarlar',
-				slug: 'telefon-akssesuarlar',
+				slug: 'phones',
 			},
 			{
 				id: '5',
-				label: 'televizorlar',
-				slug: 'televizorlar',
+				label: 'Akkasuarlar',
+				slug: 'accessories',
 			},
 			{
 				id: '6',
 				label: 'Noutbook',
-				slug: 'noutbook',
-			},
-			{
-				id: '7',
-				label: 'planshetlar',
-				slug: 'planshetlar',
+				slug: 'laptops',
 			},
 		],
 	},

@@ -20,8 +20,7 @@ export const useFilter = () => {
 				value,
 			})
 		})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [searchParams, updateQueryParam])
 
 	const updateQueryParams = (key: keyof TListingParams, value: string) => {
 		const newParams = new URLSearchParams(searchParams.toString())
@@ -33,10 +32,24 @@ export const useFilter = () => {
 		}
 
 		startTransition(() => {
-			router.replace(pathname + `?${newParams.toString()}`, { scroll: false })
+			router.replace(pathname + `?${newParams.toString()}`)
 		})
 		updateQueryParam({ key, value })
 	}
 
-	return { queryParams, isFilterUpdated, updateQueryParams, isPending, reset }
+	const resetQueryParams = () => {
+		reset()
+
+		startTransition(() => {
+			router.replace(pathname)
+		})
+	}
+
+	return {
+		queryParams,
+		isFilterUpdated,
+		updateQueryParams,
+		isPending,
+		resetQueryParams,
+	}
 }

@@ -1,13 +1,16 @@
-import { useState } from 'react'
-
 import { Button } from '@/components/ui/button'
+import { useFilter } from '@/hooks/useFilter'
 
-type TStatus = 'new' | 'used' | 'all'
+type TStatus = 'newest' | 'oldest' | 'all'
 
 const filterButtons: { label: string; value: TStatus }[] = [
 	{
 		label: 'Yangi',
-		value: 'new',
+		value: 'newest',
+	},
+	{
+		label: 'Eskilar',
+		value: 'oldest',
 	},
 	{
 		label: 'Barchasi',
@@ -15,7 +18,7 @@ const filterButtons: { label: string; value: TStatus }[] = [
 	},
 ]
 export function StatusSort() {
-	const [selectStatus, setSelectStatus] = useState<TStatus>('all')
+	const { updateQueryParams, queryParams } = useFilter()
 
 	return (
 		<div className="mt-6 w-full">
@@ -23,9 +26,9 @@ export function StatusSort() {
 			<div className="flex flex-wrap items-center gap-2">
 				{filterButtons.map((btn) => (
 					<Button
-						variant={selectStatus === btn.value ? 'default' : 'outline'}
+						variant={queryParams.sort === btn.value ? 'default' : 'outline'}
 						key={btn.value}
-						onClick={() => setSelectStatus(btn.value)}
+						onClick={() => updateQueryParams('sort', btn.value)}
 					>
 						{btn.label}
 					</Button>
