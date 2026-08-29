@@ -18,7 +18,7 @@ import AddButton from './add.button'
 import CategoryMenu from './category.menu'
 import LangDropMenu from './lang.dropMenu'
 import ProfileMenu from './profile.menu'
-import SearchInput from './searchInput'
+import SearchInput from './search/searchInput'
 
 export default function Header() {
 	const searchParams = useSearchParams()
