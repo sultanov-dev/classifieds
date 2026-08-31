@@ -33,7 +33,9 @@ export const useCreateListing = () => {
 				router.replace('/')
 				toast.success("E'lon joylandi")
 			})
-			queryClient.invalidateQueries({ queryKey: ['listings'] })
+			queryClient.invalidateQueries({
+				queryKey: ['listings', 'my-listings', 'catalog-explorer'],
+			})
 		},
 		onError: (error) => {
 			if (isAxiosError(error)) {

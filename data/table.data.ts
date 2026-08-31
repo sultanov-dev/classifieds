@@ -1,38 +1,26 @@
-export type TProfileAd = {
-	id: number
-	images: string[]
-	title: string
-	price: string
-	createdAt: string
-}
-
-export const tableData: TProfileAd[] = [
+export const columnsSkeleton = [
 	{
-		id: 1,
-		images: ['/car.jpg', '/car2.jpeg'],
-		title: 'BYD Chazor DMI 120km Flagship Full pozitsiyasi',
-		price: '370 196 800 so’m',
-		createdAt: '2026-08-06T12:32:00+05:00',
+		header: 'h-4 w-12',
+		cell: 'h-12 w-12 rounded-md',
 	},
 	{
-		id: 2,
-		images: ['/car2.jpeg', '/car.jpg'],
-		title: 'BYD Chazor DMI 120km Flagship Full pozitsiyasi',
-		price: '370 196 800 so’m',
-		createdAt: '2026-08-06T12:32:00+05:00',
+		header: 'h-4 w-36',
+		cell: 'h-4 w-48',
 	},
 	{
-		id: 3,
-		images: ['/car.jpg', '/car2.jpeg'],
-		title: 'BYD Chazor DMI 120km Flagship Full pozitsiyasi',
-		price: '370 196 800 so’m',
-		createdAt: '2026-08-06T12:32:00+05:00',
+		header: 'h-4 w-20',
+		cell: 'h-4 w-24',
 	},
 	{
-		id: 4,
-		images: ['/car2.jpeg', '/car.jpg'],
-		title: 'BYD Chazor DMI 120km Flagship Full pozitsiyasi',
-		price: '370 196 800 so’m',
-		createdAt: '2026-08-06T12:32:00+05:00',
+		header: 'h-4 w-20',
+		cell: 'h-6 w-20 rounded-full',
+	},
+	{
+		header: 'h-4 w-24',
+		cell: 'h-4 w-24',
+	},
+	{
+		header: 'h-4 w-12',
+		cell: 'h-8 w-8 rounded-md',
 	},
 ]

@@ -6,6 +6,7 @@ import axios, {
 
 import { getAccesToken, removeFromStorage } from '@/services/auth/auth.helper'
 import { authService } from '@/services/auth/auth.service'
+import { ETokens } from '@/types/auth.types'
 
 import { getErrorMessage } from './api.helper'
 
@@ -24,8 +25,16 @@ const axiosOptions: CreateAxiosDefaults = {
 export const axiosClassic = axios.create(axiosOptions)
 export const instance = axios.create(axiosOptions)
 
-instance.interceptors.request.use((config) => {
-	const accessToken = getAccesToken()
+instance.interceptors.request.use(async (config) => {
+	let accessToken: string | null | undefined = null
+
+	if (typeof window !== 'undefined') {
+		accessToken = getAccesToken()
+	} else {
+		const { cookies } = await import('next/headers')
+		const cookieStore = await cookies()
+		accessToken = cookieStore.get(ETokens.ACCESSTOKEN)?.value
+	}
 
 	if (config.headers && accessToken) {
 		config.headers.Authorization = `Bearer ${accessToken}`
@@ -35,7 +44,7 @@ instance.interceptors.request.use((config) => {
 })
 
 instance.interceptors.response.use(
-	(config) => config.data,
+	(config) => config,
 	async (error: AxiosError) => {
 		const originalRequest = error.config as CustomAxiosRequestConfig
 
@@ -57,6 +66,8 @@ instance.interceptors.response.use(
 					getErrorMessage(error) === 'Refresh token not passed'
 				)
 					removeFromStorage()
+
+				return Promise.reject(error)
 			}
 		}
 	},

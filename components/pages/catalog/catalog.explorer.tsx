@@ -27,6 +27,7 @@ export function CatalogExplorer({
 		initialData: initialData,
 		enabled: isFilterUpdated,
 		select: (data) => data.data,
+		staleTime: 30 * 1000,
 	})
 
 	const isCatalogLoading = isPending || isFetching || isLoading || isRefetching

@@ -49,5 +49,7 @@ export const formatCurrency = (
 		currency,
 		minimumFractionDigits: fractionDigits,
 		maximumFractionDigits: fractionDigits,
-	}).format(num)
+	})
+		.format(num)
+		.replace(/\u00A0|\u202F/g, ' ')
 }
