@@ -41,7 +41,7 @@ export default function SearchInput() {
 			)}
 
 			{search && (
-				<div className="animate-in fade-in-0 zoom-in-95 absolute z-10 mt-2 flex w-full flex-col gap-y-4 rounded-2xl bg-white p-6 text-base font-normal text-black shadow duration-400">
+				<div className="animate-in fade-in-0 zoom-in-95 absolute z-30 mt-2 flex w-full flex-col gap-y-4 rounded-2xl bg-white p-6 text-base font-normal text-black shadow duration-400">
 					{isSearching ? (
 						<div className="flex flex-col gap-4">
 							{Array.from({ length: 3 }).map((_, index) => (
