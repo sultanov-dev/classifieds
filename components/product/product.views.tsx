@@ -1,31 +1,27 @@
-'use client'
-
 import Link from 'next/link'
 
 import { MoveRightIcon } from 'lucide-react'
 
-import { useListings } from '@/hooks/useListings'
 import { publicPages } from '@/config/pages.config'
+import { listingService } from '@/services/listing.service'
 import { Heading } from '@/shared/heading'
 
-import { ProductCard } from './product.card'
-import { ProductLoader } from './product.loader'
+import { ProductLoadMore } from './product.loadMore'
 
 type TProductViews = {
 	title?: string
 	isHomePage?: boolean
+	type: 'latest' | 'all'
 }
 
-export default function ProductViews({ title, isHomePage }: TProductViews) {
-	const { data, isLoading } = useListings()
+export const revalidate = 60
 
-	if (!data || !data.listings?.length) {
-		return (
-			<div className="my-16 flex h-full items-center justify-center">
-				<h1>Elon topilmadi</h1>
-			</div>
-		)
-	}
+export default async function ProductViews({
+	title,
+	isHomePage,
+	type,
+}: TProductViews) {
+	const response = await listingService.getLisings({ type, page: 1, limit: 10 })
 
 	return (
 		<div className="my-16 h-full">
@@ -36,19 +32,11 @@ export default function ProductViews({ title, isHomePage }: TProductViews) {
 						className="flex items-center gap-2 text-sky-400"
 						href={publicPages.CATALOG}
 					>
-						Barcha elonlar <MoveRightIcon className="siz-3" />
+						Barcha e&apos;lonlar <MoveRightIcon className="siz-3" />
 					</Link>
 				)}
 			</div>
-			<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-				{isLoading
-					? Array.from([1, 2, 3, 4]).map((_, index) => (
-							<ProductLoader key={index} />
-						))
-					: data.listings.map((item) => (
-							<ProductCard item={item} key={item.id} />
-						))}
-			</div>
+			<ProductLoadMore initialData={response} type={type} />
 		</div>
 	)
 }

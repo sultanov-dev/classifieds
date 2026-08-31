@@ -1,5 +1,5 @@
 import { ProductCard } from '@/components/product/product.card'
-import { ProductLoader } from '@/components/product/product.loader'
+import { ListingSkeleton } from '@/shared/listing.skeleton'
 import type { TListingRemoveUser, TMeta } from '@/types/listing.types'
 
 type Props = {
@@ -15,7 +15,7 @@ export function CatalogListings({ isLoading, data }: Props) {
 		<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 			{isLoading
 				? Array.from({ length: 10 }).map((_, index) => (
-						<ProductLoader key={index} />
+						<ListingSkeleton key={index} />
 					))
 				: data.listings.map((item) => (
 						<ProductCard key={item.id} item={item} />

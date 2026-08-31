@@ -5,10 +5,10 @@ import { listingService } from '@/services/listing.service'
 import Container from '@/shared/container'
 
 export const dynamicParams = true
-export const revalidate = 60
+export const revalidate = 20
 
 export async function generateStaticParams() {
-	const response = await listingService.getLisings()
+	const response = await listingService.getLisings({})
 	const data = response.data.listings
 
 	return data.map((item) => ({

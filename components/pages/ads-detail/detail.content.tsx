@@ -2,11 +2,9 @@
 
 import dynamic from 'next/dynamic'
 
-import { Heart } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
 import { formatAdDate, formatCurrency } from '@/lib/utils'
 import { Heading } from '@/shared/heading'
+import { LikeButton } from '@/shared/like.button'
 import { ShareButton } from '@/shared/share.button'
 import type { IListing } from '@/types/listing.types'
 
@@ -34,12 +32,12 @@ export function DetailContent({ item }: { item: IListing }) {
 				</div>
 				<div className="flex items-center gap-4">
 					<ShareButton title={item.title} />
-					<Button
+					<LikeButton
 						size={'icon-lg'}
 						className="flex cursor-pointer items-center justify-center rounded-full bg-gray-100 text-black transition-colors hover:bg-white/35"
-					>
-						<Heart className="size-4" />
-					</Button>
+						initialLiked={item.isLiked}
+						id={item.id}
+					/>
 				</div>
 			</div>
 			<Heading title={item.title} className="text-2xl font-normal" />

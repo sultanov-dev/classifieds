@@ -81,6 +81,7 @@ export type TListingParams = {
 	minPrice?: string | number
 	maxPrice?: string | number
 	currency?: string
+	type?: 'latest' | 'all'
 }
 
 export const defaultDueryParamsData: TListingParams = {

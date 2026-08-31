@@ -1,4 +1,4 @@
-import { useCallback, useState, useTransition } from 'react'
+import { useCallback, useTransition } from 'react'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
@@ -6,15 +6,9 @@ import { toast } from 'sonner'
 import { listingService } from '@/services/listing.service'
 import type { IGetListingResponse } from '@/types/listing.types'
 
-export const useLiked = (isLike: boolean) => {
+export const useLiked = (initialLiked: boolean, listingId: string) => {
 	const queryClient = useQueryClient()
-	const [inState, setInState] = useState<boolean>(isLike)
 	const [isPending, startTransition] = useTransition()
-
-	// const [optimisticLiked, addOptimistic] = useOptimistic<boolean, boolean>(
-	// 	inState,
-	// 	(_state, target) => target,
-	// )
 
 	const { mutate: likedMutate, isPending: likeLoading } = useMutation({
 		mutationKey: ['like-listing'],
@@ -37,6 +31,7 @@ export const useLiked = (isLike: boolean) => {
 					return {
 						...old.data,
 						data: {
+							...old.data,
 							listings: old.data.listings.map((item) =>
 								item.id === id ? { ...item, isLiked: !item.isLiked } : item,
 							),
@@ -44,20 +39,6 @@ export const useLiked = (isLike: boolean) => {
 					}
 				},
 			)
-
-			// queryClient.setQueriesData(
-			// 	{ queryKey: ['listings'] },
-			// 	(old: IGetListingResponse) => {
-			// 		if (!old?.data.listings.length) return old
-			// 		return {
-			// 			...old.data,
-			// 			data: old.data.listings.map((item) =>
-			// 				item.id === id ? { ...item, isLiked: !item.isLiked } : item,
-			// 			),
-			// 		}
-			// 	},
-			// )
-
 			return { previousCatalog, previousListings }
 		},
 		onError: (err, id, context) => {
@@ -66,32 +47,31 @@ export const useLiked = (isLike: boolean) => {
 					queryClient.setQueryData(queryKey, data)
 				},
 			)
-			// context?.previousListings?.forEach(
-			// 	([queryKey, data]: [readonly unknown[], unknown]) => {
-			// 		queryClient.setQueryData(queryKey, data)
-			// 	},
-			// )
+
 			toast.error("Xatolik bo'ldi")
 		},
 		onSettled: () => {
-			queryClient.invalidateQueries({ queryKey: ['catalog-explorer'] })
-			queryClient.invalidateQueries({ queryKey: ['listings'] })
+			queryClient.invalidateQueries({
+				queryKey: ['catalog-explorer', listingId],
+			})
+			queryClient.invalidateQueries({ queryKey: ['listings', listingId] })
 		},
 	})
 
+	const isLiked =
+		queryClient.getQueryData<boolean>(['listings-liked', listingId]) ??
+		initialLiked
+
 	const handleToggle = useCallback(
 		(id: string) => {
-			const nextState = !inState
-
 			startTransition(() => {
 				likedMutate(id)
-				setInState(nextState)
 			})
 		},
-		[inState, likedMutate, startTransition],
+		[likedMutate, startTransition],
 	)
 
 	const isLoading = isPending || likeLoading
 
-	return { isLoading, handleToggle }
+	return { isLoading, handleToggle, isLiked }
 }
