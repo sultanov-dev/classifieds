@@ -1,9 +1,11 @@
 import type { ColumnDef } from '@tanstack/react-table'
-import { Pencil, Trash2 } from 'lucide-react'
+import { Pencil } from 'lucide-react'
 
 import { formatAdDate, formatCurrency } from '@/lib/utils'
 import { BlurImage } from '@/shared/blur.image'
 import type { TListingRemoveUser } from '@/types/listing.types'
+
+import { DeleteBtn } from './delete.btn'
 
 export const columns: ColumnDef<TListingRemoveUser>[] = [
 	{
@@ -58,20 +60,13 @@ export const columns: ColumnDef<TListingRemoveUser>[] = [
 				<button
 					type="button"
 					onClick={() => console.log('Tahrirlash:', row.original.id)}
-					className="cursor-pointer rounded-md p-2 text-blue-600 hover:bg-blue-50"
+					className="cursor-pointer rounded-md bg-transparent p-2 text-blue-600 hover:bg-blue-50"
 					aria-label="E'lonni tahrirlash"
 				>
 					<Pencil size={18} />
 				</button>
 
-				<button
-					type="button"
-					onClick={() => console.log("O'chirish:", row.original.id)}
-					className="cursor-pointer rounded-md p-2 text-red-600 hover:bg-red-50"
-					aria-label="E'lonni o'chirish"
-				>
-					<Trash2 size={18} />
-				</button>
+				<DeleteBtn id={row.original.id} />
 			</div>
 		),
 	},

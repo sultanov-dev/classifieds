@@ -59,6 +59,12 @@ class ListingService {
 
 		return response.data
 	}
+
+	async deleteListing(id: string) {
+		const response = await instance.delete(`${this.LISTINGURL}/${id}`)
+
+		return response
+	}
 }
 
 export const listingService = new ListingService()
