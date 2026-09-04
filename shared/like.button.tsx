@@ -16,22 +16,20 @@ type Props = {
 }
 
 export function LikeButton({ size, className, initialLiked, id }: Props) {
-	const { handleToggle, isLoading, isLiked } = useLiked(initialLiked, id)
-
-	console.log({ isLiked, initialLiked })
+	const { handleToggle, likeLoading } = useLiked(initialLiked, id)
 
 	return (
 		<Button
-			disabled={isLoading}
-			onClick={() => handleToggle(id)}
+			disabled={likeLoading}
+			onClick={handleToggle}
 			className={className}
 			size={size}
-			aria-label="Yoqtirish"
+			aria-label={initialLiked ? 'Like-ni bekor qilish' : 'Like qilish'}
 		>
 			<HeartIcon
 				className={cn(
 					'size-5',
-					isLiked ? 'fill-rose-600 stroke-rose-600' : 'fill-none',
+					initialLiked ? 'fill-rose-600 stroke-rose-600' : 'fill-none',
 				)}
 			/>
 		</Button>

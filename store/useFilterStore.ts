@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
 
 import { ESORT, type TListingParams } from '@/types/listing.types'
 
@@ -21,16 +22,18 @@ const initileStoreState: Pick<IFilterStoreState, 'queryParams'> = {
 	},
 }
 
-export const useFilterStore = create<IFilterStoreState>((set) => ({
-	...initileStoreState,
-	isFilterUpdated: false,
+export const useFilterStore = create<IFilterStoreState>()(
+	devtools((set) => ({
+		...initileStoreState,
+		isFilterUpdated: false,
 
-	updateQueryParam: ({ key, value }) => {
-		set((state) => ({
-			queryParams: { ...state.queryParams, [key]: value },
-			isFilterUpdated: true,
-		}))
-	},
+		updateQueryParam: ({ key, value }) => {
+			set((state) => ({
+				queryParams: { ...state.queryParams, [key]: value },
+				isFilterUpdated: true,
+			}))
+		},
 
-	reset: () => set(() => ({ ...initileStoreState, isFilterUpdated: true })),
-}))
+		reset: () => set(() => ({ ...initileStoreState, isFilterUpdated: true })),
+	})),
+)

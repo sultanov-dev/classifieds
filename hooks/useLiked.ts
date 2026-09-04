@@ -1,6 +1,10 @@
-import { useCallback, useTransition } from 'react'
+import { useCallback } from 'react'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+	useMutation,
+	useQueryClient,
+	type QueryKey,
+} from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { listingService } from '@/services/listing.service'
@@ -8,14 +12,16 @@ import type { IGetListingResponse } from '@/types/listing.types'
 
 export const useLiked = (initialLiked: boolean, listingId: string) => {
 	const queryClient = useQueryClient()
-	const [isPending, startTransition] = useTransition()
 
 	const { mutate: likedMutate, isPending: likeLoading } = useMutation({
-		mutationKey: ['like-listing'],
+		mutationKey: ['like-listing', listingId],
 		mutationFn: (id: string) => listingService.likedListing(id),
 		onMutate: async (id) => {
-			await queryClient.cancelQueries({ queryKey: ['catalog-explorer'] })
-			await queryClient.cancelQueries({ queryKey: ['listings'] })
+			await Promise.all([
+				queryClient.cancelQueries({ queryKey: ['catalog-explorer'] }),
+				queryClient.cancelQueries({ queryKey: ['listings'] }),
+				queryClient.cancelQueries({ queryKey: ['liked-my-listings'] }),
+			])
 
 			const previousCatalog = queryClient.getQueriesData({
 				queryKey: ['catalog-explorer'],
@@ -23,13 +29,16 @@ export const useLiked = (initialLiked: boolean, listingId: string) => {
 			const previousListings = queryClient.getQueriesData({
 				queryKey: ['listings'],
 			})
+			const previousMyLiked = queryClient.getQueriesData({
+				queryKey: ['liked-my-listings'],
+			})
 
-			queryClient.setQueriesData(
-				{ queryKey: ['catalog-explorer'] },
-				(old: IGetListingResponse) => {
-					if (!old?.data.listings.length) return old
+			const toggleLikedInCache = (queryKey: QueryKey) => {
+				queryClient.setQueriesData<IGetListingResponse>({ queryKey }, (old) => {
+					if (!old?.data?.listings?.length) return old
+
 					return {
-						...old.data,
+						...old,
 						data: {
 							...old.data,
 							listings: old.data.listings.map((item) =>
@@ -37,41 +46,61 @@ export const useLiked = (initialLiked: boolean, listingId: string) => {
 							),
 						},
 					}
+				})
+			}
+
+			toggleLikedInCache(['catalog-explorer'])
+			toggleLikedInCache(['listings'])
+
+			queryClient.setQueriesData<IGetListingResponse>(
+				{ queryKey: ['liked-my-listings'] },
+				(old) => {
+					if (!old?.data?.listings?.length) return old
+
+					return {
+						...old,
+						data: {
+							...old.data,
+							listings: old.data.listings.filter((item) => item.id !== id),
+						},
+					}
 				},
 			)
-			return { previousCatalog, previousListings }
+
+			return { previousCatalog, previousListings, previousMyLiked }
 		},
 		onError: (err, id, context) => {
-			context?.previousCatalog?.forEach(
-				([queryKey, data]: [readonly unknown[], unknown]) => {
-					queryClient.setQueryData(queryKey, data)
-				},
-			)
+			context?.previousListings.forEach(([queryKey, data]) => {
+				queryClient.setQueryData(queryKey, data)
+			})
+			context?.previousListings.forEach(([queryKey, data]) => {
+				queryClient.setQueryData(queryKey, data)
+			})
+
+			context?.previousListings.forEach(([queryKey, data]) => {
+				queryClient.setQueryData(queryKey, data)
+			})
 
 			toast.error("Xatolik bo'ldi")
 		},
-		onSettled: () => {
-			queryClient.invalidateQueries({
-				queryKey: ['catalog-explorer', listingId],
-			})
-			queryClient.invalidateQueries({ queryKey: ['listings', listingId] })
+		onSettled: async () => {
+			await Promise.all([
+				queryClient.invalidateQueries({
+					queryKey: ['catalog-explorer'],
+				}),
+				queryClient.invalidateQueries({ queryKey: ['listings'] }),
+				queryClient.invalidateQueries({
+					queryKey: ['liked-my-listings'],
+				}),
+			])
 		},
 	})
 
-	const isLiked =
-		queryClient.getQueryData<boolean>(['listings-liked', listingId]) ??
-		initialLiked
+	const handleToggle = useCallback(() => {
+		if (!likeLoading) {
+			likedMutate(listingId)
+		}
+	}, [likedMutate, likeLoading, listingId])
 
-	const handleToggle = useCallback(
-		(id: string) => {
-			startTransition(() => {
-				likedMutate(id)
-			})
-		},
-		[likedMutate, startTransition],
-	)
-
-	const isLoading = isPending || likeLoading
-
-	return { isLoading, handleToggle, isLiked }
+	return { likeLoading, handleToggle, initialLiked }
 }

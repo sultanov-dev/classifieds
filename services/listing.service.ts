@@ -54,6 +54,14 @@ class ListingService {
 		return response.data
 	}
 
+	async getLikedListings() {
+		const response = await instance.get<IGetListingResponse>(
+			`${this.LISTINGURL}/liked`,
+		)
+
+		return response.data
+	}
+
 	async likedListing(id: string) {
 		const response = await instance.post(`${this.LISTINGURL}/${id}/like`)
 

@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { listingService } from '@/services/listing.service'
+import { HasNoResult } from '@/shared/hasNoResult'
 import type {
 	IGetListingResponse,
 	TListingRemoveUser,
@@ -11,7 +12,6 @@ import type {
 import { AdsTableLoader } from './ads.table.loader'
 import { columns } from './columns'
 import { DataTable } from './data-table'
-import { HasNoResult } from './hasNoResult'
 
 export default function ProfileAds({
 	initialData,
@@ -36,7 +36,7 @@ export default function ProfileAds({
 			{isListingLoad ? (
 				<AdsTableLoader />
 			) : hasNoListings ? (
-				<HasNoResult />
+				<HasNoResult text={"Hali e'lon qo'shmagansiz"} />
 			) : (
 				<DataTable data={listings} columns={columns} />
 			)}
