@@ -28,7 +28,7 @@ export default function Header() {
 	const { isAuthenticated } = useAuth()
 
 	const [region, setRegion] = useState<string | null>(
-		regionSearch || 'toshkent',
+		regionSearch || 'TOSHKENT_SHAHRI',
 	)
 
 	return (

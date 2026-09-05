@@ -10,7 +10,7 @@ export function LogOutBtn() {
 	return (
 		<Button
 			className={
-				'mt-3 w-full cursor-pointer bg-rose-500 text-base tracking-tighter text-white hover:bg-rose-400'
+				'mt-3 w-full cursor-pointer bg-rose-500 text-base font-normal tracking-widest text-white hover:bg-rose-400'
 			}
 			variant={'destructive'}
 			onClick={() => logoutMutate()}
