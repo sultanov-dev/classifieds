@@ -65,6 +65,13 @@ export interface IGetListingResponse {
 	}
 }
 
+export type IGetListingUserViewResponse = Omit<IGetListingResponse, 'data'> & {
+	data: {
+		listings: TListingRemoveUser[]
+		nextCursor: string | null
+	}
+}
+
 export enum ESORT {
 	NEWEST = 'newest',
 	OLDEST = 'oldest',

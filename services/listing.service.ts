@@ -1,6 +1,7 @@
 import { axiosClassic, instance } from '@/api/axios'
 import type {
 	IGetListingResponse,
+	IGetListingUserViewResponse,
 	IListingResponse,
 	TListingParams,
 } from '@/types/listing.types'
@@ -58,6 +59,32 @@ class ListingService {
 		const response = await instance.get<IGetListingResponse>(
 			`${this.LISTINGURL}/liked`,
 		)
+
+		return response.data
+	}
+
+	async getUserViewed({
+		cursor,
+		limit,
+	}: {
+		cursor: string | null
+		limit?: number
+	}) {
+		const response = await instance.get<IGetListingUserViewResponse>(
+			`${this.LISTINGURL}/viewed`,
+			{
+				params: {
+					cursor,
+					limit: limit || 10,
+				},
+			},
+		)
+
+		return response.data
+	}
+
+	async viewListing(id: string) {
+		const response = await instance.post(`${this.LISTINGURL}/${id}/view`)
 
 		return response.data
 	}

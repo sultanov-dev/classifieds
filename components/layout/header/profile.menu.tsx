@@ -46,11 +46,11 @@ export default function ProfileMenu() {
 							</span>
 						</DropdownMenuItem>
 					</Link>
-					<Link href={protectPages.SEARCH}>
+					<Link href={protectPages.HISTORY}>
 						<DropdownMenuItem>
 							<SearchIcon className="size-5" />
 							<span className="text-base font-normal text-black capitalize">
-								qidiruvlar
+								tarix
 							</span>
 						</DropdownMenuItem>
 					</Link>

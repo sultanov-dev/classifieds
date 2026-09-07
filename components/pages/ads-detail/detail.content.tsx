@@ -1,8 +1,10 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { useEffect } from 'react'
 
 import { formatAdDate, formatCurrency } from '@/lib/utils'
+import { listingService } from '@/services/listing.service'
 import { Heading } from '@/shared/heading'
 import { LikeButton } from '@/shared/like.button'
 import { ShareButton } from '@/shared/share.button'
@@ -18,6 +20,13 @@ const DynamicCarousel = dynamic(
 )
 
 export function DetailContent({ item }: { item: IListing }) {
+	useEffect(() => {
+		const viewListings = async () => {
+			await listingService.viewListing(item.id)
+		}
+		viewListings()
+	}, [item.id])
+
 	return (
 		<section className="bg-background rounded-md p-7 shadow-md">
 			<DynamicCarousel images={item.images} />

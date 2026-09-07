@@ -17,7 +17,7 @@ class ProtectPages {
 	LIKED = '/profile/liked'
 	SETTINGS = '/profile/settings'
 	ADS = '/profile/ads'
-	SEARCH = '/profile/search'
+	HISTORY = '/profile/history'
 	CREATELISTING = '/create'
 }
 
