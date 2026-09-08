@@ -3,7 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { listingService } from '@/services/listing.service'
 
 export const useInifinityListings = () => {
-	const { hasNextPage, isFetchingNextPage, fetchNextPage, data } =
+	const { hasNextPage, isFetchingNextPage, fetchNextPage, data, isLoading } =
 		useInfiniteQuery({
 			queryKey: ['viewed-listings'],
 			queryFn: ({ pageParam }) =>
@@ -14,5 +14,5 @@ export const useInifinityListings = () => {
 			},
 		})
 
-	return { hasNextPage, isFetchingNextPage, data, fetchNextPage }
+	return { hasNextPage, isFetchingNextPage, data, fetchNextPage, isLoading }
 }

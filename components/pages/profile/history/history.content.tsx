@@ -4,19 +4,22 @@ import Image from 'next/image'
 
 import { useInifinityListings } from '@/hooks/useInfinityListings'
 import { formatAdDate } from '@/lib/utils'
+import { HasNoResult } from '@/shared/hasNoResult'
 import { Heading } from '@/shared/heading'
 import { InfiniteTrigger } from '@/shared/infiniteTrigger'
 import { Loader } from '@/shared/loader'
 
 export function HistoryContent() {
-	const { hasNextPage, isFetchingNextPage, fetchNextPage, data } =
+	const { hasNextPage, isFetchingNextPage, fetchNextPage, data, isLoading } =
 		useInifinityListings()
 
 	const listings = data?.pages.flatMap((page) => page.data.listings) ?? []
+	const isEmpty = !isLoading && listings.length === 0
 
 	return (
 		<div className="my-10">
 			<Heading title="Tarix" className="mb-5" />
+			{isEmpty && <HasNoResult text={"Ko'rilgan e'lonlar yo'q"} />}
 			{listings.map((item) => (
 				<div
 					className="mb-6 flex w-full items-center rounded-md shadow-md last:mb-0"
