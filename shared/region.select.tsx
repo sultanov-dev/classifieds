@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import type { ReactNode } from 'react'
 
 import {
 	Select,
@@ -18,19 +19,33 @@ interface RegionSelectProps {
 	onValueChange: (value: string | null) => void
 	placeholder?: string
 	className?: string
+	id?: string
+	icon?: ReactNode
 }
 
 export default function RegionSelect({
 	value,
 	onValueChange,
 	className,
+	icon,
 	placeholder = 'Viloyatni tanlang',
+	id,
 }: RegionSelectProps) {
 	const pathname = usePathname()
 
 	return (
-		<Select items={regionData} value={value} onValueChange={onValueChange}>
+		<Select
+			items={regionData}
+			value={value}
+			onValueChange={onValueChange}
+			id={id}
+		>
 			<SelectTrigger className={cn('w-48', className)}>
+				{icon && (
+					<span className="text-muted-foreground flex size-4 shrink-0 items-center justify-center">
+						{icon}
+					</span>
+				)}
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent

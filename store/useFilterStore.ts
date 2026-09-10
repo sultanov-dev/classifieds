@@ -10,7 +10,7 @@ interface IFilterStoreState {
 	isFilterUpdated: boolean
 }
 
-const initileStoreState: Pick<IFilterStoreState, 'queryParams'> = {
+const initialStoreState: Pick<IFilterStoreState, 'queryParams'> = {
 	queryParams: {
 		q: '',
 		sort: ESORT.ALL,
@@ -24,7 +24,7 @@ const initileStoreState: Pick<IFilterStoreState, 'queryParams'> = {
 
 export const useFilterStore = create<IFilterStoreState>()(
 	devtools((set) => ({
-		...initileStoreState,
+		...initialStoreState,
 		isFilterUpdated: false,
 
 		updateQueryParam: ({ key, value }) => {
@@ -34,6 +34,6 @@ export const useFilterStore = create<IFilterStoreState>()(
 			}))
 		},
 
-		reset: () => set(() => ({ ...initileStoreState, isFilterUpdated: true })),
+		reset: () => set(() => ({ ...initialStoreState, isFilterUpdated: true })),
 	})),
 )
