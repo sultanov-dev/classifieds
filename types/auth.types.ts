@@ -17,10 +17,6 @@ export interface IUserData {
 	createdAt: string
 }
 
-type TUserDataAccess = IUserData & {
-	accessToken: ETokens.ACCESSTOKEN
-}
-
 export type TUserResponse = {
 	data: {
 		user: IUserData
@@ -30,7 +26,8 @@ export type TUserResponse = {
 export type TUserUpdataRes = Omit<TUserResponse, 'user'> & {
 	message: string
 	data: {
-		user: TUserDataAccess
+		user: IUserData
+		accessToken: ETokens.ACCESSTOKEN
 	}
 }
 

@@ -1,6 +1,6 @@
 import axios, {
-	CreateAxiosDefaults,
 	type AxiosError,
+	type CreateAxiosDefaults,
 	type InternalAxiosRequestConfig,
 } from 'axios'
 
@@ -48,17 +48,22 @@ instance.interceptors.response.use(
 	async (error: AxiosError) => {
 		const originalRequest = error.config as CustomAxiosRequestConfig
 
-		if (
+		const isAuthError =
 			error.response?.status === 401 ||
 			getErrorMessage(error) === 'jwt expired' ||
-			(getErrorMessage(error) === 'jwt must be provided' &&
-				originalRequest &&
-				!originalRequest._retry)
-		) {
+			getErrorMessage(error) === 'jwt must be provided'
+
+		if (isAuthError && originalRequest && !originalRequest._retry) {
 			originalRequest._retry = true
 
 			try {
-				await authService.getNewTokens()
+				const response = await authService.getNewTokens()
+				const newAccessToken = response.accessToken
+
+				if (newAccessToken && originalRequest.headers) {
+					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+				}
+
 				return instance.request(originalRequest)
 			} catch (error) {
 				if (
@@ -70,5 +75,7 @@ instance.interceptors.response.use(
 				return Promise.reject(error)
 			}
 		}
+
+		return Promise.reject(error)
 	},
 )

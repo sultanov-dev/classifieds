@@ -21,6 +21,7 @@ interface RegionSelectProps {
 	className?: string
 	id?: string
 	icon?: ReactNode
+	disabled?: boolean
 }
 
 export default function RegionSelect({
@@ -30,6 +31,7 @@ export default function RegionSelect({
 	icon,
 	placeholder = 'Viloyatni tanlang',
 	id,
+	disabled,
 }: RegionSelectProps) {
 	const pathname = usePathname()
 
@@ -40,7 +42,7 @@ export default function RegionSelect({
 			onValueChange={onValueChange}
 			id={id}
 		>
-			<SelectTrigger className={cn('w-48', className)}>
+			<SelectTrigger className={cn('w-48', className)} disabled={disabled}>
 				{icon && (
 					<span className="text-muted-foreground flex size-4 shrink-0 items-center justify-center">
 						{icon}

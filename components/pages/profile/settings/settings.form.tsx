@@ -1,8 +1,7 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { LockIcon, MailIcon, MapPin, PhoneIcon, UserIcon } from 'lucide-react'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -11,39 +10,22 @@ import {
 	FieldGroup,
 	FieldLabel,
 } from '@/components/ui/field'
+import { useSettings } from '@/hooks/useSetting'
 import { IconInput } from '@/shared/icon.input'
 import { PassowordStrengthField } from '@/shared/password.stength'
 import RegionSelect from '@/shared/region.select'
 import type { IUserData } from '@/types/auth.types'
-import {
-	settingsSchema,
-	type TSettingsSchema,
-} from '@/validation/settings.validation'
 
 export function SettingsForm({
 	initialData,
 }: {
 	initialData: IUserData | undefined
 }) {
-	const form = useForm<TSettingsSchema>({
-		resolver: zodResolver(settingsSchema),
-		defaultValues: {
-			fullName: initialData?.fullName || '',
-			email: initialData?.email || '',
-			phoneNumber: initialData?.phoneNumber || '+998',
-			region: initialData?.region || 'Toshkent shahri',
-			currentPassword: '',
-			newPassword: '',
-		},
-	})
-
-	const onSubmit = (data: TSettingsSchema) => {
-		console.log(data)
-	}
+	const { form, isPending, handleSubmit } = useSettings(initialData)
 
 	return (
 		<>
-			<form id="settings-form" onSubmit={form.handleSubmit(onSubmit)}>
+			<form id="settings-form" onSubmit={form.handleSubmit(handleSubmit)}>
 				<FieldGroup className="grid grid-cols-1 md:grid-cols-2">
 					<div className="max-h-110 rounded-lg border p-3.5">
 						<h1 className="mb-2 text-3xl font-semibold">
@@ -66,6 +48,7 @@ export function SettingsForm({
 										</FieldLabel>
 
 										<IconInput
+											disabled={isPending}
 											icon={<UserIcon />}
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
@@ -93,6 +76,7 @@ export function SettingsForm({
 										</FieldLabel>
 
 										<IconInput
+											disabled={isPending}
 											icon={<MailIcon />}
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
@@ -121,13 +105,14 @@ export function SettingsForm({
 										</FieldLabel>
 
 										<IconInput
+											disabled={isPending}
 											icon={<PhoneIcon />}
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
 											inputMode="numeric"
 											maxLength={13}
 											id="settings-form-phoneNumber"
-											placeholder="900158502"
+											placeholder="+998900158502"
 											type="tel"
 											onChange={(e) => {
 												const phoneDigits = e.target.value
@@ -157,6 +142,7 @@ export function SettingsForm({
 											Viloyatni tanlang
 										</FieldLabel>
 										<RegionSelect
+											disabled={isPending}
 											icon={<MapPin />}
 											value={field.value ?? ''}
 											onValueChange={field.onChange}
@@ -190,6 +176,7 @@ export function SettingsForm({
 											Parol kiriting
 										</FieldLabel>
 										<IconInput
+											disabled={isPending}
 											icon={<LockIcon />}
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
@@ -216,6 +203,7 @@ export function SettingsForm({
 				size={'lg'}
 				type="submit"
 				form="settings-form"
+				disabled={isPending}
 			>
 				Saqlash
 			</Button>

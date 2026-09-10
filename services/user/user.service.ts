@@ -2,6 +2,8 @@ import { instance } from '@/api/axios'
 import type { TUserResponse, TUserUpdataRes } from '@/types/auth.types'
 import type { TSettingsSchema } from '@/validation/settings.validation'
 
+import { saveTokenStorage } from '../auth/auth.helper'
+
 class UserService {
 	private readonly BASE_URL = '/users'
 
@@ -16,6 +18,9 @@ class UserService {
 			`${this.BASE_URL}/me`,
 			data,
 		)
+
+		if (response.data.data.accessToken)
+			saveTokenStorage(response.data.data.accessToken)
 
 		return response.data
 	}
