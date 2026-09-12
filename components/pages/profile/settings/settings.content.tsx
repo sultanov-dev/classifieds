@@ -3,6 +3,7 @@
 import { useProfile } from '@/hooks/useProfile'
 import { Heading } from '@/shared/heading'
 
+import { FormSkeleton } from './form.skeleton'
 import { SettingsForm } from './settings.form'
 
 export function SettingsContent() {
@@ -11,11 +12,7 @@ export function SettingsContent() {
 	return (
 		<div className="my-9">
 			<Heading title="Sozlamalar" className="mb-10" />
-			{isLoading ? (
-				<div>loading</div>
-			) : (
-				<SettingsForm initialData={data?.user} />
-			)}
+			{isLoading ? <FormSkeleton /> : <SettingsForm initialData={data?.user} />}
 		</div>
 	)
 }

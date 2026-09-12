@@ -105,6 +105,7 @@ export function SettingsForm({
 										</FieldLabel>
 
 										<IconInput
+											value={field.value ?? ''}
 											disabled={isPending}
 											icon={<PhoneIcon />}
 											aria-invalid={fieldState.invalid}
@@ -114,14 +115,7 @@ export function SettingsForm({
 											id="settings-form-phoneNumber"
 											placeholder="+998900158502"
 											type="tel"
-											onChange={(e) => {
-												const phoneDigits = e.target.value
-													.replace(/\D/g, '')
-													.replace(/^998/, '')
-													.slice(0, 9)
-
-												field.onChange(`+998${phoneDigits}`)
-											}}
+											onChange={field.onChange}
 										/>
 
 										{fieldState.invalid && (

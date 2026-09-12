@@ -42,7 +42,7 @@ export function PassowordStrengthField({
 						{...field}
 					/>
 
-					<PassowordStrengthIndicator password={newPassword} />
+					<PassowordStrengthIndicator password={newPassword!} />
 					<p className="text-sm font-normal text-gray-500">
 						Kamida 6 ta belgi, bosh harf, raqam va maxsus belgi bo&apos;lishi
 						kerak.

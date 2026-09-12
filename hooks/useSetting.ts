@@ -11,11 +11,15 @@ import {
 	type TSettingsSchema,
 } from '@/validation/settings.validation'
 
+import { useAuth } from './useAuth'
+
 export const useSettings = (initialData: IUserData | undefined) => {
+	const { setCridentials } = useAuth()
+
 	const form = useForm<TSettingsSchema>({
 		resolver: zodResolver(settingsSchema),
-		defaultValues: {
-			fullName: initialData?.fullName || 'null',
+		values: {
+			fullName: initialData?.fullName || '',
 			email: initialData?.email || '',
 			phoneNumber: initialData?.phoneNumber || '',
 			region: initialData?.region || 'Toshkent shahri',
@@ -29,8 +33,10 @@ export const useSettings = (initialData: IUserData | undefined) => {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['update-settings'],
 		mutationFn: (data: TSettingsSchema) => userService.updateProfile(data),
-		onSuccess: () => {
+		onSuccess: (updatedUser) => {
 			toast.success('Profil yangilandi')
+
+			setCridentials(updatedUser.data.user)
 
 			queryClient.invalidateQueries({ queryKey: ['get-profile'] })
 		},
