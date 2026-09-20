@@ -1,5 +1,6 @@
 import { axiosClassic, instance } from '@/api/axios'
 import type { ICommentsRes, IRepliesRes } from '@/types/comments.type'
+import type { TCommentSchema } from '@/validation/comment.validation'
 
 class CommentService {
 	private readonly LISTINGS = '/listings'
@@ -21,7 +22,7 @@ class CommentService {
 		return response.data
 	}
 
-	async createComment(listingId: string, data: { body: string }) {
+	async createComment(listingId: string, data: TCommentSchema) {
 		const response = await instance.post(
 			`${this.LISTINGS}/${listingId}${this.COMMENTS}`,
 			data,

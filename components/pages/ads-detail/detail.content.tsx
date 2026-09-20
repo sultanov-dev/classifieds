@@ -11,6 +11,7 @@ import { ShareButton } from '@/shared/share.button'
 import type { IListing } from '@/types/listing.types'
 
 import { DetailAttributes } from './detail.attributes'
+import { DetailComments } from './detail.comments'
 
 const DynamicCarousel = dynamic(
 	() => import('./detail.carousel').then((mod) => mod.DetailCarousel),
@@ -28,7 +29,7 @@ export function DetailContent({ item }: { item: IListing }) {
 	}, [item.id])
 
 	return (
-		<section className="bg-background rounded-md p-7 shadow-md">
+		<section className="bg-background mb-10 rounded-md p-7 shadow-md">
 			<DynamicCarousel images={item.images} />
 			<div className="mt-5 flex items-center justify-between border-t pt-5">
 				<div className="flex items-center gap-6">
@@ -65,6 +66,7 @@ export function DetailContent({ item }: { item: IListing }) {
 				/>
 				<p className="text-base leading-7 font-normal">{item.description}</p>
 			</div>
+			<DetailComments />
 		</section>
 	)
 }

@@ -1,15 +1,15 @@
 export interface ICommentsRes {
 	success: boolean
 	data: {
-		comments: Comment[]
+		comments: IComment[]
 		meta: Meta
 	}
 }
 
-export interface Comment {
+export interface IComment {
 	id: string
 	body: string
-	editedAt: string
+	editedAt: string | null
 	parentId: string
 	user: User
 	isSeller: boolean
