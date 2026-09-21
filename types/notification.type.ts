@@ -1,3 +1,6 @@
+export type TNotificationType =
+	'LISTING_COMMENT' | 'COMMENT_REPLY' | 'LISTING_REPLY'
+
 export interface INotificationRes {
 	success: boolean
 	data: {
@@ -14,10 +17,10 @@ export interface INotificationRes {
 
 export interface INotification {
 	id: string
-	type: string
+	type: TNotificationType
 	actor: {
 		id: string
-		fullName: string
+		fullName: string | null
 	}
 	listing: {
 		id: string
@@ -31,4 +34,25 @@ export interface INotification {
 	}
 	readAt: string | null
 	createdAt: string
+}
+
+export interface IQueryNotifications {
+	page?: number
+	limit?: number
+	unread?: boolean
+}
+
+export interface IMarkReadRes {
+	success: boolean
+	message: string
+	data: {
+		updated: number
+		unreadCount: number
+	}
+}
+
+export interface INotificationEvent {
+	v: 1
+	recipientId: string
+	notification: INotification
 }

@@ -17,6 +17,7 @@ import RegionSelect from '@/shared/region.select'
 import AddButton from './add.button'
 import CategoryMenu from './category.menu'
 import LangDropMenu from './lang.dropMenu'
+import NotificationBell from './notification/notification.bell'
 import ProfileMenu from './profile.menu'
 import SearchInput from './search/searchInput'
 
@@ -52,7 +53,10 @@ export default function Header() {
 					) : isLoading ? (
 						<Loader />
 					) : (
-						<ProfileMenu />
+						<>
+							<NotificationBell />
+							<ProfileMenu />
+						</>
 					)}
 				</div>
 			</Container>

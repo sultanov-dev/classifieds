@@ -9,6 +9,7 @@ import './globals.css'
 import { Toaster } from 'sonner'
 
 import { ReactQueryProvider } from '@/providers/react.query'
+import { SocketProvider } from '@/providers/socket.provider'
 
 const poppinsSans = Poppins({
 	variable: '--font-poppins-sans',
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
 	return (
 		<html
-			lang="en"
+			lang="uz"
 			className={cn(
 				'h-full',
 				'antialiased',
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
 			)}
 		>
 			<body className="min-h-full bg-[#FAFAFA]">
-				<ReactQueryProvider>{children}</ReactQueryProvider>
+				<ReactQueryProvider>
+					<SocketProvider>{children}</SocketProvider>
+				</ReactQueryProvider>
 				<Toaster position="top-center" />
 			</body>
 		</html>

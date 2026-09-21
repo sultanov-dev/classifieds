@@ -11,6 +11,7 @@ export function ReactQueryProvider({ children }: { children: ReactNode }) {
 			defaultOptions: {
 				queries: {
 					refetchOnWindowFocus: false,
+					retry: 2,
 				},
 			},
 		}),
