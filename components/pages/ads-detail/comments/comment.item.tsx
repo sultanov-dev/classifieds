@@ -1,3 +1,6 @@
+import { useParams } from 'next/navigation'
+import { useState } from 'react'
+
 import { useQuery } from '@tanstack/react-query'
 
 import { Badge } from '@/components/ui/badge'
@@ -9,13 +12,18 @@ import { Loader } from '@/shared/loader'
 import { useReplyStore } from '@/store/useReplyStore'
 import type { IComment } from '@/types/comments.type'
 
+import { CommentEditForm } from './comment.edit.form'
 import { CommentsHeader } from './comment.header'
-import { CommentReplyForm } from './commnt.reply.form'
+import { CommentReplyForm } from './comment.reply.form'
 import { ReplyItem } from './reply.item'
 
 export function CommentItem({ comment }: { comment: IComment }) {
+	const [isEditing, setIsEditing] = useState(false)
+	const closeReply = useReplyStore((s) => s.closeReply)
+
 	const auth = useAuth()
 	const { replyCommentId } = useReplyStore()
+	const { id } = useParams<{ id: string }>()
 
 	const { data, isLoading, isFetching } = useQuery({
 		queryKey: commentsKeys.replies(comment.id),
@@ -36,9 +44,16 @@ export function CommentItem({ comment }: { comment: IComment }) {
 					<h5 className="text-base font-medium capitalize">
 						{comment.user.fullName}
 					</h5>
-					<span className="text-xs font-semibold tracking-wider">
-						{formatRelativeTime(comment.createdAt)}
-					</span>
+					{comment.editedAt ? (
+						<span className="text-xs font-semibold tracking-wider">
+							{formatRelativeTime(comment.editedAt)}{' '}
+							<span className="text-xs italic">(tahrirlangan)</span>
+						</span>
+					) : (
+						<span className="text-xs font-semibold tracking-wider">
+							{formatRelativeTime(comment.createdAt)}
+						</span>
+					)}
 				</div>
 				{comment.isSeller && (
 					<Badge
@@ -53,9 +68,25 @@ export function CommentItem({ comment }: { comment: IComment }) {
 					commentUserId={comment.user.id}
 					curruntUserId={auth.user?.id}
 					commentId={comment.id}
+					listingId={id}
+					onEdit={() => {
+						closeReply()
+						setIsEditing(true)
+					}}
 				/>
 			</div>
-			<p className="text-sm tracking-wider">{comment.body}</p>
+
+			{isEditing ? (
+				<CommentEditForm
+					comment={comment}
+					commentUserName={comment.user.fullName}
+					replyUserName={auth.user?.fullName}
+					commentId={comment.id}
+					onClose={() => setIsEditing(false)}
+				/>
+			) : (
+				<p className="text-sm tracking-wider">{comment.body}</p>
+			)}
 
 			{isRepliesLoading ? (
 				<div className="flex items-center justify-center">

@@ -11,7 +11,7 @@ export async function generateStaticParams() {
 	const response = await listingService.getLisings({})
 	const data = response.data.listings
 
-	return data.map((item) => ({
+	return data.slice(0, 10).map((item) => ({
 		id: item.id,
 	}))
 }

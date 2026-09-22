@@ -5,7 +5,7 @@ export const commentSchema = z.object({
 })
 
 export const replySchema = z.object({
-	body: z.string(),
+	body: z.string().trim().min(1, "Izoh bo'sh bo'lishi mumkin emas"),
 })
 
 export type TCommentSchema = z.infer<typeof commentSchema>
