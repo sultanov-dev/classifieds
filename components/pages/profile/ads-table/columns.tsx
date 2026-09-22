@@ -1,6 +1,9 @@
+import Link from 'next/link'
+
 import type { ColumnDef } from '@tanstack/react-table'
 import { Pencil } from 'lucide-react'
 
+import { protectPages } from '@/config/pages.config'
 import { formatAdDate, formatCurrency } from '@/lib/utils'
 import { BlurImage } from '@/shared/blur.image'
 import type { TListingRemoveUser } from '@/types/listing.types'
@@ -57,14 +60,13 @@ export const columns: ColumnDef<TListingRemoveUser>[] = [
 		header: 'Harakat',
 		cell: ({ row }) => (
 			<div className="flex items-center gap-2">
-				<button
-					type="button"
-					onClick={() => console.log('Tahrirlash:', row.original.id)}
-					className="cursor-pointer rounded-md bg-transparent p-2 text-blue-600 hover:bg-blue-50"
+				<Link
+					href={protectPages.EDIT_AD(row.original.id)}
+					className="inline-flex cursor-pointer rounded-md bg-transparent p-2 text-blue-600 hover:bg-blue-50"
 					aria-label="E'lonni tahrirlash"
 				>
 					<Pencil size={18} />
-				</button>
+				</Link>
 
 				<DeleteBtn id={row.original.id} />
 			</div>

@@ -5,13 +5,13 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { MEMORYDATA, RAMDATA } from '@/data/region.data'
-import type { TListingSchmema } from '@/validation/create.validadtion'
+import type { TListingFormValues } from '@/validation/create.validadtion'
 
 import { ColorPicker } from './color.picker.fields'
 import { MemoryGroup } from './memory.group'
 
 export function ElectronicFields() {
-	const { control } = useFormContext<TListingSchmema>()
+	const { control } = useFormContext<TListingFormValues>()
 
 	return (
 		<div className="mt-8 flex w-full flex-col gap-4">
@@ -48,11 +48,7 @@ export function ElectronicFields() {
 					</Field>
 				)}
 			/>
-			<MemoryGroup
-				memoryData={MEMORYDATA}
-				ramData={RAMDATA}
-				control={control}
-			/>
+			<MemoryGroup memoryData={MEMORYDATA} ramData={RAMDATA} />
 			<Controller
 				name="attributes.battery"
 				control={control}
@@ -101,7 +97,7 @@ export function ElectronicFields() {
 					</Field>
 				)}
 			/>
-			<ColorPicker control={control} />
+			<ColorPicker />
 		</div>
 	)
 }

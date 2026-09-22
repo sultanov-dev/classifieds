@@ -20,6 +20,15 @@ class ListingService {
 		return response
 	}
 
+	async updateListing(id: string, formData: FormData) {
+		const response = await instance.patch<IListingResponse>(
+			`${this.LISTINGURL}/${id}`,
+			formData,
+		)
+
+		return response.data
+	}
+
 	async getLisings(queryParams: TListingParams | undefined) {
 		const accessToken = getAccesToken()
 

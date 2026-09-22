@@ -56,3 +56,12 @@ export const listingSchema = z.discriminatedUnion('category', [
 ])
 
 export type TListingSchmema = z.infer<typeof listingSchema>
+
+export const editListingSchema = z.discriminatedUnion('category', [
+	transportSchema.omit({ images: true }),
+	electronicsSchema.omit({ images: true }),
+])
+
+export type TListingEditSchema = z.infer<typeof editListingSchema>
+
+export type TListingFormValues = TListingEditSchema

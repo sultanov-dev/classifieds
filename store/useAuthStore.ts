@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
-import { IUserData } from '@/types/auth.types'
+import type { IUserData } from '@/types/auth.types'
 
 interface IAuthState {
 	user: IUserData | null

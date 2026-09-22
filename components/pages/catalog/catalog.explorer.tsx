@@ -6,7 +6,7 @@ import { useFilter } from '@/hooks/useFilter'
 import { useInitialParams } from '@/hooks/useIntitalParams'
 import { listingService } from '@/services/listing.service'
 import Container from '@/shared/container'
-import { IGetListingResponse } from '@/types/listing.types'
+import type { IGetListingResponse } from '@/types/listing.types'
 
 import { CatalogListings } from './catalog.listings'
 import { CatalogPagination } from './catalogPagination'

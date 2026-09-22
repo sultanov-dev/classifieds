@@ -11,7 +11,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import type { TListingSchmema } from '@/validation/create.validadtion'
+import type { TListingFormValues } from '@/validation/create.validadtion'
 
 const CURRENT_YEAR = new Date().getFullYear()
 const YEARS = Array.from({ length: CURRENT_YEAR - 1970 + 1 }, (_, i) =>
@@ -19,7 +19,7 @@ const YEARS = Array.from({ length: CURRENT_YEAR - 1970 + 1 }, (_, i) =>
 )
 
 export function TransportFields() {
-	const { control } = useFormContext<TListingSchmema>()
+	const { control } = useFormContext<TListingFormValues>()
 
 	return (
 		<div className="mt-8 flex w-full flex-col gap-4">

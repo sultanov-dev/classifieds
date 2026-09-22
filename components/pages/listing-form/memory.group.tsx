@@ -1,21 +1,21 @@
-import { Controller, type Control } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import { Field, FieldLabel } from '@/components/ui/field'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import type { TMemory } from '@/data/region.data'
 import { cn } from '@/lib/utils'
-import type { TListingSchmema } from '@/validation/create.validadtion'
+import type { TListingFormValues } from '@/validation/create.validadtion'
 
 export function MemoryGroup({
 	memoryData,
-	control,
 	ramData,
 }: {
 	memoryData: TMemory[]
 	ramData: TMemory[]
-	control: Control<TListingSchmema>
 }) {
+	const { control } = useFormContext<TListingFormValues>()
+
 	return (
 		<>
 			<Controller

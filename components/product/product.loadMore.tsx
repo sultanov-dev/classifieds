@@ -1,7 +1,7 @@
 'use client'
 
 import { useListings } from '@/hooks/useListings'
-import { IGetListingResponse } from '@/types/listing.types'
+import type { IGetListingResponse } from '@/types/listing.types'
 
 import { Button } from '../ui/button'
 import { ProductGrid } from './product.grid'

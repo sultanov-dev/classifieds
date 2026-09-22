@@ -1,19 +1,16 @@
 import { CheckIcon } from 'lucide-react'
-import { Controller, type Control } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Field, FieldLabel } from '@/components/ui/field'
 import { COLORS } from '@/data/region.data'
 import { cn } from '@/lib/utils'
-import type { TListingSchmema } from '@/validation/create.validadtion'
+import type { TListingFormValues } from '@/validation/create.validadtion'
 
 import { useColorPicker } from './hooks/useColorPicker'
 
-export function ColorPicker({
-	control,
-}: {
-	control: Control<TListingSchmema>
-}) {
+export function ColorPicker() {
+	const { control } = useFormContext<TListingFormValues>()
 	const { selectedColor, handleSelectColor } = useColorPicker()
 
 	const activeColorObj = COLORS.find((c) => c.id === selectedColor)

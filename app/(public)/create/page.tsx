@@ -1,4 +1,4 @@
-import { CreateContent } from '@/components/pages/create/create.content'
+import { CreateContent } from '@/components/pages/listing-form/create.content'
 import Container from '@/shared/container'
 
 export default function CreateListing() {

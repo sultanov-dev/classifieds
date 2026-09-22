@@ -1,9 +1,9 @@
 import { useFormContext, useWatch } from 'react-hook-form'
 
-import type { TListingSchmema } from '@/validation/create.validadtion'
+import type { TListingFormValues } from '@/validation/create.validadtion'
 
 export const useColorPicker = () => {
-	const { control, setValue, clearErrors } = useFormContext<TListingSchmema>()
+	const { control, setValue, clearErrors } = useFormContext<TListingFormValues>()
 
 	const selectedColor = useWatch({
 		control,

@@ -6,9 +6,10 @@ import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 import RegionSelect from '@/shared/region.select'
+import type { TListingFormValues } from '@/validation/create.validadtion'
 
 export function CommonFields() {
-	const { control } = useFormContext()
+	const { control } = useFormContext<TListingFormValues>()
 
 	return (
 		<>
