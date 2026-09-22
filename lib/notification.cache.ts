@@ -2,6 +2,8 @@ import type { QueryClient } from '@tanstack/react-query'
 
 import type { INotification, INotificationRes } from '@/types/notification.type'
 
+import { commentsKeys } from './querykeys/comments'
+
 export const NOTIFICATIONS_KEY = ['notifications']
 
 export const NOTIFICATIONS_LIMIT = 20
@@ -90,4 +92,22 @@ export const restoreNotifications = (
 	previous?: INotificationRes,
 ) => {
 	if (previous) queryClient.setQueryData(NOTIFICATIONS_KEY, previous)
+}
+
+export const invalidateCommentQuerys = (
+	queryClient: QueryClient,
+	notification: INotification,
+) => {
+	const { type, listing, comment } = notification
+
+	if (type === 'LISTING_COMMENT') {
+		queryClient.invalidateQueries({ queryKey: commentsKeys.list(listing.id) })
+		return
+	}
+
+	if (comment.parentId) {
+		queryClient.invalidateQueries({
+			queryKey: commentsKeys.replies(comment.parentId),
+		})
+	}
 }

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { commentsKeys } from '@/lib/querykeys/comments'
 import { commentsService } from '@/services/comments/comments.service'
 import { Loader } from '@/shared/loader'
 
@@ -7,7 +8,7 @@ import { CommentItem } from './comment.item'
 
 export function Comments({ listingId }: { listingId: string }) {
 	const { data, isFetching, isLoading } = useQuery({
-		queryKey: ['comments-get'],
+		queryKey: commentsKeys.list(listingId),
 		queryFn: () => commentsService.getListingComments(listingId),
 		select: (data) => data.data.comments,
 		enabled: !!listingId,

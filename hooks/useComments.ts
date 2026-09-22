@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 
+import { commentsKeys } from '@/lib/querykeys/comments'
 import { commentsService } from '@/services/comments/comments.service'
 import { useReplyStore } from '@/store/useReplyStore'
 import {
@@ -25,12 +26,16 @@ export const useComments = (listingId: string, commentId: string | null) => {
 	})
 
 	const { mutate: commentMutate, isPending: commentIsPending } = useMutation({
-		mutationKey: [commentId ? 'reply-create' : 'comment-create'],
+		mutationKey: commentId
+			? commentsKeys.replyCreate
+			: commentsKeys.commentCreate,
 		mutationFn: (data: TCommentSchema) =>
 			commentsService.createComment(listingId, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: [commentId ? 'reply-get' : 'comments-get'],
+				queryKey: commentId
+					? commentsKeys.replies(commentId)
+					: commentsKeys.list(listingId),
 			})
 			commentReset()
 		},

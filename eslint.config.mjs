@@ -1,3 +1,4 @@
+import pluginQuery from '@tanstack/eslint-plugin-query'
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
 import eslintConfigPrettier from 'eslint-config-prettier'
@@ -18,8 +19,10 @@ const eslintConfig = defineConfig([
 	{
 		plugins: {
 			'unused-imports': unusedImports,
+			'@tanstack/query': pluginQuery,
 		},
 		rules: {
+			'@tanstack/query/exhaustive-deps': 'error',
 			'no-unused-vars': 'off',
 			'unused-imports/no-unused-imports': 'error',
 			'unused-imports/no-unused-vars': [

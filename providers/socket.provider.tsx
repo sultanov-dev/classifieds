@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 
 import { useAuth } from '@/hooks/useAuth'
 import {
+	invalidateCommentQuerys,
 	NOTIFICATIONS_KEY,
 	prependNotification,
 } from '@/lib/notification.cache'
@@ -51,6 +52,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 			if (event.v !== 1) return
 
 			prependNotification(queryClient, event.notification)
+			invalidateCommentQuerys(queryClient, event.notification)
 			toast.info(getNotificationMessage(event.notification))
 		})
 

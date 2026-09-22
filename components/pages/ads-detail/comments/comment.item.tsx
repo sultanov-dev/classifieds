@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { Badge } from '@/components/ui/badge'
 import { useAuth } from '@/hooks/useAuth'
+import { commentsKeys } from '@/lib/querykeys/comments'
 import { formatRelativeTime, getInitials } from '@/lib/utils'
 import { commentsService } from '@/services/comments/comments.service'
 import { Loader } from '@/shared/loader'
@@ -17,7 +18,7 @@ export function CommentItem({ comment }: { comment: IComment }) {
 	const { replyCommentId } = useReplyStore()
 
 	const { data, isLoading, isFetching } = useQuery({
-		queryKey: ['reply-get'],
+		queryKey: commentsKeys.replies(comment.id),
 		queryFn: () => commentsService.getCommentReplies(comment.id),
 		select: (data) => data.data,
 	})
