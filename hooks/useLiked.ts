@@ -3,7 +3,7 @@ import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
 import { listingCachePredicate } from '@/lib/querykeys/listing'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import { useLikedStore } from '@/store/liked.store'
 
 export const useLiked = (initialLiked: boolean, listingId: string) => {

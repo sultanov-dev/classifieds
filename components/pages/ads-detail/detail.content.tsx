@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 
 import { formatAdDate, formatCurrency } from '@/lib/utils'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import { Heading } from '@/shared/heading'
 import { LikeButton } from '@/shared/like.button'
 import { ShareButton } from '@/shared/share.button'

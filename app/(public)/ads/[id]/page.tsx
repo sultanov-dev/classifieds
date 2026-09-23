@@ -1,7 +1,7 @@
 import { Phone } from 'lucide-react'
 
 import { DetailContent } from '@/components/pages/ads-detail/detail.content'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import Container from '@/shared/container'
 
 export const dynamicParams = true

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 
 export const deleteListing = async (listingId: string) => {
 	try {

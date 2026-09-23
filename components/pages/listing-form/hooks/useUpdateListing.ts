@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 
 import { protectPages } from '@/config/pages.config'
 import { buildListingUpdateFormData } from '@/lib/listing.mapper'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import type { IListing } from '@/types/listing.types'
 import type { TListingEditSchema } from '@/validation/create.validadtion'
 

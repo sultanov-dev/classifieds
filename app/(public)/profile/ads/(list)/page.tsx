@@ -1,5 +1,5 @@
 import ProfileAds from '@/components/pages/profile/ads-table/profile.ads'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import Container from '@/shared/container'
 
 export const revalidate = 60

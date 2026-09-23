@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useFilter } from '@/hooks/useFilter'
 import { useInitialParams } from '@/hooks/useIntitalParams'
 import { listingKeys } from '@/lib/querykeys/listing'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import Container from '@/shared/container'
 import type { IGetListingResponse } from '@/types/listing.types'
 

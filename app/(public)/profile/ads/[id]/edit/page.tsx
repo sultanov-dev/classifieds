@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 
 import { EditContent } from '@/components/pages/listing-form/edit.content'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import { userService } from '@/services/user/user.service'
 import Container from '@/shared/container'
 

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { ProductGrid } from '@/components/product/product.grid'
 import { listingKeys } from '@/lib/querykeys/listing'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import { GridSkeleton } from '@/shared/grid.loader'
 import { HasNoResult } from '@/shared/hasNoResult'
 import type { TListingRemoveUser } from '@/types/listing.types'

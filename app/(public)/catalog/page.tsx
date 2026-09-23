@@ -1,5 +1,5 @@
 import { CatalogExplorer } from '@/components/pages/catalog/catalog.explorer'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import type { TListingParams } from '@/types/listing.types'
 
 type TSearchParams = Promise<TListingParams>

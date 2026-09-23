@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { MoveRightIcon } from 'lucide-react'
 
 import { publicPages } from '@/config/pages.config'
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import { Heading } from '@/shared/heading'
 
 import { ProductLoadMore } from './product.loadMore'

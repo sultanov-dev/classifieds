@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
-import { listingService } from '@/services/listing.service'
+import { listingService } from '@/services/listing/listing.service'
 import type { TListingSchmema } from '@/validation/create.validadtion'
 
 import { useListingForm } from './useListingForm'
