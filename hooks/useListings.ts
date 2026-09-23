@@ -18,6 +18,8 @@ export const useListings = (
 				pages: [initialData],
 				pageParams: [1],
 			},
+			staleTime: 0,
+			refetchOnMount: 'always',
 			getNextPageParam: (lastPage, allPages) => {
 				if (lastPage.data.listings.length < 10) return undefined
 

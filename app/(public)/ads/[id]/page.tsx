@@ -8,7 +8,7 @@ export const dynamicParams = true
 export const revalidate = 20
 
 export async function generateStaticParams() {
-	const response = await listingService.getLisings({})
+	const response = await listingService.getListingsPublic({})
 	const data = response.data.listings
 
 	return data.slice(0, 10).map((item) => ({
@@ -23,7 +23,7 @@ export default async function AdsDetailPage({
 }) {
 	const id = (await params).id
 
-	const listing = await listingService.getLisingById(id)
+	const listing = await listingService.getListingByIdPublic(id)
 
 	return (
 		<Container>

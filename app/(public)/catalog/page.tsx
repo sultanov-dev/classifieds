@@ -4,8 +4,6 @@ import type { TListingParams } from '@/types/listing.types'
 
 type TSearchParams = Promise<TListingParams>
 
-export const revalidate = 30
-
 export default async function CatalogPage({
 	searchParams,
 }: {

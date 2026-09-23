@@ -1,4 +1,4 @@
-import { instance } from '@/api/axios'
+import { axiosClassic, instance } from '@/api/axios'
 import type {
 	IGetListingResponse,
 	IGetListingUserViewResponse,
@@ -98,6 +98,25 @@ class ListingService {
 		const response = await instance.delete(`${this.LISTINGURL}/${id}`)
 
 		return response
+	}
+
+	async getListingsPublic(queryParams?: TListingParams) {
+		const response = await axiosClassic.get<IGetListingResponse>(
+			`${this.LISTINGURL}`,
+			{
+				params: queryParams ?? {},
+			},
+		)
+
+		return response.data
+	}
+
+	async getListingByIdPublic(id: string) {
+		const response = await axiosClassic.get<IListingResponse>(
+			`${this.LISTINGURL}/${id}`,
+		)
+
+		return response.data.data
 	}
 }
 

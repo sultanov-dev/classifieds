@@ -3,6 +3,9 @@
 import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 
+import { useQuery } from '@tanstack/react-query'
+
+import { listingKeys } from '@/lib/querykeys/listing'
 import { formatAdDate, formatCurrency } from '@/lib/utils'
 import { listingService } from '@/services/listing/listing.service'
 import { Heading } from '@/shared/heading'
@@ -20,7 +23,17 @@ const DynamicCarousel = dynamic(
 	},
 )
 
-export function DetailContent({ item }: { item: IListing }) {
+export function DetailContent({ item: initialItem }: { item: IListing }) {
+	const { data } = useQuery({
+		queryKey: listingKeys.detail(initialItem.id),
+		queryFn: () => listingService.getLisingById(initialItem.id),
+		initialData: { listing: initialItem },
+		staleTime: 0,
+		refetchOnMount: 'always',
+	})
+
+	const item = data.listing
+
 	useEffect(() => {
 		const viewListings = async () => {
 			await listingService.viewListing(item.id)

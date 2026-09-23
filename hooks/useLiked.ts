@@ -2,17 +2,21 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
-import { listingCachePredicate } from '@/lib/querykeys/listing'
+import { applyLikeToCache } from '@/lib/listing.cache'
+import { listingCachePredicate, listingKeys } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing/listing.service'
 import { useLikedStore } from '@/store/liked.store'
+
+import { useLikedIds } from './useLikedIds'
 
 export const useLiked = (initialLiked: boolean, listingId: string) => {
 	const queryClient = useQueryClient()
 	const override = useLikedStore((s) => s.overrides[listingId])
 	const setLiked = useLikedStore((s) => s.setLiked)
-	const revert = useLikedStore((s) => s.revert)
 
-	const isLiked = override ?? initialLiked
+	const likedIds = useLikedIds()
+	const serverLiked = likedIds?.has(listingId) ?? initialLiked
+	const isLiked = override ?? serverLiked
 
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['like-listing', listingId],
@@ -27,6 +31,7 @@ export const useLiked = (initialLiked: boolean, listingId: string) => {
 			})
 
 			setLiked(listingId, next)
+			applyLikeToCache(queryClient, listingId, next)
 
 			return { snapshot, previous: isLiked }
 		},
@@ -48,7 +53,7 @@ export const useLiked = (initialLiked: boolean, listingId: string) => {
 		onSettled: () => {
 			if (queryClient.isMutating({ mutationKey: ['like-listing'] }) > 1) return
 
-			revert(listingId)
+			queryClient.invalidateQueries({ queryKey: [listingKeys.likedIds] })
 			queryClient.invalidateQueries({ predicate: listingCachePredicate })
 		},
 	})

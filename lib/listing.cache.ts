@@ -28,7 +28,7 @@ const mapListing = (
 		}
 	}
 
-	if (!old.data.listings) return old
+	if (!old.data?.listings) return old
 
 	return { ...old, data: { ...old.data, listings: fn(old.data.listings) } }
 }
@@ -38,6 +38,22 @@ export const applyLikeToCache = (
 	id: string,
 	liked: boolean,
 ) => {
+	queryClient.setQueriesData<Set<string>>(
+		{ queryKey: [listingKeys.likedIds] },
+		(old) => {
+			if (!old) return old
+
+			const next = new Set(old)
+
+			if (liked) {
+				next.add(id)
+			} else {
+				next.delete(id)
+			}
+			return next
+		},
+	)
+
 	queryClient.setQueriesData<TListingCache>(
 		{ predicate: listingCachePredicate },
 		(old) =>
