@@ -1,11 +1,12 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 
+import { listingKeys } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing.service'
 
 export const useInifinityListings = () => {
 	const { hasNextPage, isFetchingNextPage, fetchNextPage, data, isLoading } =
 		useInfiniteQuery({
-			queryKey: ['viewed-listings'],
+			queryKey: [listingKeys.viewed],
 			queryFn: ({ pageParam }) =>
 				listingService.getUserViewed({ cursor: pageParam, limit: 10 }),
 			initialPageParam: null as string | null,

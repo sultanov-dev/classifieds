@@ -1,8 +1,6 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
-
-import { listingService } from '@/services/listing.service'
+import { useMyListings } from '@/hooks/useMyListings'
 import { HasNoResult } from '@/shared/hasNoResult'
 import type {
 	IGetListingResponse,
@@ -18,15 +16,7 @@ export default function ProfileAds({
 }: {
 	initialData: IGetListingResponse
 }) {
-	const { data, isFetching, isLoading } = useQuery({
-		queryKey: ['my-listings'],
-		queryFn: () => listingService.getMylistings(),
-		initialData: initialData,
-		select: (data) => data.data,
-		staleTime: 60 * 1000,
-	})
-
-	const isListingLoad = isFetching || isLoading
+	const { isListingLoad, data } = useMyListings(initialData)
 
 	const listings = (data?.listings ?? []) as TListingRemoveUser[]
 	const hasNoListings = !isListingLoad && listings.length === 0

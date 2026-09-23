@@ -1,12 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { listingKeys } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing.service'
+import type { IGetListingResponse } from '@/types/listing.types'
 
-export const useMyListings = () => {
+export const useMyListings = (initialData: IGetListingResponse) => {
 	const { data, isFetching, isLoading } = useQuery({
-		queryKey: ['my-listings'],
+		queryKey: [listingKeys.myListings],
 		queryFn: () => listingService.getMylistings(),
-		select: (data) => data,
+		select: (data) => data.data,
+		initialData: initialData,
+		staleTime: 60 * 1000,
 	})
 
 	const isListingLoad = isFetching || isLoading

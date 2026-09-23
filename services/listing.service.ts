@@ -1,12 +1,10 @@
-import { axiosClassic, instance } from '@/api/axios'
+import { instance } from '@/api/axios'
 import type {
 	IGetListingResponse,
 	IGetListingUserViewResponse,
 	IListingResponse,
 	TListingParams,
 } from '@/types/listing.types'
-
-import { getAccesToken } from './auth/auth.helper'
 
 class ListingService {
 	private LISTINGURL = '/listings'
@@ -30,12 +28,9 @@ class ListingService {
 	}
 
 	async getLisings(queryParams: TListingParams | undefined) {
-		const accessToken = getAccesToken()
-
-		const response = await axiosClassic.get<IGetListingResponse>(
+		const response = await instance.get<IGetListingResponse>(
 			`${this.LISTINGURL}`,
 			{
-				headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
 				params: queryParams ? queryParams : {},
 			},
 		)
@@ -44,13 +39,8 @@ class ListingService {
 	}
 
 	async getLisingById(id: string) {
-		const accessToken = getAccesToken()
-
-		const response = await axiosClassic.get<IListingResponse>(
+		const response = await instance.get<IListingResponse>(
 			`${this.LISTINGURL}/${id}`,
-			{
-				headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-			},
 		)
 
 		return response.data.data

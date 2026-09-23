@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 
+import { listingKeys } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing.service'
 import type { IGetListingResponse } from '@/types/listing.types'
 
@@ -9,7 +10,7 @@ export const useListings = (
 ) => {
 	const { hasNextPage, isFetchingNextPage, fetchNextPage, data } =
 		useInfiniteQuery({
-			queryKey: ['listings', type],
+			queryKey: [listingKeys.root, type],
 			queryFn: ({ pageParam }) =>
 				listingService.getLisings({ page: pageParam, type, limit: 10 }),
 			initialPageParam: 1,

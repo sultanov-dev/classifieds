@@ -1,106 +1,57 @@
-import { useCallback } from 'react'
-
-import {
-	useMutation,
-	useQueryClient,
-	type QueryKey,
-} from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
+import { listingCachePredicate } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing.service'
-import type { IGetListingResponse } from '@/types/listing.types'
+import { useLikedStore } from '@/store/liked.store'
 
 export const useLiked = (initialLiked: boolean, listingId: string) => {
 	const queryClient = useQueryClient()
+	const override = useLikedStore((s) => s.overrides[listingId])
+	const setLiked = useLikedStore((s) => s.setLiked)
+	const revert = useLikedStore((s) => s.revert)
 
-	const { mutate: likedMutate, isPending: likeLoading } = useMutation({
+	const isLiked = override ?? initialLiked
+
+	const { mutate, isPending } = useMutation({
 		mutationKey: ['like-listing', listingId],
-		mutationFn: (id: string) => listingService.likedListing(id),
-		onMutate: async (id) => {
-			await Promise.all([
-				queryClient.cancelQueries({ queryKey: ['catalog-explorer'] }),
-				queryClient.cancelQueries({ queryKey: ['listings'] }),
-				queryClient.cancelQueries({ queryKey: ['liked-my-listings'] }),
-			])
+		scope: { id: `like-${listingId}` },
+		mutationFn: () => listingService.likedListing(listingId),
+		onMutate: async () => {
+			const next = !isLiked
 
-			const previousCatalog = queryClient.getQueriesData({
-				queryKey: ['catalog-explorer'],
-			})
-			const previousListings = queryClient.getQueriesData({
-				queryKey: ['listings'],
-			})
-			const previousMyLiked = queryClient.getQueriesData({
-				queryKey: ['liked-my-listings'],
+			await queryClient.cancelQueries({ predicate: listingCachePredicate })
+			const snapshot = queryClient.getQueriesData({
+				predicate: listingCachePredicate,
 			})
 
-			const toggleLikedInCache = (queryKey: QueryKey) => {
-				queryClient.setQueriesData<IGetListingResponse>({ queryKey }, (old) => {
-					if (!old?.data?.listings?.length) return old
+			setLiked(listingId, next)
 
-					return {
-						...old,
-						data: {
-							...old.data,
-							listings: old.data.listings.map((item) =>
-								item.id === id ? { ...item, isLiked: !item.isLiked } : item,
-							),
-						},
-					}
-				})
-			}
-
-			toggleLikedInCache(['catalog-explorer'])
-			toggleLikedInCache(['listings'])
-
-			queryClient.setQueriesData<IGetListingResponse>(
-				{ queryKey: ['liked-my-listings'] },
-				(old) => {
-					if (!old?.data?.listings?.length) return old
-
-					return {
-						...old,
-						data: {
-							...old.data,
-							listings: old.data.listings.filter((item) => item.id !== id),
-						},
-					}
-				},
+			return { snapshot, previous: isLiked }
+		},
+		onError: (err, _id, context) => {
+			context?.snapshot.forEach(([key, data]) =>
+				queryClient.setQueryData(key, data),
 			)
 
-			return { previousCatalog, previousListings, previousMyLiked }
-		},
-		onError: (err, id, context) => {
-			context?.previousListings.forEach(([queryKey, data]) => {
-				queryClient.setQueryData(queryKey, data)
-			})
-			context?.previousListings.forEach(([queryKey, data]) => {
-				queryClient.setQueryData(queryKey, data)
-			})
+			if (context) setLiked(listingId, context.previous)
 
-			context?.previousListings.forEach(([queryKey, data]) => {
-				queryClient.setQueryData(queryKey, data)
-			})
+			if (isAxiosError(err) && err.response?.status === 401) {
+				toast.error('Avval tizimga kiring')
+
+				return
+			}
 
 			toast.error("Xatolik bo'ldi")
 		},
-		onSettled: async () => {
-			await Promise.all([
-				queryClient.invalidateQueries({
-					queryKey: ['catalog-explorer'],
-				}),
-				queryClient.invalidateQueries({ queryKey: ['listings'] }),
-				queryClient.invalidateQueries({
-					queryKey: ['liked-my-listings'],
-				}),
-			])
+		onSettled: () => {
+			if (queryClient.isMutating({ mutationKey: ['like-listing'] }) > 1) return
+
+			revert(listingId)
+			queryClient.invalidateQueries({ predicate: listingCachePredicate })
 		},
 	})
 
-	const handleToggle = useCallback(() => {
-		if (!likeLoading) {
-			likedMutate(listingId)
-		}
-	}, [likedMutate, likeLoading, listingId])
-
-	return { likeLoading, handleToggle, initialLiked }
+	return { isPending, toggle: () => mutate(), isLiked }
 }

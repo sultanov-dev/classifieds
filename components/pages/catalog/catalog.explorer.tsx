@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { useFilter } from '@/hooks/useFilter'
 import { useInitialParams } from '@/hooks/useIntitalParams'
+import { listingKeys } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing.service'
 import Container from '@/shared/container'
 import type { IGetListingResponse } from '@/types/listing.types'
@@ -22,7 +23,7 @@ export function CatalogExplorer({
 	const { queryParams, isFilterUpdated, isPending: filterPending } = useFilter()
 
 	const { data, isPending, isLoading, isFetching, isRefetching } = useQuery({
-		queryKey: ['catalog-explorer', queryParams],
+		queryKey: [listingKeys.catalog, queryParams],
 		queryFn: () => listingService.getLisings(queryParams),
 		initialData: initialData,
 		enabled: isFilterUpdated,
