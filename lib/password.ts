@@ -1,10 +1,18 @@
+import type { TTranslator } from '@/types/i18n.types'
+
 type TReturn = {
 	score: number
 	color: string
 	label: string
 }
 
-export const getPasswordStrength = (password: string): TReturn => {
+/**
+ * @param t `useTranslations('Password')` dan olingan tarjimon
+ */
+export const getPasswordStrength = (
+	password: string,
+	t: TTranslator<'Password'>,
+): TReturn => {
 	if (!password) return { score: 0, color: 'bg-muted', label: '' }
 
 	let score = 0
@@ -16,13 +24,13 @@ export const getPasswordStrength = (password: string): TReturn => {
 
 	switch (score) {
 		case 1:
-			return { score: 1, color: 'bg-red-500', label: 'Juda zaif' }
+			return { score: 1, color: 'bg-red-500', label: t('veryWeak') }
 		case 2:
-			return { score: 2, color: 'bg-orange-500', label: 'Zaif' }
+			return { score: 2, color: 'bg-orange-500', label: t('weak') }
 		case 3:
-			return { score: 3, color: 'bg-yellow-500', label: "O'rtacha" }
+			return { score: 3, color: 'bg-yellow-500', label: t('medium') }
 		case 4:
-			return { score: 4, color: 'bg-emerald-500', label: 'Juda kuchli' }
+			return { score: 4, color: 'bg-emerald-500', label: t('strong') }
 		default:
 			return { score: 0, color: 'bg-muted', label: '' }
 	}

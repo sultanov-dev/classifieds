@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 import { Loader } from '@/shared/loader'
 import type { INotification } from '@/types/notification.type'
 
@@ -14,6 +16,8 @@ export function NotificationList({
 	isLoading,
 	onRead,
 }: INotificationListProps) {
+	const t = useTranslations('Header')
+
 	if (isLoading)
 		return (
 			<div className="flex items-center justify-center py-8">
@@ -24,7 +28,7 @@ export function NotificationList({
 	if (!notifications.length)
 		return (
 			<p className="text-muted-foreground py-8 text-center text-sm">
-				Hozircha bildirishnoma yo&apos;q
+				{t('noNotifications')}
 			</p>
 		)
 

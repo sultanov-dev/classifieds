@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 import { Button } from '@/components/ui/button'
 import { useFilter } from '@/hooks/useFilter'
 import RegionSelect from '@/shared/region.select'
@@ -7,6 +9,7 @@ import RegionSelect from '@/shared/region.select'
 import { StatusSort } from './catalog.status'
 
 export function CatalogFilter() {
+	const t = useTranslations('Common')
 	const { queryParams, updateQueryParams, resetQueryParams } = useFilter()
 
 	const fromValue = queryParams.minPrice || 0
@@ -16,7 +19,7 @@ export function CatalogFilter() {
 		<div className="bg-background sticky top-6 rounded-md p-3 shadow">
 			<RegionSelect
 				className="mb-5 w-full"
-				value={queryParams.region || 'Toskent shahri'}
+				value={queryParams.region || 'TOSHKENT_SHAHRI'}
 				onValueChange={(value) => updateQueryParams('region', String(value))}
 			/>
 			{/* <RangeSlider
@@ -34,7 +37,7 @@ export function CatalogFilter() {
 				variant={'outline'}
 				onClick={resetQueryParams}
 			>
-				Reset
+				{t('reset')}
 			</Button>
 		</div>
 	)

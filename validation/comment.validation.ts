@@ -1,12 +1,18 @@
 import * as z from 'zod'
 
+import type { TTranslator } from '@/types/i18n.types'
+
 export const commentSchema = z.object({
 	body: z.string(),
 })
 
-export const replySchema = z.object({
-	body: z.string().trim().min(1, "Izoh bo'sh bo'lishi mumkin emas"),
-})
+/**
+ * @param t `useTranslations('Validation')` dan olingan tarjimon
+ */
+export const createReplySchema = (t: TTranslator<'Validation'>) =>
+	z.object({
+		body: z.string().trim().min(1, t('commentEmpty')),
+	})
 
 export type TCommentSchema = z.infer<typeof commentSchema>
-export type TReplySchema = z.infer<typeof replySchema>
+export type TReplySchema = z.infer<ReturnType<typeof createReplySchema>>

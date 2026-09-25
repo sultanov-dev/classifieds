@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Controller, type Control } from 'react-hook-form'
 
 import { Field, FieldLabel } from '@/components/ui/field'
@@ -12,6 +13,8 @@ export function ImageUpload({
 	control: Control<TListingSchmema>
 	isLoading: boolean
 }) {
+	const t = useTranslations('ListingForm')
+
 	return (
 		<Controller<TListingSchmema, 'images'>
 			name="images"
@@ -23,10 +26,10 @@ export function ImageUpload({
 							className="text-base font-semibold"
 							id="create-listing-images"
 						>
-							Elon rasmlari
+							{t('images')}
 						</FieldLabel>
 						<span className="text-muted-foreground text-xs">
-							Birinchi rasm asosiy boladi
+							{t('imagesHint')}
 						</span>
 					</div>
 

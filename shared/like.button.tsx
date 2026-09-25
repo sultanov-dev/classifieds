@@ -1,6 +1,7 @@
 'use client'
 
 import { HeartIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import { useLiked } from '@/hooks/useLiked'
@@ -16,6 +17,7 @@ type Props = {
 }
 
 export function LikeButton({ size, className, initialLiked, id }: Props) {
+	const t = useTranslations('AdDetail')
 	const { isLiked, toggle, isPending } = useLiked(initialLiked, id)
 
 	return (
@@ -24,7 +26,7 @@ export function LikeButton({ size, className, initialLiked, id }: Props) {
 			onClick={toggle}
 			className={className}
 			size={size}
-			aria-label={isLiked ? 'Like-ni bekor qilish' : 'Like qilish'}
+			aria-label={isLiked ? t('likeRemove') : t('likeAdd')}
 		>
 			<HeartIcon
 				className={cn(

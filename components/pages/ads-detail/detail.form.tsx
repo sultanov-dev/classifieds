@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Controller } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -6,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useComments } from '@/hooks/useComments'
 
 export function DetailForm({ listingId }: { listingId: string }) {
+	const t = useTranslations('Comments')
 	const {
 		commentControl,
 		commentHandleSubmit,
@@ -26,14 +28,14 @@ export function DetailForm({ listingId }: { listingId: string }) {
 									id="comment-form-body"
 									className="font-normal tracking-wide"
 								>
-									Fikr va mulohaza
+									{t('label')}
 								</FieldLabel>
 								<Textarea
 									className="h-18 resize-none bg-blue-100 focus-visible:ring-0 focus-visible:outline-none"
 									aria-invalid={fieldState.invalid}
 									rows={1000}
 									id="comment-form-body"
-									placeholder="E'lon haqida o'z izohlaringizni yozing..."
+									placeholder={t('placeholder')}
 									disabled={commentIsPending}
 									{...field}
 								/>
@@ -49,7 +51,7 @@ export function DetailForm({ listingId }: { listingId: string }) {
 				type="submit"
 				disabled={commentIsPending}
 			>
-				Izoh qoldirish
+				{t('submit')}
 			</Button>
 		</>
 	)

@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { FormProvider } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -16,6 +17,9 @@ import { ImageUpload } from './image.upload'
 import { TransportFields } from './transport.fields'
 
 export function CreateContent() {
+	const t = useTranslations('ListingForm')
+	const tCommon = useTranslations('Common')
+
 	const {
 		isLoading,
 		onSubmit,
@@ -62,12 +66,12 @@ export function CreateContent() {
 						onClick={prevStep}
 						disabled={currentStep === 1}
 					>
-						← Orqaga
+						← {tCommon('back')}
 					</Button>
 
 					{currentStep < STEPS.length ? (
 						<Button type="button" onClick={nextStep}>
-							Keyingisi →
+							{tCommon('next')} →
 						</Button>
 					) : (
 						<Button
@@ -76,7 +80,7 @@ export function CreateContent() {
 							className="bg-green-600 hover:bg-green-700"
 							disabled={isLoading}
 						>
-							Elonni joylash
+							{t('submit')}
 							{isLoading && <Loader />}
 						</Button>
 					)}

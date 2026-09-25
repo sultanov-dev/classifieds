@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { useLocale, useTranslations } from 'next-intl'
 
 import { useFilter } from '@/hooks/useFilter'
 import { useInitialParams } from '@/hooks/useIntitalParams'
@@ -18,12 +19,15 @@ export function CatalogExplorer({
 }: {
 	initialData: IGetListingResponse
 }) {
+	const t = useTranslations('Catalog')
+	const locale = useLocale()
+
 	useInitialParams()
 
 	const { queryParams, isFilterUpdated, isPending: filterPending } = useFilter()
 
 	const { data, isPending, isLoading, isFetching, isRefetching } = useQuery({
-		queryKey: [listingKeys.catalog, queryParams],
+		queryKey: [listingKeys.catalog, queryParams, locale],
 		queryFn: () => listingService.getLisings(queryParams),
 		initialData: initialData,
 		enabled: isFilterUpdated,
@@ -40,9 +44,7 @@ export function CatalogExplorer({
 					<CatalogFilter />
 				</aside>
 				{!data.listings?.length ? (
-					<div className="flex items-center justify-center">
-						So&apos;rovlar bo&apos;yicha e&apos;lon topilmadi
-					</div>
+					<div className="flex items-center justify-center">{t('empty')}</div>
 				) : (
 					<CatalogListings isLoading={isCatalogLoading} data={data} />
 				)}

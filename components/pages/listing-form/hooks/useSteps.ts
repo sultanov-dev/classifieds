@@ -1,24 +1,34 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
+import { useTranslations } from 'next-intl'
 import type { UseFormReturn } from 'react-hook-form'
 
 import {
-	baseSchema,
-	electronicsSchema,
-	transportSchema,
+	createListingSchemas,
 	type TListingSchmema,
 } from '@/validation/create.validadtion'
-
-const STEPS = [
-	{ id: 1, title: 'Asosiy' },
-	{ id: 2, title: 'Xususiyatlar' },
-	{ id: 3, title: 'Rasmlar' },
-]
 
 export const useSteps = (
 	form: UseFormReturn<TListingSchmema>,
 	selectedCategory: string,
 ) => {
+	const t = useTranslations('ListingForm')
+	const tValidation = useTranslations('Validation')
+
+	const STEPS = useMemo(
+		() => [
+			{ id: 1, title: t('stepBasic') },
+			{ id: 2, title: t('stepAttributes') },
+			{ id: 3, title: t('stepImages') },
+		],
+		[t],
+	)
+
+	const { baseSchema, transportSchema, electronicsSchema } = useMemo(
+		() => createListingSchemas(tValidation),
+		[tValidation],
+	)
+
 	const [step, setStep] = useState<number>(1)
 
 	const nextStep = () => {

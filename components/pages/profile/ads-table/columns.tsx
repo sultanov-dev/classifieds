@@ -1,19 +1,24 @@
-import Link from 'next/link'
-
 import type { ColumnDef } from '@tanstack/react-table'
 import { Pencil } from 'lucide-react'
 
 import { protectPages } from '@/config/pages.config'
+import { Link } from '@/i18n/navigation'
 import { formatAdDate, formatCurrency } from '@/lib/utils'
 import { BlurImage } from '@/shared/blur.image'
+import type { TTranslator } from '@/types/i18n.types'
 import type { TListingRemoveUser } from '@/types/listing.types'
 
 import { DeleteBtn } from './delete.btn'
 
-export const columns: ColumnDef<TListingRemoveUser>[] = [
+/**
+ * @param t `useTranslations('Profile')` dan olingan tarjimon
+ */
+export const getColumns = (
+	t: TTranslator<'Profile'>,
+): ColumnDef<TListingRemoveUser>[] => [
 	{
 		id: 'image',
-		header: "Sur'ati",
+		header: t('adsImage'),
 		cell: ({ row }) => (
 			<div className="relative size-14 overflow-hidden rounded-md">
 				<BlurImage
@@ -28,14 +33,14 @@ export const columns: ColumnDef<TListingRemoveUser>[] = [
 	},
 	{
 		accessorKey: 'title',
-		header: 'Nomi',
+		header: t('adsTitle'),
 		cell: ({ row }) => (
 			<p className="max-w-70 truncate font-medium">{row.original.title}</p>
 		),
 	},
 	{
 		accessorKey: 'price',
-		header: 'Narxi',
+		header: t('adsPrice'),
 		cell: ({ row }) => (
 			<p className="font-medium whitespace-nowrap" suppressHydrationWarning>
 				{formatCurrency(row.original.price, {
@@ -48,7 +53,7 @@ export const columns: ColumnDef<TListingRemoveUser>[] = [
 	},
 	{
 		accessorKey: 'createdAt',
-		header: 'Sana',
+		header: t('adsDate'),
 		cell: ({ row }) => (
 			<p className="whitespace-nowrap">
 				{formatAdDate(row.original.createdAt)}
@@ -57,13 +62,13 @@ export const columns: ColumnDef<TListingRemoveUser>[] = [
 	},
 	{
 		id: 'actions',
-		header: 'Harakat',
+		header: t('adsActions'),
 		cell: ({ row }) => (
 			<div className="flex items-center gap-2">
 				<Link
 					href={protectPages.EDIT_AD(row.original.id)}
 					className="inline-flex cursor-pointer rounded-md bg-transparent p-2 text-blue-600 hover:bg-blue-50"
-					aria-label="E'lonni tahrirlash"
+					aria-label={t('adsEdit')}
 				>
 					<Pencil size={18} />
 				</Link>

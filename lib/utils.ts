@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
+import type { TTranslator } from '@/types/i18n.types'
+
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
@@ -66,31 +68,34 @@ export function getInitials(name?: string | null): string {
 	return (parts[0][0] + parts[1][0]).toUpperCase()
 }
 
-export const formatRelativeTime = (dateInput: string | number | Date) => {
+export const formatRelativeTime = (
+	dateInput: string | number | Date,
+	t: TTranslator<'Time'>,
+) => {
 	const date = new Date(dateInput)
 	const now = new Date()
 	const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
 
 	if (diffInSeconds < 30) {
-		return 'hozirgina'
+		return t('now')
 	}
 
 	const intervals = [
-		{ label: 'yil', seconds: 31536000 },
-		{ label: 'oy', seconds: 2592000 },
-		{ label: 'hafta', seconds: 604800 },
-		{ label: 'kun', seconds: 86400 },
-		{ label: 'soat', seconds: 3600 },
-		{ label: 'daqiqa', seconds: 60 },
-	]
+		{ key: 'year', seconds: 31536000 },
+		{ key: 'month', seconds: 2592000 },
+		{ key: 'week', seconds: 604800 },
+		{ key: 'day', seconds: 86400 },
+		{ key: 'hour', seconds: 3600 },
+		{ key: 'minute', seconds: 60 },
+	] as const
 
 	for (const interval of intervals) {
 		const count = Math.floor(diffInSeconds / interval.seconds)
 
 		if (count >= 1) {
-			return `${count} ${interval.label} oldin`
+			return t(interval.key, { count })
 		}
 	}
 
-	return 'hozirgina'
+	return t('now')
 }

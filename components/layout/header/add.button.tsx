@@ -1,11 +1,12 @@
-import { useRouter } from 'next/navigation'
-
 import { PlusIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import { protectPages } from '@/config/pages.config'
+import { useRouter } from '@/i18n/navigation'
 
 export default function AddButton() {
+	const t = useTranslations('Header')
 	const { push } = useRouter()
 
 	return (
@@ -15,7 +16,7 @@ export default function AddButton() {
 		>
 			<PlusIcon className="size-5" />
 			<span className="hidden text-base font-normal capitalize md:block">
-				Qoshish
+				{t('addListing')}
 			</span>
 		</Button>
 	)

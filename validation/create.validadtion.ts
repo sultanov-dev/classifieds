@@ -1,67 +1,80 @@
 import { z } from 'zod'
 
-export const baseSchema = z.object({
-	subCategory: z.string('Kichik kategoriyani tanlang'),
-	price: z
-		.number('Narxni raqamlarda kiriting')
-		.positive("Narx noldan katta bo'lishi kerak"),
-	region: z.string('Hududni tanlang'),
-	description: z.string().min(60, "Ko'proq ma'lumot yozing"),
-	title: z
-		.string()
-		.min(10, "Sarlavhani toliqroq yo'zing")
-		.max(120, 'Sarlavha 120ta belgidan oshmasligi kerak'),
-	currency: z.enum(['USD', 'UZS'], 'Valyutani tanlang'),
-})
+import type { TTranslator } from '@/types/i18n.types'
 
-const imagesSchema = z.object({
-	images: z
-		.array(z.custom<File>((val) => val instanceof File, "Fayl bo'lishi kerak"))
-		.min(1, 'Kamida 1 ta rasm yuklashingiz kerak')
-		.max(6, 'Maksimal 10 ta rasm yuklash mumkin'),
-})
+/**
+ * E'lon formasining barcha sxemalari. Xato matnlari tarjima qilinishi kerak
+ * bo'lgani uchun sxemalar modul darajasida emas, `t` ni qabul qiladigan
+ * factory ichida quriladi.
+ *
+ * @param t `useTranslations('Validation')` dan olingan tarjimon
+ */
+export const createListingSchemas = (t: TTranslator<'Validation'>) => {
+	const baseSchema = z.object({
+		subCategory: z.string(t('subCategoryRequired')),
+		price: z.number(t('priceNumber')).positive(t('pricePositive')),
+		region: z.string(t('regionSelect')),
+		description: z.string().min(60, t('descriptionMin')),
+		title: z.string().min(10, t('titleMin')).max(120, t('titleMax')),
+		currency: z.enum(['USD', 'UZS'], t('currencyRequired')),
+	})
 
-export const transportSchema = baseSchema.extend({
-	category: z.literal('transport'),
-	images: imagesSchema.shape.images,
-	attributes: z.object({
-		marka: z.string().min(1, 'Markani kiriting'),
-		model: z.string().min(1, 'Modelni kiriting'),
-		year: z
-			.number()
-			.min(2001, 'Yili xato kiritildi')
-			.max(2026, "Xali kelmagan yilni kiritib bo'lmaydi"),
-		mileage: z.number().min(0, "Probeg 0 dan kichik bo'lamaydi"),
-		transmission: z.enum(['mexanik', 'avtomat'], 'Karobkani tanlang'),
-	}),
-})
+	const imagesSchema = z.object({
+		images: z
+			.array(z.custom<File>((val) => val instanceof File, t('imageFile')))
+			.min(1, t('imagesMin'))
+			.max(6, t('imagesMax')),
+	})
 
-export const electronicsSchema = baseSchema.extend({
-	category: z.literal('electronics'),
-	images: imagesSchema.shape.images,
-	attributes: z.object({
-		brand: z.string().min(1, 'Brendni kiriting (masalan: Apple)'),
-		model: z.string().min(1, 'Brendni kiriting (masalan: Apple)'),
-		memory: z.string().min(1, 'Xotirani tanlang'),
-		ramMemory: z.string().min(1, 'Ram xotirani tanlang'),
-		color: z.string().min(1, 'Rangni tanlang'),
-		status: z.enum(['new', 'used'], 'Holatini belgilang'),
-		battery: z.number().min(1).max(100, "Batareya maksimal 100% bo'ladi"),
-	}),
-})
+	const transportSchema = baseSchema.extend({
+		category: z.literal('transport'),
+		images: imagesSchema.shape.images,
+		attributes: z.object({
+			marka: z.string().min(1, t('markaRequired')),
+			model: z.string().min(1, t('modelRequired')),
+			year: z.number().min(2001, t('yearMin')).max(2026, t('yearMax')),
+			mileage: z.number().min(0, t('mileageMin')),
+			transmission: z.enum(['mexanik', 'avtomat'], t('transmissionRequired')),
+		}),
+	})
 
-export const listingSchema = z.discriminatedUnion('category', [
-	transportSchema,
-	electronicsSchema,
-])
+	const electronicsSchema = baseSchema.extend({
+		category: z.literal('electronics'),
+		images: imagesSchema.shape.images,
+		attributes: z.object({
+			brand: z.string().min(1, t('brandRequired')),
+			model: z.string().min(1, t('modelRequired')),
+			memory: z.string().min(1, t('memoryRequired')),
+			ramMemory: z.string().min(1, t('ramRequired')),
+			color: z.string().min(1, t('colorRequired')),
+			status: z.enum(['new', 'used'], t('statusRequired')),
+			battery: z.number().min(1).max(100, t('batteryMax')),
+		}),
+	})
 
-export type TListingSchmema = z.infer<typeof listingSchema>
+	const listingSchema = z.discriminatedUnion('category', [
+		transportSchema,
+		electronicsSchema,
+	])
 
-export const editListingSchema = z.discriminatedUnion('category', [
-	transportSchema.omit({ images: true }),
-	electronicsSchema.omit({ images: true }),
-])
+	const editListingSchema = z.discriminatedUnion('category', [
+		transportSchema.omit({ images: true }),
+		electronicsSchema.omit({ images: true }),
+	])
 
-export type TListingEditSchema = z.infer<typeof editListingSchema>
+	return {
+		baseSchema,
+		transportSchema,
+		electronicsSchema,
+		listingSchema,
+		editListingSchema,
+	}
+}
+
+type TListingSchemas = ReturnType<typeof createListingSchemas>
+
+export type TListingSchmema = z.infer<TListingSchemas['listingSchema']>
+
+export type TListingEditSchema = z.infer<TListingSchemas['editListingSchema']>
 
 export type TListingFormValues = TListingEditSchema

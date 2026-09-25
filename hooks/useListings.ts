@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
 
 import { listingKeys } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing/listing.service'
@@ -8,9 +9,11 @@ export const useListings = (
 	type: 'latest' | 'all',
 	initialData: IGetListingResponse,
 ) => {
+	const locale = useLocale()
+
 	const { hasNextPage, isFetchingNextPage, fetchNextPage, data } =
 		useInfiniteQuery({
-			queryKey: [listingKeys.root, type],
+			queryKey: [listingKeys.root, type, locale],
 			queryFn: ({ pageParam }) =>
 				listingService.getLisings({ page: pageParam, type, limit: 10 }),
 			initialPageParam: 1,

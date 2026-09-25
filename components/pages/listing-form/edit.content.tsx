@@ -1,13 +1,14 @@
 'use client'
 
-import Link from 'next/link'
 import { useMemo } from 'react'
 
+import { useTranslations } from 'next-intl'
 import { FormProvider } from 'react-hook-form'
 
 import { Button, buttonVariants } from '@/components/ui/button'
 import { FieldGroup } from '@/components/ui/field'
 import { protectPages } from '@/config/pages.config'
+import { Link } from '@/i18n/navigation'
 import { listingToFormValues } from '@/lib/listing.mapper'
 import { Heading } from '@/shared/heading'
 import { Loader } from '@/shared/loader'
@@ -22,6 +23,9 @@ import { useUpdateListing } from './hooks/useUpdateListing'
 import { TransportFields } from './transport.fields'
 
 export function EditContent({ listing }: { listing: IListing }) {
+	const t = useTranslations('ListingForm')
+	const tCommon = useTranslations('Common')
+
 	const initialValues = useMemo(() => listingToFormValues(listing), [listing])
 
 	const { form, onSubmit, selectedCategory, isLoading, isDirty } =
@@ -35,7 +39,7 @@ export function EditContent({ listing }: { listing: IListing }) {
 					onSubmit={form.handleSubmit(onSubmit)}
 					className="bg-card rounded-xl p-6 shadow-sm"
 				>
-					<Heading title="E'lonni tahrirlash" className="text-2xl" />
+					<Heading title={t('editTitle')} className="text-2xl" />
 
 					<FieldGroup>
 						<CreateWrapper>
@@ -57,7 +61,7 @@ export function EditContent({ listing }: { listing: IListing }) {
 							href={protectPages.ADS}
 							className={buttonVariants({ variant: 'outline' })}
 						>
-							← Bekor qilish
+							← {tCommon('cancel')}
 						</Link>
 
 						<Button
@@ -65,7 +69,7 @@ export function EditContent({ listing }: { listing: IListing }) {
 							disabled={isLoading || !isDirty}
 							className="bg-green-600 hover:bg-green-700"
 						>
-							Saqlash
+							{tCommon('save')}
 							{isLoading && <Loader />}
 						</Button>
 					</div>

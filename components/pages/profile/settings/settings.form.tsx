@@ -1,6 +1,7 @@
 'use client'
 
 import { LockIcon, MailIcon, MapPin, PhoneIcon, UserIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Controller } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -21,6 +22,8 @@ export function SettingsForm({
 }: {
 	initialData: IUserData | undefined
 }) {
+	const t = useTranslations('Profile')
+	const tCommon = useTranslations('Common')
 	const { form, isPending, handleSubmit } = useSettings(initialData)
 
 	return (
@@ -28,11 +31,9 @@ export function SettingsForm({
 			<form id="settings-form" onSubmit={form.handleSubmit(handleSubmit)}>
 				<FieldGroup className="grid grid-cols-1 md:grid-cols-2">
 					<div className="max-h-110 rounded-lg border p-3.5">
-						<h1 className="mb-2 text-3xl font-semibold">
-							Asosiy ma&apos;lumotlar
-						</h1>
+						<h1 className="mb-2 text-3xl font-semibold">{t('mainInfo')}</h1>
 						<p className="mb-6 text-sm font-normal text-gray-500">
-							Boshqa foydalanuvchilarga ko&apos;rinadigan ma&apos;lumotlaringiz
+							{t('mainInfoText')}
 						</p>
 						<div className="grid grid-cols-2 gap-3">
 							<Controller
@@ -44,7 +45,7 @@ export function SettingsForm({
 											className="text-xs font-medium"
 											id="settings-form-fullName"
 										>
-											Toliq ism
+											{t('fullName')}
 										</FieldLabel>
 
 										<IconInput
@@ -53,7 +54,7 @@ export function SettingsForm({
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
 											id="settings-form-fullName"
-											placeholder="Inomov Inomjon"
+											placeholder={t('fullNamePlaceholder')}
 											{...field}
 										/>
 
@@ -72,7 +73,7 @@ export function SettingsForm({
 											className="text-xs font-medium"
 											id="settings-form-email"
 										>
-											Email
+											{t('email')}
 										</FieldLabel>
 
 										<IconInput
@@ -82,7 +83,7 @@ export function SettingsForm({
 											autoComplete="off"
 											type="email"
 											id="settings-form-email"
-											placeholder="inomjon@mail.ru"
+											placeholder={t('emailPlaceholder')}
 											{...field}
 										/>
 
@@ -101,7 +102,7 @@ export function SettingsForm({
 											className="text-xs font-medium"
 											id="settings-form-phoneNumber"
 										>
-											Telefon raqam
+											{t('phone')}
 										</FieldLabel>
 
 										<IconInput
@@ -113,7 +114,7 @@ export function SettingsForm({
 											inputMode="numeric"
 											maxLength={13}
 											id="settings-form-phoneNumber"
-											placeholder="+998900158502"
+											placeholder={t('phonePlaceholder')}
 											type="tel"
 											onChange={field.onChange}
 										/>
@@ -133,7 +134,7 @@ export function SettingsForm({
 											className="text-xs font-medium"
 											id="settings-form-region"
 										>
-											Viloyatni tanlang
+											{t('region')}
 										</FieldLabel>
 										<RegionSelect
 											disabled={isPending}
@@ -152,10 +153,9 @@ export function SettingsForm({
 						</div>
 					</div>
 					<div className="max-h-110 w-112.5 rounded-lg border p-3.5">
-						<h1 className="mb-2 text-3xl font-semibold">Xavfsizlik</h1>
+						<h1 className="mb-2 text-3xl font-semibold">{t('security')}</h1>
 						<p className="mb-6 text-sm font-normal text-gray-500">
-							Hisobingiz xavfsizligini ta&apos;minlash uchun kuchli paroldan
-							foydalaning.
+							{t('securityText')}
 						</p>
 						<div className="grid grid-cols-1 gap-3">
 							<Controller
@@ -167,7 +167,7 @@ export function SettingsForm({
 											className="text-xs font-medium"
 											id="settings-form-password"
 										>
-											Parol kiriting
+											{t('currentPassword')}
 										</FieldLabel>
 										<IconInput
 											disabled={isPending}
@@ -199,7 +199,7 @@ export function SettingsForm({
 				form="settings-form"
 				disabled={isPending}
 			>
-				Saqlash
+				{tCommon('save')}
 			</Button>
 		</>
 	)

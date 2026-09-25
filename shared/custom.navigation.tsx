@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useSwiper } from 'swiper/react'
 
 import 'swiper/css'
@@ -8,6 +9,7 @@ import 'swiper/css'
 import { Button } from '@/components/ui/button'
 
 export function CustomNavigation() {
+	const t = useTranslations('AdDetail')
 	const swiper = useSwiper()
 
 	return (
@@ -17,7 +19,7 @@ export function CustomNavigation() {
 				type="button"
 				onClick={() => swiper.slidePrev()}
 				className="absolute top-[calc(50%-1.25rem)] left-3 z-10 cursor-pointer rounded-full bg-black/20 p-2 transition-colors hover:bg-black/25"
-				aria-label="Oldingi rasm"
+				aria-label={t('prevImage')}
 			>
 				<ChevronLeft size={22} />
 			</Button>
@@ -27,7 +29,7 @@ export function CustomNavigation() {
 				type="button"
 				onClick={() => swiper.slideNext()}
 				className="absolute top-[calc(50%-1.25rem)] right-3 z-10 cursor-pointer rounded-full bg-black/20 p-2 shadow transition hover:bg-black/25"
-				aria-label="Keyingi rasm"
+				aria-label={t('nextImage')}
 			>
 				<ChevronRight size={22} />
 			</Button>

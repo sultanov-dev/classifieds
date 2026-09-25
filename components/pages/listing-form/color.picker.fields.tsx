@@ -1,4 +1,5 @@
 import { CheckIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -10,6 +11,8 @@ import type { TListingFormValues } from '@/validation/create.validadtion'
 import { useColorPicker } from './hooks/useColorPicker'
 
 export function ColorPicker() {
+	const t = useTranslations('ListingForm')
+	const tColor = useTranslations('Colors')
 	const { control } = useFormContext<TListingFormValues>()
 	const { selectedColor, handleSelectColor } = useColorPicker()
 
@@ -22,12 +25,12 @@ export function ColorPicker() {
 			render={({ field, fieldState }) => (
 				<Field className="space-y-3" data-invalid={fieldState.invalid}>
 					<div className="flex items-center justify-between">
-						<FieldLabel id="create-listing-color">Qurilma rangi</FieldLabel>
+						<FieldLabel id="create-listing-color">{t('color')}</FieldLabel>
 						{activeColorObj && (
 							<span className="text-muted-foreground text-sm font-medium">
-								Tanlandi:
+								{t('colorSelected')}
 								<strong className="text-foreground">
-									{activeColorObj.name}
+									{tColor(activeColorObj.id)}
 								</strong>
 							</span>
 						)}
@@ -41,7 +44,7 @@ export function ColorPicker() {
 									id="create-listing-color"
 									key={color.id}
 									type="button"
-									title={color.name}
+									title={tColor(color.id)}
 									onClick={() => {
 										field.onChange(color.id)
 										handleSelectColor(color.id)

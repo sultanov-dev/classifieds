@@ -1,6 +1,5 @@
-import Link from 'next/link'
-
 import { MenuIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -16,8 +15,12 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { publicPages } from '@/config/pages.config'
 import { categoryData } from '@/data/category.data'
+import { Link } from '@/i18n/navigation'
 
 export default function CategoryMenu() {
+	const t = useTranslations('Header')
+	const tCategory = useTranslations('Categories')
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger
@@ -33,15 +36,15 @@ export default function CategoryMenu() {
 			>
 				<MenuIcon className="size-4" />
 				<span className="hidden text-base font-normal capitalize md:block">
-					Kategoriya
+					{t('category')}
 				</span>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-3xs">
 				<DropdownMenuGroup>
 					{categoryData.map((category) => (
-						<DropdownMenuSub key={category.label}>
+						<DropdownMenuSub key={category.key}>
 							<DropdownMenuSubTrigger className={'font-normal capitalize'}>
-								{category.label}
+								{category.icon} {tCategory(category.key)}
 							</DropdownMenuSubTrigger>
 
 							<DropdownMenuPortal>
@@ -52,7 +55,7 @@ export default function CategoryMenu() {
 												className="font-normal capitalize"
 												href={`${publicPages.CATALOG}?category=${item.slug}`}
 											>
-												{item.label}
+												{tCategory(item.slug)}
 											</Link>
 										</DropdownMenuItem>
 									))}

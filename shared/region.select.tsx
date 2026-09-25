@@ -1,6 +1,8 @@
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import type { ReactNode } from 'react'
+'use client'
+
+import { useMemo, type ReactNode } from 'react'
+
+import { useTranslations } from 'next-intl'
 
 import {
 	Select,
@@ -12,6 +14,7 @@ import {
 } from '@/components/ui/select'
 import { publicPages } from '@/config/pages.config'
 import { regionData } from '@/data/region.data'
+import { Link, usePathname } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 
 interface RegionSelectProps {
@@ -29,26 +32,31 @@ export default function RegionSelect({
 	onValueChange,
 	className,
 	icon,
-	placeholder = 'Viloyatni tanlang',
+	placeholder,
 	id,
 	disabled,
 }: RegionSelectProps) {
+	const t = useTranslations('Regions')
+	const tHeader = useTranslations('Header')
 	const pathname = usePathname()
 
+	const regions = useMemo(
+		() =>
+			regionData.map((item) => ({ value: item.value, label: t(item.value) })),
+		[t],
+	)
+
 	return (
-		<Select
-			items={regionData}
-			value={value}
-			onValueChange={onValueChange}
-			id={id}
-		>
+		<Select items={regions} value={value} onValueChange={onValueChange} id={id}>
 			<SelectTrigger className={cn('w-48', className)} disabled={disabled}>
 				{icon && (
 					<span className="text-muted-foreground flex size-4 shrink-0 items-center justify-center">
 						{icon}
 					</span>
 				)}
-				<SelectValue placeholder={placeholder} />
+				<SelectValue
+					placeholder={placeholder ?? tHeader('regionPlaceholder')}
+				/>
 			</SelectTrigger>
 			<SelectContent
 				className="w-90"
@@ -56,7 +64,7 @@ export default function RegionSelect({
 				alignItemWithTrigger={false}
 			>
 				<SelectGroup>
-					{regionData.map((item) =>
+					{regions.map((item) =>
 						['/catalog', '/'].includes(pathname) ? (
 							<Link
 								href={`${publicPages.CATALOG}?region=${item.value}`}

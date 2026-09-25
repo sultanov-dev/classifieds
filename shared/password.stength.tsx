@@ -1,6 +1,7 @@
 'use client'
 
 import { LockIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Controller, useWatch, type Control } from 'react-hook-form'
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
@@ -14,6 +15,7 @@ export function PassowordStrengthField({
 }: {
 	control: Control<TSettingsSchema>
 }) {
+	const t = useTranslations('Profile')
 	const newPassword = useWatch({
 		control,
 		name: 'newPassword',
@@ -30,7 +32,7 @@ export function PassowordStrengthField({
 						className="text-xs font-medium"
 						id="settings-form-password"
 					>
-						Yangi Parol kiriting
+						{t('newPassword')}
 					</FieldLabel>
 					<IconInput
 						icon={<LockIcon />}
@@ -44,8 +46,7 @@ export function PassowordStrengthField({
 
 					<PassowordStrengthIndicator password={newPassword!} />
 					<p className="text-sm font-normal text-gray-500">
-						Kamida 6 ta belgi, bosh harf, raqam va maxsus belgi bo&apos;lishi
-						kerak.
+						{t('passwordHint')}
 					</p>
 
 					{fieldState.invalid && <FieldError errors={[fieldState.error]} />}

@@ -1,15 +1,16 @@
 'use client'
 
-import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 import { KeyIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/useAuth'
 import { useProfile } from '@/hooks/useProfile'
 import { authPages } from '@/config/pages.config'
+import { Link } from '@/i18n/navigation'
 import Container from '@/shared/container'
 import { Loader } from '@/shared/loader'
 import RegionSelect from '@/shared/region.select'
@@ -22,6 +23,7 @@ import ProfileMenu from './profile.menu'
 import SearchInput from './search/searchInput'
 
 export default function Header() {
+	const t = useTranslations('Header')
 	const searchParams = useSearchParams()
 	const regionSearch = searchParams.get('region')
 
@@ -47,7 +49,7 @@ export default function Header() {
 								className="flex items-center gap-x-1"
 							>
 								<KeyIcon className="h-4 w-4" />
-								register
+								{t('register')}
 							</Link>
 						</Button>
 					) : isLoading ? (

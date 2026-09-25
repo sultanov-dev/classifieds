@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 import { XIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Input } from '@/components/ui/input'
 import { useDebounce } from '@/hooks/useDebounce'
@@ -12,6 +13,7 @@ import { SearchItem } from './searchItem'
 import { SearchSkeleton } from './searchSkeleton'
 
 export default function SearchInput() {
+	const t = useTranslations('Header')
 	const [search, setSearch] = useState<string>('')
 	const debouncedValue = useDebounce<string>(search, 400)
 
@@ -30,7 +32,7 @@ export default function SearchInput() {
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
 				type="text"
-				placeholder="Elon qidirish"
+				placeholder={t('searchPlaceholder')}
 				className="w-full focus-visible:ring-0 focus-visible:outline-none"
 			/>
 			{search && (
@@ -50,9 +52,9 @@ export default function SearchInput() {
 						</div>
 					) : hasNoResult ? (
 						<div className="flex w-full flex-col items-center justify-center gap-y-3">
-							<h2 className="text-xl font-semibold">Natijalar topilmadi 🔍</h2>
+							<h2 className="text-xl font-semibold">{t('searchEmptyTitle')}</h2>
 							<p className="text-base tracking-wide text-zinc-500">
-								Afsuski, soʻrovingizga mos keladigan maʼlumot topilmadi
+								{t('searchEmptyText')}
 							</p>
 						</div>
 					) : (

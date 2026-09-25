@@ -1,53 +1,28 @@
-interface IRegion {
-	label: string
-	value: string
-}
+export type TRegionValue =
+	| 'TOSHKENT_SHAHRI'
+	| 'FARGONA'
+	| 'JIZZAX'
+	| 'XORAZM'
+	| 'NAMANGAN'
+	| 'NAVOIY'
+	| 'QASHQADARYO'
+	| 'SAMARQAND'
+	| 'SIRDARYO'
+	| 'SURXONDARYO'
+	| 'TOSHKENT'
 
-export const regionData: IRegion[] = [
-	{
-		label: 'Toshkent shahri',
-		value: 'TOSHKENT_SHAHRI',
-	},
-	{
-		label: 'Fargʻona viloyati',
-		value: 'FARGONA',
-	},
-	{
-		label: 'Jizzax viloyati',
-		value: 'JIZZAX',
-	},
-	{
-		label: 'Xorazm viloyati',
-		value: 'XORAZM',
-	},
-	{
-		label: 'Namangan viloyati',
-		value: 'NAMANGAN',
-	},
-	{
-		label: 'Navoiy viloyati',
-		value: 'NAVOIY',
-	},
-	{
-		label: 'Qashqadaryo viloyati',
-		value: 'QASHQADARYO',
-	},
-	{
-		label: 'Samarqand viloyati',
-		value: 'SAMARQAND',
-	},
-	{
-		label: 'Sirdaryo viloyati',
-		value: 'SIRDARYO',
-	},
-	{
-		label: 'Surxondaryo viloyati',
-		value: 'SURXONDARYO',
-	},
-	{
-		label: 'Toshkent viloyati',
-		value: 'TOSHKENT',
-	},
+export const regionData: { value: TRegionValue }[] = [
+	{ value: 'TOSHKENT_SHAHRI' },
+	{ value: 'FARGONA' },
+	{ value: 'JIZZAX' },
+	{ value: 'XORAZM' },
+	{ value: 'NAMANGAN' },
+	{ value: 'NAVOIY' },
+	{ value: 'QASHQADARYO' },
+	{ value: 'SAMARQAND' },
+	{ value: 'SIRDARYO' },
+	{ value: 'SURXONDARYO' },
+	{ value: 'TOSHKENT' },
 ]
 
 export type TMemory = {
@@ -55,6 +30,7 @@ export type TMemory = {
 	label: string
 }
 
+// Texnik qiymatlar — tarjima talab qilmaydi
 export const MEMORYDATA: TMemory[] = [
 	{
 		value: '128gb',
@@ -93,13 +69,30 @@ export const RAMDATA: TMemory[] = [
 	},
 ]
 
-export const COLORS = [
-	{ id: 'black', name: 'Qora (Black)', hex: '#000000', border: false },
-	{ id: 'white', name: 'Oq (White)', hex: '#FFFFFF', border: true },
-	{ id: 'space-gray', name: 'Space Gray', hex: '#4B4D4E', border: false },
-	{ id: 'silver', name: 'Kumush (Silver)', hex: '#E2E4E1', border: true },
-	{ id: 'gold', name: 'Tilla (Gold)', hex: '#F5E7D3', border: true },
-	{ id: 'blue', name: 'Kök (Blue)', hex: '#2563EB', border: false },
-	{ id: 'purple', name: 'Binafsha (Purple)', hex: '#9333EA', border: false },
-	{ id: 'natural-titanium', name: 'Titanium', hex: '#8A8680', border: false },
+/**
+ * Ranglar. Ko'rinadigan nom `Colors` namespace'idan `id` kaliti bo'yicha olinadi.
+ */
+export type TColorId =
+	| 'black'
+	| 'white'
+	| 'space-gray'
+	| 'silver'
+	| 'gold'
+	| 'blue'
+	| 'purple'
+	| 'natural-titanium'
+
+export const COLORS: {
+	id: TColorId
+	hex: string
+	border: boolean
+}[] = [
+	{ id: 'black', hex: '#000000', border: false },
+	{ id: 'white', hex: '#FFFFFF', border: true },
+	{ id: 'space-gray', hex: '#4B4D4E', border: false },
+	{ id: 'silver', hex: '#E2E4E1', border: true },
+	{ id: 'gold', hex: '#F5E7D3', border: true },
+	{ id: 'blue', hex: '#2563EB', border: false },
+	{ id: 'purple', hex: '#9333EA', border: false },
+	{ id: 'natural-titanium', hex: '#8A8680', border: false },
 ]

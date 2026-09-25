@@ -1,11 +1,11 @@
 'use client'
 
-import Link from 'next/link'
-
+import { useTranslations } from 'next-intl'
 import { Controller } from 'react-hook-form'
 
 import { useAuthForm } from '@/hooks/useAuthForm'
 import { authPages } from '@/config/pages.config'
+import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import { Loader } from '@/shared/loader'
 
@@ -14,12 +14,13 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field'
 import { Input } from '../ui/input'
 
 export default function AuthForm({ isLogin }: { isLogin: boolean }) {
+	const t = useTranslations('Auth')
 	const { form, isLoading, onSubmit } = useAuthForm(isLogin)
 
 	return (
 		<div className="w-70">
 			<h1 className="mb-12 text-2xl font-normal">
-				{isLogin ? 'Kirish' : "Ro'hatdan o'tish"}
+				{isLogin ? t('loginTitle') : t('registerTitle')}
 			</h1>
 			<form id="auth-form" onSubmit={form.handleSubmit(onSubmit)}>
 				<FieldGroup>
@@ -32,14 +33,14 @@ export default function AuthForm({ isLogin }: { isLogin: boolean }) {
 									className="text-xs font-medium"
 									id="auth-form-email"
 								>
-									Emailni kiriting
+									{t('emailLabel')}
 								</FieldLabel>
 								<Input
 									className="w-full focus-visible:ring-purple-300"
 									id="auth-form-email"
 									aria-invalid={fieldState.invalid}
 									autoComplete="off"
-									placeholder="example@mail.ru"
+									placeholder={t('emailPlaceholder')}
 									{...field}
 								/>
 
@@ -58,7 +59,7 @@ export default function AuthForm({ isLogin }: { isLogin: boolean }) {
 									className="text-xs font-medium"
 									id="auth-form-password"
 								>
-									Parol kiriting
+									{t('passwordLabel')}
 								</FieldLabel>
 								<Input
 									type="password"
@@ -66,7 +67,7 @@ export default function AuthForm({ isLogin }: { isLogin: boolean }) {
 									id="auth-form-password"
 									aria-invalid={fieldState.invalid}
 									autoComplete="off"
-									placeholder="********"
+									placeholder={t('passwordPlaceholder')}
 									{...field}
 								/>
 
@@ -88,19 +89,19 @@ export default function AuthForm({ isLogin }: { isLogin: boolean }) {
 				form="auth-form"
 				disabled={isLoading}
 			>
-				{isLogin ? 'Kirish' : 'Ro"yhatdan o"tish'}
+				{isLogin ? t('loginSubmit') : t('registerSubmit')}
 				{isLoading && <Loader />}
 			</Button>
 
 			<div className="mt-7 flex w-full items-center justify-center gap-3">
 				<span className="text-muted-foreground text-xs font-normal">
-					{isLogin ? "Akkountingiz yo'qmi?" : 'Akkountingiz bormi?'}
+					{isLogin ? t('noAccount') : t('hasAccount')}
 				</span>
 				<Link
 					className="text-sm hover:text-sky-400"
 					href={isLogin ? authPages.REGISTER : authPages.LOGIN}
 				>
-					{isLogin ? "Ro'yhatdan o'ting" : 'Kirish'}
+					{isLogin ? t('toRegister') : t('toLogin')}
 				</Link>
 			</div>
 		</div>

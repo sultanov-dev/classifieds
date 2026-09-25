@@ -1,6 +1,7 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useTransition } from 'react'
 
+import { usePathname, useRouter } from '@/i18n/navigation'
 import { useFilterStore } from '@/store/useFilterStore'
 import type { TListingParams } from '@/types/listing.types'
 

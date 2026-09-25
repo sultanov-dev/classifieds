@@ -1,12 +1,18 @@
 import * as z from 'zod'
 
-export const authSchema = z.object({
-  email: z.email("Email formati noto'g'ri"),
-  password: z
-    .string()
-    .min(6, "Parol kamida 6 ta belgidan iborat bo'lsin")
-    .regex(/[A-Z]/, "Parolda kamida bitta katta harf bo'lsin")
-    .regex(/[0-9]/, "Parolda kamida bitta raqam bo'lsin"),
-})
+import type { TTranslator } from '@/types/i18n.types'
 
-export type TAuthScheme = z.infer<typeof authSchema>
+/**
+ * @param t `useTranslations('Validation')` dan olingan tarjimon
+ */
+export const createAuthSchema = (t: TTranslator<'Validation'>) =>
+	z.object({
+		email: z.email(t('emailInvalid')),
+		password: z
+			.string()
+			.min(6, t('passwordMin'))
+			.regex(/[A-Z]/, t('passwordUpper'))
+			.regex(/[0-9]/, t('passwordDigit')),
+	})
+
+export type TAuthScheme = z.infer<ReturnType<typeof createAuthSchema>>

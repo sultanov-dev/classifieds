@@ -1,5 +1,9 @@
 'use client'
 
+import { useMemo } from 'react'
+
+import { useTranslations } from 'next-intl'
+
 import { useMyListings } from '@/hooks/useMyListings'
 import { HasNoResult } from '@/shared/hasNoResult'
 import type {
@@ -8,7 +12,7 @@ import type {
 } from '@/types/listing.types'
 
 import { AdsTableLoader } from './ads.table.loader'
-import { columns } from './columns'
+import { getColumns } from './columns'
 import { DataTable } from './data-table'
 
 export default function ProfileAds({
@@ -16,7 +20,10 @@ export default function ProfileAds({
 }: {
 	initialData: IGetListingResponse
 }) {
+	const t = useTranslations('Profile')
 	const { isListingLoad, data } = useMyListings(initialData)
+
+	const columns = useMemo(() => getColumns(t), [t])
 
 	const listings = (data?.listings ?? []) as TListingRemoveUser[]
 	const hasNoListings = !isListingLoad && listings.length === 0
@@ -26,7 +33,7 @@ export default function ProfileAds({
 			{isListingLoad ? (
 				<AdsTableLoader />
 			) : hasNoListings ? (
-				<HasNoResult text={"Hali e'lon qo'shmagansiz"} />
+				<HasNoResult text={t('adsEmpty')} />
 			) : (
 				<DataTable data={listings} columns={columns} />
 			)}

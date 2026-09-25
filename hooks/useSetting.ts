@@ -1,28 +1,35 @@
+import { useMemo } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { userService } from '@/services/user/user.service'
 import type { IUserData } from '@/types/auth.types'
 import {
-	settingsSchema,
+	createSettingsSchema,
 	type TSettingsSchema,
 } from '@/validation/settings.validation'
 
 import { useAuth } from './useAuth'
 
 export const useSettings = (initialData: IUserData | undefined) => {
+	const t = useTranslations('Profile')
+	const tValidation = useTranslations('Validation')
 	const { setCridentials } = useAuth()
 
+	const schema = useMemo(() => createSettingsSchema(tValidation), [tValidation])
+
 	const form = useForm<TSettingsSchema>({
-		resolver: zodResolver(settingsSchema),
+		resolver: zodResolver(schema),
 		values: {
 			fullName: initialData?.fullName || '',
 			email: initialData?.email || '',
 			phoneNumber: initialData?.phoneNumber || '',
-			region: initialData?.region || 'Toshkent shahri',
+			region: initialData?.region || 'TOSHKENT_SHAHRI',
 			currentPassword: '',
 			newPassword: '',
 		},
@@ -34,7 +41,7 @@ export const useSettings = (initialData: IUserData | undefined) => {
 		mutationKey: ['update-settings'],
 		mutationFn: (data: TSettingsSchema) => userService.updateProfile(data),
 		onSuccess: (updatedUser) => {
-			toast.success('Profil yangilandi')
+			toast.success(t('updated'))
 
 			setCridentials(updatedUser.data.user)
 

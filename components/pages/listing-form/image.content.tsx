@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 import { UploadCloudIcon, XIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -16,6 +17,7 @@ export function ImageContent({
 	onChange: (files: File[]) => void
 	isLoading: boolean
 }) {
+	const t = useTranslations('ListingForm')
 	const { imagePrviews, handleSelectImages, removeImage } = useImages({
 		value,
 		onChange,
@@ -56,12 +58,10 @@ export function ImageContent({
 							imagePrviews.length >= 6 ? 'text-rose-600' : 'text-black',
 						)}
 					>
-						{imagePrviews.length >= 6
-							? "Boshqa rasm yuklab bo'lmaydi"
-							: 'Rasmlarni yuklash uchun bosing yoki shu yerga tashlang'}
+						{imagePrviews.length >= 6 ? t('imagesFull') : t('imagesDrop')}
 					</p>
 					<p className="text-muted-foreground text-xs">
-						PNG, JPG, WEBP (Maksimal 6 ta rasm)
+						{t('imagesFormatsMax', { max: 6 })}
 					</p>
 				</div>
 			</div>
@@ -75,7 +75,7 @@ export function ImageContent({
 						>
 							<Image
 								src={image.url}
-								alt={`E'lon rasmi ${index + 1}`}
+								alt={t('imageAlt', { index: index + 1 })}
 								className="object-cover"
 								fill
 								sizes="(max-width: 640px) 33vw, 150px"
@@ -84,7 +84,7 @@ export function ImageContent({
 							{/* Asosiy Rasm Nishoni */}
 							{index === 0 && (
 								<span className="absolute bottom-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-white">
-									Asosiy
+									{t('imagePrimary')}
 								</span>
 							)}
 

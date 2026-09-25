@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 
+import { useTranslations } from 'next-intl'
+
 import { useInifinityListings } from '@/hooks/useInfinityListings'
 import { formatAdDate } from '@/lib/utils'
 import { HasNoResult } from '@/shared/hasNoResult'
@@ -10,6 +12,7 @@ import { InfiniteTrigger } from '@/shared/infiniteTrigger'
 import { Loader } from '@/shared/loader'
 
 export function HistoryContent() {
+	const t = useTranslations('Profile')
 	const { hasNextPage, isFetchingNextPage, fetchNextPage, data, isLoading } =
 		useInifinityListings()
 
@@ -18,13 +21,13 @@ export function HistoryContent() {
 
 	return (
 		<div className="my-10">
-			<Heading title="Tarix" className="mb-5" />
+			<Heading title={t('historyTitle')} className="mb-5" />
 			{isLoading ? (
 				<div className="flex h-full items-center justify-center">
 					<Loader className="size-5" />
 				</div>
 			) : isEmpty ? (
-				<HasNoResult text={"Ko'rilgan e'lonlar yo'q"} />
+				<HasNoResult text={t('historyEmpty')} />
 			) : (
 				listings.map((item) => (
 					<div

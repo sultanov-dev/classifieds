@@ -1,6 +1,7 @@
 'use client'
 
 import { BellIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -13,6 +14,7 @@ import { useNotifications } from '@/hooks/useNotifications'
 import { NotificationList } from './notification.list'
 
 export default function NotificationBell() {
+	const t = useTranslations('Header')
 	const { notifications, unreadCount, isLoading, markRead, isMarking } =
 		useNotifications()
 
@@ -31,7 +33,7 @@ export default function NotificationBell() {
 
 			<DropdownMenuContent align="end" className="w-95 p-0">
 				<div className="flex items-center justify-between gap-2 border-b px-3 py-2">
-					<span className="text-sm font-medium">Bildirishnomalar</span>
+					<span className="text-sm font-medium">{t('notifications')}</span>
 					<Button
 						variant={'ghost'}
 						size={'xs'}
@@ -39,7 +41,7 @@ export default function NotificationBell() {
 						disabled={!unreadCount || isMarking}
 						onClick={() => markRead(undefined)}
 					>
-						Hammasini o&apos;qilgan qilish
+						{t('markAllRead')}
 					</Button>
 				</div>
 

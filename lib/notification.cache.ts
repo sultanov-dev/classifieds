@@ -1,4 +1,4 @@
-import type { QueryClient } from '@tanstack/react-query'
+import type { QueryClient, QueryKey } from '@tanstack/react-query'
 
 import type { INotification, INotificationRes } from '@/types/notification.type'
 
@@ -8,13 +8,23 @@ export const NOTIFICATIONS_KEY = ['notifications']
 
 export const NOTIFICATIONS_LIMIT = 20
 
+export type TNotificationsSnapshot = [QueryKey, INotificationRes | undefined][]
+
+const updateNotifications = (
+	queryClient: QueryClient,
+	updater: (old: INotificationRes) => INotificationRes,
+) => {
+	queryClient.setQueriesData<INotificationRes>(
+		{ queryKey: NOTIFICATIONS_KEY },
+		(old) => (old ? updater(old) : old),
+	)
+}
+
 export const prependNotification = (
 	queryClient: QueryClient,
 	notification: INotification,
 ) => {
-	queryClient.setQueryData<INotificationRes>(NOTIFICATIONS_KEY, (old) => {
-		if (!old) return old
-
+	updateNotifications(queryClient, (old) => {
 		const { notifications, meta } = old.data
 
 		if (notifications.some((item) => item.id === notification.id)) return old
@@ -40,11 +50,11 @@ export const prependNotification = (
 }
 
 export const applyMarkRead = (queryClient: QueryClient, ids?: string[]) => {
-	const previous = queryClient.getQueryData<INotificationRes>(NOTIFICATIONS_KEY)
+	const previous = queryClient.getQueriesData<INotificationRes>({
+		queryKey: NOTIFICATIONS_KEY,
+	})
 
-	queryClient.setQueryData<INotificationRes>(NOTIFICATIONS_KEY, (old) => {
-		if (!old) return old
-
+	updateNotifications(queryClient, (old) => {
 		const readAt = new Date().toISOString()
 		let marked = 0
 
@@ -77,21 +87,17 @@ export const setUnreadCount = (
 	queryClient: QueryClient,
 	unreadCount: number,
 ) => {
-	queryClient.setQueryData<INotificationRes>(NOTIFICATIONS_KEY, (old) => {
-		if (!old) return old
-
-		return {
-			...old,
-			data: { ...old.data, meta: { ...old.data.meta, unreadCount } },
-		}
-	})
+	updateNotifications(queryClient, (old) => ({
+		...old,
+		data: { ...old.data, meta: { ...old.data.meta, unreadCount } },
+	}))
 }
 
 export const restoreNotifications = (
 	queryClient: QueryClient,
-	previous?: INotificationRes,
+	previous?: TNotificationsSnapshot,
 ) => {
-	if (previous) queryClient.setQueryData(NOTIFICATIONS_KEY, previous)
+	previous?.forEach(([key, data]) => queryClient.setQueryData(key, data))
 }
 
 export const invalidateCommentQuerys = (

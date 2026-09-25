@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Field, FieldLabel } from '@/components/ui/field'
@@ -14,6 +15,7 @@ export function MemoryGroup({
 	memoryData: TMemory[]
 	ramData: TMemory[]
 }) {
+	const t = useTranslations('ListingForm')
 	const { control } = useFormContext<TListingFormValues>()
 
 	return (
@@ -23,7 +25,7 @@ export function MemoryGroup({
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid} className="gap-2.5">
-						<FieldLabel id="create-listing-memory">Asosiy xotirasi</FieldLabel>
+						<FieldLabel id="create-listing-memory">{t('memory')}</FieldLabel>
 						<RadioGroup
 							onValueChange={field.onChange}
 							value={field.value ?? '128bg'}
@@ -57,7 +59,9 @@ export function MemoryGroup({
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid} className="gap-2.5">
-						<FieldLabel id="create-listing-ramMemory">RAM xotirasi</FieldLabel>
+						<FieldLabel id="create-listing-ramMemory">
+							{t('ramMemory')}
+						</FieldLabel>
 						<RadioGroup
 							onValueChange={field.onChange}
 							value={field.value ?? '64gb'}

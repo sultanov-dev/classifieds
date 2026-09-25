@@ -1,8 +1,12 @@
+import { useTranslations } from 'next-intl'
+
 export const useShare = (title: string) => {
+	const t = useTranslations('AdDetail')
+
 	const handleShare = async () => {
 		const shareData = {
 			title,
-			text: `${title} e'lonni ko'ring`,
+			text: t('shareText', { title }),
 			url: window.location.href,
 		}
 
@@ -11,7 +15,7 @@ export const useShare = (title: string) => {
 				await navigator.share(shareData)
 			} else {
 				await navigator.clipboard.writeText(window.location.href)
-				alert('Nusxalandi')
+				alert(t('shareCopied'))
 			}
 		} catch (error) {
 			if ((error as Error).name !== 'AbortError') {

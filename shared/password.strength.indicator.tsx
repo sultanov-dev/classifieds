@@ -1,3 +1,7 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+
 import { getPasswordStrength } from '@/lib/password'
 import { cn } from '@/lib/utils'
 
@@ -6,7 +10,8 @@ export function PassowordStrengthIndicator({
 }: {
 	password: string
 }) {
-	const { score, color, label } = getPasswordStrength(password)
+	const t = useTranslations('Password')
+	const { score, color, label } = getPasswordStrength(password, t)
 
 	return (
 		<div className="mt-2 space-y-1.5">
@@ -23,7 +28,7 @@ export function PassowordStrengthIndicator({
 			</div>
 
 			<div className="text-muted-foreground flex justify-between text-xs">
-				<span>Parol ishonchliligi:</span>
+				<span>{t('strengthLabel')}</span>
 				<span className="text-foreground font-medium">{label}</span>
 			</div>
 		</div>

@@ -2,6 +2,7 @@ import { useParams } from 'next/navigation'
 import { useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
+import { useLocale, useTranslations } from 'next-intl'
 
 import { Badge } from '@/components/ui/badge'
 import { useAuth } from '@/hooks/useAuth'
@@ -18,6 +19,10 @@ import { CommentReplyForm } from './comment.reply.form'
 import { ReplyItem } from './reply.item'
 
 export function CommentItem({ comment }: { comment: IComment }) {
+	const t = useTranslations('Comments')
+	const tTime = useTranslations('Time')
+	const locale = useLocale()
+
 	const [isEditing, setIsEditing] = useState(false)
 	const closeReply = useReplyStore((s) => s.closeReply)
 
@@ -26,7 +31,7 @@ export function CommentItem({ comment }: { comment: IComment }) {
 	const { id } = useParams<{ id: string }>()
 
 	const { data, isLoading, isFetching } = useQuery({
-		queryKey: commentsKeys.replies(comment.id),
+		queryKey: [...commentsKeys.replies(comment.id), locale],
 		queryFn: () => commentsService.getCommentReplies(comment.id),
 		select: (data) => data.data,
 	})
@@ -46,12 +51,12 @@ export function CommentItem({ comment }: { comment: IComment }) {
 					</h5>
 					{comment.editedAt ? (
 						<span className="text-xs font-semibold tracking-wider">
-							{formatRelativeTime(comment.editedAt)}{' '}
-							<span className="text-xs italic">(tahrirlangan)</span>
+							{formatRelativeTime(comment.editedAt, tTime)}{' '}
+							<span className="text-xs italic">{t('edited')}</span>
 						</span>
 					) : (
 						<span className="text-xs font-semibold tracking-wider">
-							{formatRelativeTime(comment.createdAt)}
+							{formatRelativeTime(comment.createdAt, tTime)}
 						</span>
 					)}
 				</div>
@@ -60,7 +65,7 @@ export function CommentItem({ comment }: { comment: IComment }) {
 						className="text-xs font-medium capitalize"
 						variant={'secondary'}
 					>
-						Sotuvchi
+						{t('seller')}
 					</Badge>
 				)}
 

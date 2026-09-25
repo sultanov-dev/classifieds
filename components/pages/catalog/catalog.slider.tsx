@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
+import { useTranslations } from 'next-intl'
+
 import { Slider } from '@/components/ui/slider'
 import { useDebounce } from '@/hooks/useDebounce'
 
@@ -18,6 +20,7 @@ export function RangeSlider({
 	fromInitialValue = 0,
 	toInitialValue = max,
 }: IRangSlider) {
+	const t = useTranslations('Catalog')
 	const [range, setRange] = useState<[number, number]>([
 		fromInitialValue,
 		toInitialValue,
@@ -39,10 +42,10 @@ export function RangeSlider({
 		<div className="mt-5">
 			<div className="mb-4 flex items-center justify-center gap-6">
 				<span className="inline-bloc px-2 py-1 text-sm font-medium tracking-wide">
-					dan: ${range[0]}
+					{t('priceFrom', { value: range[0] })}
 				</span>
 				<span className="inline-block px-2 py-1 text-sm font-medium tracking-wide">
-					gacha: ${range[1]}
+					{t('priceTo', { value: range[1] })}
 				</span>
 			</div>
 

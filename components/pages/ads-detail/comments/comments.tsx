@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
 
 import { commentsKeys } from '@/lib/querykeys/comments'
 import { commentsService } from '@/services/comments/comments.service'
@@ -7,8 +8,10 @@ import { Loader } from '@/shared/loader'
 import { CommentItem } from './comment.item'
 
 export function Comments({ listingId }: { listingId: string }) {
+	const locale = useLocale()
+
 	const { data, isFetching, isLoading } = useQuery({
-		queryKey: commentsKeys.list(listingId),
+		queryKey: [...commentsKeys.list(listingId), locale],
 		queryFn: () => commentsService.getListingComments(listingId),
 		select: (data) => data.data.comments,
 		enabled: !!listingId,

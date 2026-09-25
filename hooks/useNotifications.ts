@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useLocale, useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 import { useAuth } from '@/hooks/useAuth'
@@ -12,11 +13,13 @@ import {
 import { notificationService } from '@/services/notification/notification.service'
 
 export const useNotifications = () => {
+	const t = useTranslations('Common')
+	const locale = useLocale()
 	const queryClient = useQueryClient()
 	const { isAuthenticated } = useAuth()
 
 	const { data, isLoading, isFetching } = useQuery({
-		queryKey: NOTIFICATIONS_KEY,
+		queryKey: [...NOTIFICATIONS_KEY, locale],
 		queryFn: () =>
 			notificationService.getNotifications({ limit: NOTIFICATIONS_LIMIT }),
 		select: (data) => data.data,
@@ -33,7 +36,7 @@ export const useNotifications = () => {
 		},
 		onError: (_error, _ids, context) => {
 			restoreNotifications(queryClient, context?.previous)
-			toast.error("Xatolik bo'ldi")
+			toast.error(t('error'))
 		},
 		onSuccess: (response) => {
 			setUnreadCount(queryClient, response.data.unreadCount)

@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
+import { useLocale, useTranslations } from 'next-intl'
 
 import { listingKeys } from '@/lib/querykeys/listing'
 import { formatAdDate, formatCurrency } from '@/lib/utils'
@@ -24,8 +25,11 @@ const DynamicCarousel = dynamic(
 )
 
 export function DetailContent({ item: initialItem }: { item: IListing }) {
+	const t = useTranslations('AdDetail')
+	const locale = useLocale()
+
 	const { data } = useQuery({
-		queryKey: listingKeys.detail(initialItem.id),
+		queryKey: [...listingKeys.detail(initialItem.id), locale],
 		queryFn: () => listingService.getLisingById(initialItem.id),
 		initialData: { listing: initialItem },
 		staleTime: 0,
@@ -75,7 +79,7 @@ export function DetailContent({ item: initialItem }: { item: IListing }) {
 			<div className="mt-10 border-t pt-10">
 				<Heading
 					className="mb-5 text-xl font-semibold"
-					title={"Qisqacha ma'lumot"}
+					title={t('shortInfo')}
 				/>
 				<p className="text-base leading-7 font-normal">{item.description}</p>
 			</div>

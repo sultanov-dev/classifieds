@@ -1,10 +1,12 @@
-import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
+import { useRouter } from '@/i18n/navigation'
+import { listingListPredicate } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing/listing.service'
 import type { TListingSchmema } from '@/validation/create.validadtion'
 
@@ -12,6 +14,7 @@ import { useListingForm } from './useListingForm'
 import { useSteps } from './useSteps'
 
 export const useCreateListing = () => {
+	const t = useTranslations('ListingForm')
 	const queryClient = useQueryClient()
 
 	const { form, selectedCategory } = useListingForm()
@@ -31,11 +34,9 @@ export const useCreateListing = () => {
 		onSuccess: () => {
 			startTransition(() => {
 				router.replace('/')
-				toast.success("E'lon joylandi")
+				toast.success(t('created'))
 			})
-			queryClient.invalidateQueries({
-				queryKey: ['listings', 'my-listings', 'catalog-explorer'],
-			})
+			queryClient.invalidateQueries({ predicate: listingListPredicate })
 		},
 		onError: (error) => {
 			if (isAxiosError(error)) {

@@ -1,5 +1,4 @@
-import Link from 'next/link'
-
+import { Link } from '@/i18n/navigation'
 import { formatAdDate, formatCurrency } from '@/lib/utils'
 import { BlurImage } from '@/shared/blur.image'
 import { LikeButton } from '@/shared/like.button'

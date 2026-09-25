@@ -1,4 +1,5 @@
 import { Phone } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 import { DetailContent } from '@/components/pages/ads-detail/detail.content'
 import { listingService } from '@/services/listing/listing.service'
@@ -23,6 +24,7 @@ export default async function AdsDetailPage({
 }) {
 	const id = (await params).id
 
+	const t = await getTranslations('AdDetail')
 	const listing = await listingService.getListingByIdPublic(id)
 
 	return (
@@ -39,7 +41,7 @@ export default async function AdsDetailPage({
 							// href={`tel:${listing.listing.user.phoneNumber.replace(/\s/g, '')}`}
 						>
 							<Phone className="size-5" />
-							Qongiroq qilish
+							{t('call')}
 						</a>
 					</div>
 				</aside>

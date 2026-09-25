@@ -1,21 +1,29 @@
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { useMemo, useTransition } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { publicPages } from '@/config/pages.config'
+import { useRouter } from '@/i18n/navigation'
 import { authService } from '@/services/auth/auth.service'
-import { authSchema, type TAuthScheme } from '@/validation/auth.validation'
+import {
+	createAuthSchema,
+	type TAuthScheme,
+} from '@/validation/auth.validation'
 
 import { useAuth } from './useAuth'
 
 export const useAuthForm = (isLogin: boolean) => {
+	const tValidation = useTranslations('Validation')
+
+	const schema = useMemo(() => createAuthSchema(tValidation), [tValidation])
+
 	const form = useForm<TAuthScheme>({
-		resolver: zodResolver(authSchema),
+		resolver: zodResolver(schema),
 		defaultValues: {
 			email: '',
 			password: '',

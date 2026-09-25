@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CornerDownLeftIcon, PencilIcon, Trash2Icon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import { commentsKeys } from '@/lib/querykeys/comments'
@@ -21,6 +22,7 @@ export function CommentsHeader({
 	listingId,
 	onEdit,
 }: Props) {
+	const t = useTranslations('Comments')
 	const { showReply } = useReplyStore()
 	const queryClient = useQueryClient()
 
@@ -40,7 +42,7 @@ export function CommentsHeader({
 				onClick={() => showReply(commentId)}
 			>
 				<CornerDownLeftIcon />
-				Javob yozish
+				{t('reply')}
 			</Button>
 			{commentUserId === curruntUserId && (
 				<Button

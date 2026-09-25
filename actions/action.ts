@@ -8,11 +8,11 @@ export const deleteListing = async (listingId: string) => {
 	try {
 		await listingService.deleteListing(listingId)
 
-		revalidatePath('/profile/ads')
+		revalidatePath('/[locale]/profile/ads', 'page')
 
-		return { success: true, message: "Muvaffaqiyatli o'chirildi" }
+		return { success: true, messageKey: 'deleted' as const }
 	} catch (error) {
 		console.error("O'chirishda xatolik:", error)
-		return { success: false, message: "O'chirishda xatolik yuz berdi" }
+		return { success: false, messageKey: 'deleteError' as const }
 	}
 }

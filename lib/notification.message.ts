@@ -1,21 +1,32 @@
+import type { TTranslator } from '@/types/i18n.types'
 import type {
 	INotification,
 	TNotificationType,
 } from '@/types/notification.type'
 
-const NOTIFICATION_ACTION: Record<TNotificationType, string> = {
-	LISTING_COMMENT: "e'loningizga izoh yozdi",
-	COMMENT_REPLY: 'izohingizga javob berdi',
-	LISTING_REPLY: "e'loningizdagi izohga javob berdi",
-}
+const FALLBACK_TYPE: TNotificationType = 'LISTING_COMMENT'
 
-export const getActorName = (fullName: string | null) =>
-	fullName?.trim() || 'Foydalanuvchi'
+const NOTIFICATION_TYPES: TNotificationType[] = [
+	'LISTING_COMMENT',
+	'COMMENT_REPLY',
+	'LISTING_REPLY',
+]
 
-export const getNotificationAction = (type: TNotificationType) =>
-	NOTIFICATION_ACTION[type] ?? "e'loningizga izoh yozdi"
+export const getActorName = (
+	fullName: string | null,
+	t: TTranslator<'Notifications'>,
+) => fullName?.trim() || t('defaultUser')
 
-export const getNotificationMessage = (notification: INotification) =>
-	`${getActorName(notification.actor.fullName)} ${getNotificationAction(
+export const getNotificationAction = (
+	type: TNotificationType,
+	t: TTranslator<'Notifications'>,
+) => t(NOTIFICATION_TYPES.includes(type) ? type : FALLBACK_TYPE)
+
+export const getNotificationMessage = (
+	notification: INotification,
+	t: TTranslator<'Notifications'>,
+) =>
+	`${getActorName(notification.actor.fullName, t)} ${getNotificationAction(
 		notification.type,
+		t,
 	)}`

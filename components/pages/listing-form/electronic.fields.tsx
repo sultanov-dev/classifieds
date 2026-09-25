@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
@@ -11,6 +12,7 @@ import { ColorPicker } from './color.picker.fields'
 import { MemoryGroup } from './memory.group'
 
 export function ElectronicFields() {
+	const t = useTranslations('ListingForm')
 	const { control } = useFormContext<TListingFormValues>()
 
 	return (
@@ -20,12 +22,12 @@ export function ElectronicFields() {
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
-						<FieldLabel id="create-listing-brand">Qurilma markasi</FieldLabel>
+						<FieldLabel id="create-listing-brand">{t('brand')}</FieldLabel>
 						<Input
 							id="create-listing-brand"
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
-							placeholder="Masalan: Apple, Sumsung..."
+							placeholder={t('brandPlaceholder')}
 							value={field.value ?? ''}
 							onChange={field.onChange}
 						/>
@@ -37,12 +39,14 @@ export function ElectronicFields() {
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
-						<FieldLabel id="create-listing-model">Qurilma modeli</FieldLabel>
+						<FieldLabel id="create-listing-model">
+							{t('deviceModel')}
+						</FieldLabel>
 						<Input
 							id="create-listing-model"
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
-							placeholder="Masalan: iphone 14pro, 15promax..."
+							placeholder={t('deviceModelPlaceholder')}
 							{...field}
 						/>
 					</Field>
@@ -54,14 +58,12 @@ export function ElectronicFields() {
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
-						<FieldLabel id="create-listing-battery">
-							Batareyka holati
-						</FieldLabel>
+						<FieldLabel id="create-listing-battery">{t('battery')}</FieldLabel>
 						<Input
 							type="number"
 							id="create-listing-battery"
 							aria-invalid={fieldState.invalid}
-							placeholder="Batareyka foizi"
+							placeholder={t('batteryPlaceholder')}
 							value={field.value ?? ''}
 							onChange={(e) =>
 								field.onChange(
@@ -79,7 +81,7 @@ export function ElectronicFields() {
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
-						<FieldLabel id="create-listing-status">Qurilma holati</FieldLabel>
+						<FieldLabel id="create-listing-status">{t('status')}</FieldLabel>
 						<RadioGroup
 							onValueChange={field.onChange}
 							value={field.value ?? 'new'}
@@ -87,11 +89,15 @@ export function ElectronicFields() {
 						>
 							<div className="flex items-center gap-3">
 								<RadioGroupItem value="new" id="create-listing-status-new" />
-								<Label htmlFor="create-listing-status-new">Yangi</Label>
+								<Label htmlFor="create-listing-status-new">
+									{t('statusNew')}
+								</Label>
 							</div>
 							<div className="flex items-center gap-3">
 								<RadioGroupItem value="used" id="create-listing-status-used" />
-								<Label htmlFor="create-listing-status-used">Ishlatilgan</Label>
+								<Label htmlFor="create-listing-status-used">
+									{t('statusUsed')}
+								</Label>
 							</div>
 						</RadioGroup>
 					</Field>

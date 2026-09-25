@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { useLocale, useTranslations } from 'next-intl'
 
 import { ProductGrid } from '@/components/product/product.grid'
 import { listingKeys } from '@/lib/querykeys/listing'
@@ -10,8 +11,11 @@ import { HasNoResult } from '@/shared/hasNoResult'
 import type { TListingRemoveUser } from '@/types/listing.types'
 
 export function LikedContent() {
+	const t = useTranslations('Profile')
+	const locale = useLocale()
+
 	const { data, isFetching, isLoading } = useQuery({
-		queryKey: [listingKeys.liked],
+		queryKey: [listingKeys.liked, locale],
 		queryFn: () => listingService.getLikedListings(),
 		select: (data) => data.data,
 		staleTime: 60 * 1000,
@@ -26,7 +30,7 @@ export function LikedContent() {
 			{isLikedLoading ? (
 				<GridSkeleton />
 			) : hasNoResult ? (
-				<HasNoResult text={'Yoqtirilganlar mavjud emas'} />
+				<HasNoResult text={t('likedEmpty')} />
 			) : (
 				<ProductGrid listings={listings} />
 			)}

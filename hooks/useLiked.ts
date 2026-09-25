@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 import { applyLikeToCache } from '@/lib/listing.cache'
@@ -10,6 +11,8 @@ import { useLikedStore } from '@/store/liked.store'
 import { useLikedIds } from './useLikedIds'
 
 export const useLiked = (initialLiked: boolean, listingId: string) => {
+	const t = useTranslations('Auth')
+	const tCommon = useTranslations('Common')
 	const queryClient = useQueryClient()
 	const override = useLikedStore((s) => s.overrides[listingId])
 	const setLiked = useLikedStore((s) => s.setLiked)
@@ -43,12 +46,12 @@ export const useLiked = (initialLiked: boolean, listingId: string) => {
 			if (context) setLiked(listingId, context.previous)
 
 			if (isAxiosError(err) && err.response?.status === 401) {
-				toast.error('Avval tizimga kiring')
+				toast.error(t('loginRequired'))
 
 				return
 			}
 
-			toast.error("Xatolik bo'ldi")
+			toast.error(tCommon('error'))
 		},
 		onSettled: () => {
 			if (queryClient.isMutating({ mutationKey: ['like-listing'] }) > 1) return

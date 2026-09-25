@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
@@ -19,6 +20,7 @@ const YEARS = Array.from({ length: CURRENT_YEAR - 1970 + 1 }, (_, i) =>
 )
 
 export function TransportFields() {
+	const t = useTranslations('ListingForm')
 	const { control } = useFormContext<TListingFormValues>()
 
 	return (
@@ -28,12 +30,12 @@ export function TransportFields() {
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
-						<FieldLabel id="create-listing-marka">Transport markasi</FieldLabel>
+						<FieldLabel id="create-listing-marka">{t('marka')}</FieldLabel>
 						<Input
 							id="create-listing-marka"
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
-							placeholder="Masalan: Chevrolet, BYD..."
+							placeholder={t('markaPlaceholder')}
 							{...field}
 						/>
 					</Field>
@@ -44,12 +46,14 @@ export function TransportFields() {
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
-						<FieldLabel id="create-listing-marka">Transport modeli</FieldLabel>
+						<FieldLabel id="create-listing-marka">
+							{t('transportModel')}
+						</FieldLabel>
 						<Input
 							id="create-listing-model"
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
-							placeholder="Masalan: Malibu, M4..."
+							placeholder={t('transportModelPlaceholder')}
 							{...field}
 						/>
 					</Field>
@@ -60,9 +64,7 @@ export function TransportFields() {
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
-						<FieldLabel id="create-listing-year">
-							Ishab chiqarilgan yili
-						</FieldLabel>
+						<FieldLabel id="create-listing-year">{t('year')}</FieldLabel>
 						<Select
 							value={field.value}
 							onValueChange={(value) =>
@@ -70,7 +72,7 @@ export function TransportFields() {
 							}
 						>
 							<SelectTrigger>
-								<SelectValue placeholder="Yilni tanlang" />
+								<SelectValue placeholder={t('yearPlaceholder')} />
 							</SelectTrigger>
 							<SelectContent className="max-h-60">
 								{YEARS.map((year) => (
@@ -89,13 +91,13 @@ export function TransportFields() {
 				control={control}
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
-						<FieldLabel id="create-listing-mileage">Probeg</FieldLabel>
+						<FieldLabel id="create-listing-mileage">{t('mileage')}</FieldLabel>
 						<Input
 							type="number"
 							id="create-listing-mileage"
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
-							placeholder="Probeg raqamlarda yozing"
+							placeholder={t('mileagePlaceholder')}
 							value={field.value}
 							onChange={(e) => {
 								const value = e.target.value
@@ -111,7 +113,7 @@ export function TransportFields() {
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
 						<FieldLabel id="create-listing-transmission">
-							Karobka turi
+							{t('transmission')}
 						</FieldLabel>
 						<RadioGroup
 							onValueChange={field.onChange}
@@ -125,7 +127,7 @@ export function TransportFields() {
 									id="create-listing-transmission-mexanik"
 								/>
 								<Label htmlFor="create-listing-transmission-mexanik">
-									Mexanik
+									{t('transmissionManual')}
 								</Label>
 							</div>
 							<div className="flex items-center gap-3">
@@ -134,7 +136,7 @@ export function TransportFields() {
 									id="create-listing-transmission-avtomat"
 								/>
 								<Label htmlFor="create-listing-transmission-avtomat">
-									Avtomat
+									{t('transmissionAuto')}
 								</Label>
 							</div>
 						</RadioGroup>

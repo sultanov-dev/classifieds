@@ -3,6 +3,7 @@
 import { useEffect, type ReactNode } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 import { useAuth } from '@/hooks/useAuth'
@@ -17,6 +18,7 @@ import { getAccesToken } from '@/services/auth/auth.helper'
 import { authService } from '@/services/auth/auth.service'
 
 export function SocketProvider({ children }: { children: ReactNode }) {
+	const t = useTranslations('Notifications')
 	const queryClient = useQueryClient()
 	const { isAuthenticated } = useAuth()
 
@@ -53,7 +55,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 
 			prependNotification(queryClient, event.notification)
 			invalidateCommentQuerys(queryClient, event.notification)
-			toast.info(getNotificationMessage(event.notification))
+			toast.info(getNotificationMessage(event.notification, t))
 		})
 
 		socket.on('session_expiring', async () => {
@@ -94,7 +96,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 			socket.removeAllListeners()
 			socket.disconnect()
 		}
-	}, [isAuthenticated, queryClient])
+	}, [isAuthenticated, queryClient, t])
 
 	return <>{children}</>
 }

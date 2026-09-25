@@ -1,8 +1,13 @@
+import { useTranslations } from 'next-intl'
+
 import { Badge } from '@/components/ui/badge'
 import { formatRelativeTime, getInitials } from '@/lib/utils'
 import type { IReply } from '@/types/comments.type'
 
 export function ReplyItem({ reply }: { reply: IReply }) {
+	const t = useTranslations('Comments')
+	const tTime = useTranslations('Time')
+
 	return (
 		<div className="my-2 ml-4 flex flex-col gap-3 rounded-xl bg-emerald-100 px-3 py-2">
 			<div className="flex gap-3">
@@ -14,7 +19,7 @@ export function ReplyItem({ reply }: { reply: IReply }) {
 						{reply.user.fullName}
 					</h5>
 					<span className="text-xs font-semibold tracking-wider">
-						{formatRelativeTime(reply.createdAt)}
+						{formatRelativeTime(reply.createdAt, tTime)}
 					</span>
 				</div>
 				{reply.isSeller && (
@@ -22,7 +27,7 @@ export function ReplyItem({ reply }: { reply: IReply }) {
 						className="text-xs font-medium capitalize"
 						variant={'secondary'}
 					>
-						Sotuvchi
+						{t('seller')}
 					</Badge>
 				)}
 			</div>

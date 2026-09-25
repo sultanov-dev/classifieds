@@ -1,6 +1,7 @@
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
+import { Link } from '@/i18n/navigation'
 import { getActorName, getNotificationAction } from '@/lib/notification.message'
 import { cn, formatRelativeTime, getInitials } from '@/lib/utils'
 import type { INotification } from '@/types/notification.type'
@@ -14,10 +15,13 @@ export function NotificationItem({
 	notification,
 	onRead,
 }: INotificationItemProps) {
+	const t = useTranslations('Notifications')
+	const tTime = useTranslations('Time')
+
 	const { actor, listing, comment, type, readAt, createdAt } = notification
 
 	const isUnread = !readAt
-	const actorName = getActorName(actor.fullName)
+	const actorName = getActorName(actor.fullName, t)
 
 	return (
 		<Link
@@ -38,7 +42,7 @@ export function NotificationItem({
 					<p className="text-sm leading-5 wrap-break-word whitespace-normal">
 						<span className="font-medium capitalize">{actorName}</span>{' '}
 						<span className="text-muted-foreground">
-							{getNotificationAction(type)}
+							{getNotificationAction(type, t)}
 						</span>
 					</p>
 					<span className="line-clamp-1 text-xs font-medium">
@@ -48,7 +52,7 @@ export function NotificationItem({
 						{comment.excerpt}
 					</span>
 					<span className="text-muted-foreground mt-0.5 text-[11px] tracking-wider">
-						{formatRelativeTime(createdAt)}
+						{formatRelativeTime(createdAt, tTime)}
 					</span>
 				</div>
 

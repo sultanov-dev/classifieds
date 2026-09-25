@@ -1,6 +1,7 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { startTransition, useEffect, useRef } from 'react'
 
+import { usePathname, useRouter } from '@/i18n/navigation'
 import { defaultDueryParamsData } from '@/types/listing.types'
 
 export const useInitialParams = () => {

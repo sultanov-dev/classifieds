@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
@@ -9,6 +10,7 @@ import RegionSelect from '@/shared/region.select'
 import type { TListingFormValues } from '@/validation/create.validadtion'
 
 export function CommonFields() {
+	const t = useTranslations('ListingForm')
 	const { control } = useFormContext<TListingFormValues>()
 
 	return (
@@ -22,13 +24,13 @@ export function CommonFields() {
 							className="text-xs font-medium"
 							id="create-listing-title"
 						>
-							Elon sarlavhasi
+							{t('title')}
 						</FieldLabel>
 						<Input
 							id="create-listing-title"
 							aria-invalid={fieldState.invalid}
 							autoComplete="off"
-							placeholder="Sarlavha"
+							placeholder={t('titlePlaceholder')}
 							{...field}
 						/>
 
@@ -42,7 +44,7 @@ export function CommonFields() {
 				render={({ field, fieldState }) => (
 					<Field data-invalid={fieldState.invalid}>
 						<FieldLabel id="create-listing-currency">
-							Valyuta turini tanlang
+							{t('currency')}
 						</FieldLabel>
 						<RadioGroup
 							onValueChange={field.onChange}
@@ -70,13 +72,13 @@ export function CommonFields() {
 							className="text-xs font-medium"
 							id="create-listing-price"
 						>
-							Narxi
+							{t('price')}
 						</FieldLabel>
 						<Input
 							type="number"
 							id="create-listing-price"
 							aria-invalid={fieldState.invalid}
-							placeholder="Narxi"
+							placeholder={t('pricePlaceholder')}
 							value={field.value === 0 ? '' : (field.value ?? '')}
 							onChange={(e) => {
 								const val = e.target.value
@@ -97,7 +99,7 @@ export function CommonFields() {
 							className="text-xs font-medium"
 							id="create-listing-region"
 						>
-							Hududni tanlang
+							{t('region')}
 						</FieldLabel>
 						<RegionSelect value={field.value} onValueChange={field.onChange} />
 
@@ -114,13 +116,13 @@ export function CommonFields() {
 							className="text-xs font-medium"
 							id="create-listing-description"
 						>
-							Elon haqida
+							{t('description')}
 						</FieldLabel>
 						<Textarea
 							className="resize-none"
 							rows={6}
 							id="create-listing-description"
-							placeholder="E'lon haqida to'liq yozing..."
+							placeholder={t('descriptionPlaceholder')}
 							{...field}
 						/>
 

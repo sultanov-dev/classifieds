@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 import { useListings } from '@/hooks/useListings'
 import type { IGetListingResponse } from '@/types/listing.types'
 
@@ -13,6 +15,7 @@ export function ProductLoadMore({
 	initialData: IGetListingResponse
 	type: 'latest' | 'all'
 }) {
+	const t = useTranslations('Product')
 	const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useListings(
 		type,
 		initialData,
@@ -30,7 +33,7 @@ export function ProductLoadMore({
 						onClick={() => fetchNextPage()}
 						disabled={isFetchingNextPage}
 					>
-						Ko&apos;proq yuklash
+						{t('loadMore')}
 					</Button>
 				)}
 			</div>

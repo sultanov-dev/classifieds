@@ -1,6 +1,7 @@
 import { useParams } from 'next/navigation'
 
 import { SendHorizonalIcon, XCircleIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Controller } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -24,6 +25,8 @@ export function CommentEditForm({
 	onClose,
 	comment,
 }: Props) {
+	const t = useTranslations('Comments')
+	const tCommon = useTranslations('Common')
 	const { id } = useParams<{ id: string }>()
 	const { handleSubmit, control, editIsPending, editHandle } = useEditComment(
 		comment,
@@ -37,8 +40,12 @@ export function CommentEditForm({
 		<div className="flex flex-col gap-4 rounded-md p-2.5 shadow">
 			<div className="flex items-center justify-between">
 				<h5 className="text-xs font-semibold tracking-wide">
-					<span className="text-violet-500">{replyUserName}</span> tomonidan
-					javob yozilmoqda
+					{t.rich('replyingTo', {
+						name: replyUserName ?? '',
+						highlight: (chunks) => (
+							<span className="text-violet-500">{chunks}</span>
+						),
+					})}
 				</h5>
 				<Button
 					size={'icon-xs'}
@@ -63,7 +70,7 @@ export function CommentEditForm({
 									id="reply-form-body"
 									className="font-normal tracking-wide"
 								>
-									Fikr va mulohaza
+									{t('label')}
 								</FieldLabel>
 								<Textarea
 									className="h-18 resize-none bg-blue-100 focus-visible:ring-0 focus-visible:outline-none"
@@ -71,7 +78,9 @@ export function CommentEditForm({
 									onKeyDown={(e) => e.key === 'Escape' && onClose()}
 									rows={1000}
 									id="reply-form-body"
-									placeholder={`${commentUserName}ga javob yozing...`}
+									placeholder={t('replyPlaceholder', {
+										name: commentUserName ?? '',
+									})}
 									disabled={editIsPending}
 									{...field}
 								/>
@@ -88,7 +97,7 @@ export function CommentEditForm({
 				type="submit"
 				disabled={editIsPending}
 			>
-				Saqlash
+				{tCommon('save')}
 				<SendHorizonalIcon />
 			</Button>
 		</div>

@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import {
 	HeartIcon,
 	ScrollTextIcon,
@@ -7,6 +5,7 @@ import {
 	UserCogIcon,
 	UserIcon,
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -18,15 +17,18 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { protectPages } from '@/config/pages.config'
+import { Link } from '@/i18n/navigation'
 
 import { LogOutBtn } from './logOut'
 
 export default function ProfileMenu() {
+	const t = useTranslations('Header')
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger render={<Button variant={'ghost'} />}>
 				<UserIcon className="h-4 w-4" />
-				<span className="text-base font-normal capitalize">profile</span>
+				<span className="text-base font-normal capitalize">{t('profile')}</span>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-[256px]">
 				<DropdownMenuGroup className="space-y-2">
@@ -34,7 +36,7 @@ export default function ProfileMenu() {
 						<DropdownMenuItem>
 							<ScrollTextIcon className="size-5" />
 							<span className="text-base font-normal text-black capitalize">
-								Mening elonlarim
+								{t('myAds')}
 							</span>
 						</DropdownMenuItem>
 					</Link>
@@ -42,7 +44,7 @@ export default function ProfileMenu() {
 						<DropdownMenuItem>
 							<HeartIcon className="size-5" />
 							<span className="text-base font-normal text-black capitalize">
-								saqlanganlar
+								{t('saved')}
 							</span>
 						</DropdownMenuItem>
 					</Link>
@@ -50,7 +52,7 @@ export default function ProfileMenu() {
 						<DropdownMenuItem>
 							<SearchIcon className="size-5" />
 							<span className="text-base font-normal text-black capitalize">
-								tarix
+								{t('history')}
 							</span>
 						</DropdownMenuItem>
 					</Link>
@@ -58,7 +60,7 @@ export default function ProfileMenu() {
 						<DropdownMenuItem>
 							<UserCogIcon className="size-5" />
 							<span className="text-base font-normal text-black capitalize">
-								sozlamalar
+								{t('settings')}
 							</span>
 						</DropdownMenuItem>
 					</Link>

@@ -1,19 +1,24 @@
-type TCategory = {
+export type TSubCategorySlug =
+	'cars' | 'moto' | 'trucks' | 'phones' | 'laptops' | 'accessories'
+
+type TSubCategory = {
 	id: string
-	label: string
-	slug: string
+	slug: TSubCategorySlug
 }
 
 interface ICategoryData {
 	id: number
-	label: string
-	subCategory: TCategory[]
+	key: TCategoryKey
+	icon: string
+	subCategory: TSubCategory[]
 }
 
 type TCate = {
-	label: string
-	subCategory: Omit<TCategory, 'slug'>[]
+	icon: string
+	subCategory: { id: TSubCategorySlug }[]
 }
+
+export type TCategoryKey = 'transport' | 'electronics'
 
 interface ICategory {
 	transport: TCate
@@ -22,64 +27,34 @@ interface ICategory {
 
 export const CATEGORIES: ICategory = {
 	transport: {
-		label: '🚗 transport',
-		subCategory: [
-			{ id: 'cars', label: 'Yengil avtomobillar' },
-			{ id: 'moto', label: 'Motosikllar' },
-			{ id: 'trucks', label: 'Yuk mashinalari' },
-		],
+		icon: '🚗',
+		subCategory: [{ id: 'cars' }, { id: 'moto' }, { id: 'trucks' }],
 	},
 	electronics: {
-		label: '📱 elektronika',
-		subCategory: [
-			{ id: 'phones', label: 'Telefonlar' },
-			{ id: 'laptops', label: 'Noutbuklar' },
-			{ id: 'accessories', label: 'Aksessuarlar' },
-		],
+		icon: '📱',
+		subCategory: [{ id: 'phones' }, { id: 'laptops' }, { id: 'accessories' }],
 	},
 }
 
 export const categoryData: ICategoryData[] = [
 	{
 		id: 1,
-		label: '🚗 Transport',
+		key: 'transport',
+		icon: '🚗',
 		subCategory: [
-			{
-				id: '1',
-				label: 'Yengil avtomobil',
-				slug: 'cars',
-			},
-			{
-				id: '2',
-				label: 'mahsus transport',
-				slug: 'trucks',
-			},
-			{
-				id: '3',
-				label: 'motosikl',
-				slug: 'moto',
-			},
+			{ id: '1', slug: 'cars' },
+			{ id: '2', slug: 'trucks' },
+			{ id: '3', slug: 'moto' },
 		],
 	},
 	{
 		id: 2,
-		label: '📱 Elektronika',
+		key: 'electronics',
+		icon: '📱',
 		subCategory: [
-			{
-				id: '4',
-				label: 'Telefon va akssesuarlar',
-				slug: 'phones',
-			},
-			{
-				id: '5',
-				label: 'Akkasuarlar',
-				slug: 'accessories',
-			},
-			{
-				id: '6',
-				label: 'Noutbook',
-				slug: 'laptops',
-			},
+			{ id: '4', slug: 'phones' },
+			{ id: '5', slug: 'accessories' },
+			{ id: '6', slug: 'laptops' },
 		],
 	},
 ]

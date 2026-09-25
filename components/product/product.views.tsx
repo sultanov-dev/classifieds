@@ -1,8 +1,8 @@
-import Link from 'next/link'
-
 import { MoveRightIcon } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 import { publicPages } from '@/config/pages.config'
+import { Link } from '@/i18n/navigation'
 import { listingService } from '@/services/listing/listing.service'
 import { Heading } from '@/shared/heading'
 
@@ -19,6 +19,7 @@ export default async function ProductViews({
 	isHomePage,
 	type,
 }: TProductViews) {
+	const t = await getTranslations('Home')
 	const response = await listingService.getLisings({ type, page: 1, limit: 10 })
 
 	return (
@@ -30,7 +31,7 @@ export default async function ProductViews({
 						className="flex items-center gap-2 text-sky-400"
 						href={publicPages.CATALOG}
 					>
-						Barcha e&apos;lonlar <MoveRightIcon className="siz-3" />
+						{t('allListingsLink')} <MoveRightIcon className="siz-3" />
 					</Link>
 				)}
 			</div>

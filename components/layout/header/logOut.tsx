@@ -1,10 +1,13 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 import { Button } from '@/components/ui/button'
 import { useLogOut } from '@/hooks/useLogOut'
 import { Loader } from '@/shared/loader'
 
 export function LogOutBtn() {
+	const t = useTranslations('Header')
 	const { logoutMutate, isLoading } = useLogOut()
 
 	return (
@@ -16,7 +19,7 @@ export function LogOutBtn() {
 			onClick={() => logoutMutate()}
 			disabled={isLoading}
 		>
-			Log out
+			{t('logout')}
 			{isLoading && <Loader />}
 		</Button>
 	)

@@ -1,16 +1,19 @@
-import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
+import { useRouter } from '@/i18n/navigation'
+import { listingListPredicate } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing/listing.service'
 import type { TImages } from '@/types/listing.types'
 
 export const MAX_LISTING_IMAGES = 6
 
 export const useEditImages = (listingId: string, existing: TImages[]) => {
+	const t = useTranslations('ListingForm')
 	const queryClient = useQueryClient()
 	const router = useRouter()
 
@@ -76,8 +79,8 @@ export const useEditImages = (listingId: string, existing: TImages[]) => {
 			return listingService.updateListing(listingId, formData)
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['my-listings'] })
-			toast.success('Rasmlar saqlandi')
+			queryClient.invalidateQueries({ predicate: listingListPredicate })
+			toast.success(t('imagesSaved'))
 			resetChanges()
 			router.refresh()
 		},
@@ -88,7 +91,7 @@ export const useEditImages = (listingId: string, existing: TImages[]) => {
 				toast.error(
 					Array.isArray(message)
 						? message.join(', ')
-						: (message ?? 'Rasmlarni saqlashda xatolik yuz berdi'),
+						: (message ?? t('imagesSaveError')),
 				)
 			}
 		},
@@ -96,7 +99,7 @@ export const useEditImages = (listingId: string, existing: TImages[]) => {
 
 	const save = () => {
 		if (totalCount === 0) {
-			toast.error('Kamida 1 ta rasm qolishi kerak')
+			toast.error(t('imagesMinOne'))
 			return
 		}
 

@@ -1,11 +1,12 @@
-import { useRouter } from 'next/navigation'
-
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 import { protectPages } from '@/config/pages.config'
+import { useRouter } from '@/i18n/navigation'
 import { buildListingUpdateFormData } from '@/lib/listing.mapper'
+import { listingListPredicate } from '@/lib/querykeys/listing'
 import { listingService } from '@/services/listing/listing.service'
 import type { IListing } from '@/types/listing.types'
 import type { TListingEditSchema } from '@/validation/create.validadtion'
@@ -16,6 +17,7 @@ export const useUpdateListing = (
 	listing: IListing,
 	initialValues: TListingEditSchema,
 ) => {
+	const t = useTranslations('ListingForm')
 	const queryClient = useQueryClient()
 	const router = useRouter()
 
@@ -26,8 +28,8 @@ export const useUpdateListing = (
 		mutationFn: (formData: FormData) =>
 			listingService.updateListing(listing.id, formData),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['my-listings'] })
-			toast.success("E'lon yangilandi")
+			queryClient.invalidateQueries({ predicate: listingListPredicate })
+			toast.success(t('updated'))
 			router.push(protectPages.ADS)
 			router.refresh()
 		},
@@ -38,7 +40,7 @@ export const useUpdateListing = (
 				toast.error(
 					Array.isArray(message)
 						? message.join(', ')
-						: (message ?? 'Saqlashda xatolik yuz berdi'),
+						: (message ?? t('saveError')),
 				)
 			}
 		},
@@ -51,7 +53,7 @@ export const useUpdateListing = (
 		)
 
 		if ([...formData.keys()].length === 0) {
-			toast.info("Hech narsa o'zgarmadi")
+			toast.info(t('nothingChanged'))
 			return
 		}
 
