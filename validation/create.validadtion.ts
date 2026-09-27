@@ -32,7 +32,10 @@ export const createListingSchemas = (t: TTranslator<'Validation'>) => {
 		attributes: z.object({
 			marka: z.string().min(1, t('markaRequired')),
 			model: z.string().min(1, t('modelRequired')),
-			year: z.number().min(2001, t('yearMin')).max(2026, t('yearMax')),
+			year: z
+				.number()
+				.min(2001, t('yearMin'))
+				.max(new Date().getFullYear(), t('yearMax')),
 			mileage: z.number().min(0, t('mileageMin')),
 			transmission: z.enum(['mexanik', 'avtomat'], t('transmissionRequired')),
 		}),
@@ -48,7 +51,10 @@ export const createListingSchemas = (t: TTranslator<'Validation'>) => {
 			ramMemory: z.string().min(1, t('ramRequired')),
 			color: z.string().min(1, t('colorRequired')),
 			status: z.enum(['new', 'used'], t('statusRequired')),
-			battery: z.number().min(1).max(100, t('batteryMax')),
+			battery: z
+				.number(t('batteryMin'))
+				.min(1, t('batteryMin'))
+				.max(100, t('batteryMax')),
 		}),
 	})
 

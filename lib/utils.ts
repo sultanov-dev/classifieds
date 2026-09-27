@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
 
-export const formatAdDate = (date: string | string) => {
+export const formatAdDate = (date: string) => {
 	const timestamp = Date.parse(date)
 
 	const parts = new Intl.DateTimeFormat('en-GB', {
@@ -47,7 +47,7 @@ export const formatCurrency = (
 	const { currency, locale = 'uz-UZ', fractionDigits } = options
 
 	return new Intl.NumberFormat(locale, {
-		style: 'currency',
+		style: currency ? 'currency' : 'decimal',
 		currency,
 		minimumFractionDigits: fractionDigits,
 		maximumFractionDigits: fractionDigits,
@@ -76,7 +76,7 @@ export const formatRelativeTime = (
 	const now = new Date()
 	const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
 
-	if (diffInSeconds < 30) {
+	if (diffInSeconds <= 59) {
 		return t('now')
 	}
 

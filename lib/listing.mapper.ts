@@ -13,10 +13,10 @@ type TMappableListing = Pick<
 	| 'attributes'
 >
 
-const toObject = (attributes: TAttirbute[]) =>
+export const toObject = (attributes: TAttirbute[]) =>
 	Object.fromEntries(attributes.map(({ key, value }) => [key, value]))
 
-const asString = (value: unknown, fallback = '') =>
+export const asString = (value: unknown, fallback = '') =>
 	typeof value === 'string' ? value : fallback
 
 const asNumber = (value: unknown, fallback: number) => {

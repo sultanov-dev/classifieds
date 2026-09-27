@@ -232,6 +232,7 @@
 		"ramRequired": "RAM xotirani tanlang",
 		"colorRequired": "Rangni tanlang",
 		"statusRequired": "Holatini belgilang",
+		"batteryMin": "Batareya kamida 1% boʻlishi kerak",
 		"batteryMax": "Batareya maksimal 100% boʻladi"
 	},
 	"Notifications": {
