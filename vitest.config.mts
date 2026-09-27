@@ -9,7 +9,7 @@ export default defineConfig({
 	test: {
 		environment: 'jsdom',
 		setupFiles: ['./vitest.setup.tsx'],
-		include: ['**/*.test.{ts,tsx}'],
+		include: ['test/**/*.test.{ts,tsx}'],
 		exclude: ['node_modules', '.next', 'e2e'],
 		env: {
 			API_URL: 'http://localhost:4000',
@@ -19,6 +19,8 @@ export default defineConfig({
 				inline: ['next-intl'],
 			},
 		},
+		// har testdan oldin vi.fn() chaqiruvlar tarixini tozalaydi
+		clearMocks: true,
 		restoreMocks: true,
 		coverage: {
 			provider: 'v8',

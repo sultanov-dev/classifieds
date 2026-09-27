@@ -11,6 +11,10 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 afterEach(() => {
 	server.resetHandlers()
 	cleanup()
+
+	// node muhitidagi testlarda (masalan proxy) document yo'q
+	if (typeof document === 'undefined') return
+
 	document.cookie.split(';').forEach((c) => {
 		document.cookie = `${c.split('=')[0]}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`
 	})
@@ -56,9 +60,9 @@ vi.mock('@/i18n/navigation', () => ({
 	getPathname: ({ href }: { href: string }) => href,
 }))
 
-vi.mock('@/lib/socket', async (importOrigina) => ({
-	...(await importOrigina<typeof import('@/lib/socket')>()),
-	createNotificatonSocket: vi.fn(() => ({
+vi.mock('@/lib/socket', async (importOriginal) => ({
+	...(await importOriginal<typeof import('@/lib/socket')>()),
+	createNotificationSocket: vi.fn(() => ({
 		on: vi.fn(),
 		off: vi.fn(),
 		emit: vi.fn(),
